@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+  <!-- Import Directory.Build file from parent directory -->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);$(MSBuildThisFileDirectory)..\$(MSBuildThisFileName)$(MSBuildThisFileExtension)</MSBuildAllProjects>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
+
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.Hosting">
+      <Version>9.0.2</Version>
+    </PackageVersion>
+    <PackageVersion Include="System.CommandLine">
+      <Version>2.0.0-beta4.25072.1</Version>
+    </PackageVersion>
+  </ItemGroup>
+
+</Project>

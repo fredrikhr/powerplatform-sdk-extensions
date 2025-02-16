@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+  <Target
+    Name="PackageProjectUrlFromRepositoryUrl"
+    BeforeTargets="GenerateNuspec"
+    DependsOnTargets="_InitializeNuspecRepositoryInformationProperties"
+  >
+    <PropertyGroup>
+      <PackageProjectUrl>$(RepositoryUrl.Substring(0, $(RepositoryUrl.LastIndexOf('.git'))))</PackageProjectUrl>
+    </PropertyGroup>
+  </Target>
+</Project>
