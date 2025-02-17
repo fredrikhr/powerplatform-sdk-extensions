@@ -1,0 +1,4 @@
+[submodule "github.com/fredrikhr/dotnet-generichost-extensions"]
+	path = .submodules/dotnet-generichost-extensions
+	url = https://github.com/fredrikhr/dotnet-generichost-extensions.git
+	branch = main
