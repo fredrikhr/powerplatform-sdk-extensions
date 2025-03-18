@@ -8,3 +8,10 @@ updates:
     reviewers:
       - fredrikhr
     open-pull-requests-limit: 50
+  - package-ecosystem: gitsubmodule
+    directories: ["/"]
+    schedule:
+      interval: daily
+    reviewers:
+      - fredrikhr
+    open-pull-requests-limit: 50
