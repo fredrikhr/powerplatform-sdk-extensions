@@ -17,8 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\.submodules\dotnet-generichost-extensions\src\FredrikHr.MsExtDependencyInjection.AzureIdentity\FredrikHr.MsExtDependencyInjection.AzureIdentity.csproj" />
-    <ProjectReference Include="..\..\.submodules\dotnet-generichost-extensions\src\FredrikHr.MsExtDependencyInjection.Msal\FredrikHr.MsExtDependencyInjection.Msal.csproj" />
+    <ProjectReference Include="..\..\.submodules\dotnet-generichost-extensions\src\FredrikHr.CommandLineApi.Hosting\FredrikHr.CommandLineApi.Hosting.csproj" />
+    <ProjectReference Include="..\..\.submodules\dotnet-generichost-extensions\src\FredrikHr.Extensions.DependencyInjection.AzureIdentity\FredrikHr.Extensions.DependencyInjection.AzureIdentity.csproj" />
+    <ProjectReference Include="..\..\.submodules\dotnet-generichost-extensions\src\FredrikHr.Extensions.DependencyInjection.Msal\FredrikHr.Extensions.DependencyInjection.Msal.csproj" />
   </ItemGroup>
 
 </Project>

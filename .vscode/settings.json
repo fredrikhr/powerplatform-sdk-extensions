@@ -1,3 +1,7 @@
 {
+  "files.associations": {
+    "*.slnx": "xml"
+  },
+  "dotnet.defaultSolution": "PowerPlatform SDK Extensions.slnx",
   "dotnet.testWindow.useTestingPlatformProtocol": true
 }
