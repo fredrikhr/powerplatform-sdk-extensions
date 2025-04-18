@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Solution>
   <Folder Name="/..root/">
     <File Path=".editorconfig" />
@@ -9,18 +10,5 @@
   </Folder>
   <Folder Name="/.github/">
     <File Path=".github/dependabot.yml" />
-  </Folder>
-  <Folder Name="/.submodules/" />
-  <Folder Name="/.submodules/dotnet-generichost-extensions/">
-    <Project Path=".submodules/dotnet-generichost-extensions/src/FredrikHr.CommandLineApi.Hosting/FredrikHr.CommandLineApi.Hosting.csproj" />
-    <Project Path=".submodules/dotnet-generichost-extensions/src/FredrikHr.Extensions.DependencyInjection.AzureIdentity/FredrikHr.Extensions.DependencyInjection.AzureIdentity.csproj" />
-    <Project Path=".submodules/dotnet-generichost-extensions/src/FredrikHr.Extensions.DependencyInjection.Msal/FredrikHr.Extensions.DependencyInjection.Msal.csproj" />
-    <Project Path=".submodules/dotnet-generichost-extensions/src/FredrikHr.Extensions.Options.Helpers/FredrikHr.Extensions.Options.Helpers.csproj" />
-  </Folder>
-  <Folder Name="/cli/">
-    <File Path="cli/Directory.Build.props" />
-    <File Path="cli/Directory.Packages.props" />
-    <File Path="cli/nuget.config" />
-    <Project Path="cli/FredrikHr.PowerPlatformSdkExtensions.SolutionCli/FredrikHr.PowerPlatformSdkExtensions.SolutionCli.csproj" />
   </Folder>
 </Solution>
