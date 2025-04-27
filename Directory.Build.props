@@ -33,7 +33,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup Label="LICENSE" Condition="'$(IsPackable)' == 'true'">
-    <None Include="$(MSBuildThisFileDirectory)LICENSE">
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true">
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
