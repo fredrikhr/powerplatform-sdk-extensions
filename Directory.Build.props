@@ -19,6 +19,13 @@
     <!-- <PublishDir>$(MSBuildThisFileDirectory)publish\$(MSBuildProjectName)\</PublishDir> -->
   </PropertyGroup>
 
+  <PropertyGroup Label="Nuget">
+    <RestoreAdditionalProjectFallbackFolders>
+      $(MSBuildThisFileDirectory)packages;
+      $(MSBuildThisFileDirectory).submodules\fredrikhr\nuget-msbuild-extensions\packages
+    </RestoreAdditionalProjectFallbackFolders>
+  </PropertyGroup>
+
   <PropertyGroup>
     <LangVersion>13</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -29,10 +36,10 @@
     <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>
 
-  <PropertyGroup Label="LICENSE" Condition="'$(IsPackable)' == 'true'">
+  <PropertyGroup Label="LICENSE">
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  <ItemGroup Label="LICENSE" Condition="'$(IsPackable)' == 'true'">
+  <ItemGroup Label="LICENSE">
     <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true">
       <PackagePath></PackagePath>
     </None>
