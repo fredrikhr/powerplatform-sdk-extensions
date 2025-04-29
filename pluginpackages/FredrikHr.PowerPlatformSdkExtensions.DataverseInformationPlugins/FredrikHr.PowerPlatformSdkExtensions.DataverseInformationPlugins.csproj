@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>pwrplatf_DataverseInformationPlugins</PackageId>
+    <LangVersion>13</LangVersion>
+    <TargetFramework>net471</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
+      <PrivateAssets>all</PrivateAssets>
+      <ProjectReference>..\..\build\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj</ProjectReference>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.Xrm.Sdk" />
+    <Using Include="Microsoft.Xrm.Sdk.Extensions" />
+  </ItemGroup>
+
+</Project>

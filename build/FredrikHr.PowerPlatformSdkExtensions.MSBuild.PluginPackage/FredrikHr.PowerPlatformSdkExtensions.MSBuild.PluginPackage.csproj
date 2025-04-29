@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IsPackable>true</IsPackable>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>No description provided.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
+      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.StripNuspecTfm\FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj</ProjectReference>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="build\Package.*" Pack="true">
+      <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="SetProjectVersionFromMicrosoftPowerAppsMSBuildPluginVersion"
+    BeforeTargets="_GetOutputItemsFromPack;EnsureNuGetPackOutputFallbackFolderInstallPath;GetAssemblyVersion"
+  >
+    <PropertyGroup>
+      <Version>@(PackageVersion-&gt;WithMetadataValue('Identity', 'Microsoft.PowerApps.MSBuild.Plugin')-&gt;'%(Version)')</Version>
+      <PackageVersion>$(Version)</PackageVersion>
+    </PropertyGroup>
+  </Target>
+
+</Project>

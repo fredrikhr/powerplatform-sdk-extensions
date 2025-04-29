@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 <Solution>
   <Folder Name="/..root/">
     <File Path=".editorconfig" />
@@ -10,13 +10,26 @@
     <File Path="global.json" />
     <File Path="LICENSE" />
   </Folder>
+  <Folder Name="/.config/">
+    <File Path=".config/dotnet-tools.json" />
+  </Folder>
   <Folder Name="/.github/">
     <File Path=".github/dependabot.yml" />
   </Folder>
+  <Folder Name="/.submodules/" />
+  <Folder Name="/.submodules/fredrikhr/" />
   <Folder Name="/.submodules/fredrikhr/nuget-msbuild-extensions/">
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj" />
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackageAuthorSigning/FredrikHr.NupkgMSBuild.PackageAuthorSigning.csproj" />
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackPackageReference/FredrikHr.NupkgMSBuild.PackPackageReference.csproj" />
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.ProjectReferenceAsPackageReference/FredrikHr.NupkgMSBuild.ProjectReferenceAsPackageReference.csproj" />
+    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.StripNuspecTfm/FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj" />
+  </Folder>
+  <Folder Name="/build/">
+    <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj" />
+  </Folder>
+  <Folder Name="/pluginpackages/">
+    <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
+  </Folder>
   </Folder>
 </Solution>
