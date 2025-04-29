@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>13</LangVersion>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>$(NoWarn);NU5100;NU5118;NU5128</NoWarn>
+    <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
+      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.StripNuspecTfm\FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj</ProjectReference>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Framework">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Build.Utilities.Core">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.PowerApps.MSBuild.Solution">
+      <IncludeAssets>none</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>all</ExcludeAssets>
+      <GeneratePathProperty>true</GeneratePathProperty>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(PkgMicrosoft_PowerApps_MSBuild_Solution)' != ''">
+    <Reference Include="SolutionPackagerLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>true</Private>
+      <HintPath
+        Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net472'))"
+      >$(PkgMicrosoft_PowerApps_MSBuild_Solution)\tasks\net472\SolutionPackagerLib.dll</HintPath>
+      <HintPath
+        Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))"
+      >$(PkgMicrosoft_PowerApps_MSBuild_Solution)\tasks\net6.0\SolutionPackagerLib.dll</HintPath>
+    </Reference>
+
+    <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\LICENSE.txt">
+      <PackagePath>bundledLicenses\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
+    </TfmSpecificPackageFile>
+    <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\3rdPartyNotice.txt">
+      <PackagePath>bundledLicenses\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
+    </TfmSpecificPackageFile>
+
+    <TfmSpecificPackageFile
+      Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net472'))"
+      Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\tasks\net472\**\*.*"
+    >
+      <PackagePath>tasks\$(TargetFramework)\%(RecursiveDir)</PackagePath>
+    </TfmSpecificPackageFile>
+    <TfmSpecificPackageFile
+      Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))"
+      Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\tasks\net6.0\**\*.*"
+    >
+      <PackagePath>tasks\$(TargetFramework)\%(RecursiveDir)</PackagePath>
+    </TfmSpecificPackageFile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="build\*.props;build\*.targets" Pack="true">
+      <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
+    </Content>
+  </ItemGroup>
+
+</Project>

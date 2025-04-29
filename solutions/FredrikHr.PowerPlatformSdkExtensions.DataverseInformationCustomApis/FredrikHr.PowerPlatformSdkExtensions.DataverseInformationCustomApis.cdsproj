@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFramework>net471</TargetFramework>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <SolutionRootPath>src</SolutionRootPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\**" />
+    <ExcludeDirectories Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\PluginAssemblies\*\*.dll" />
+    <ExcludeDirectories Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\pluginpackages\*\package\*.nupkg" />
+    <ExcludeDirectories Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\environmentvariabledefinitions\*\environmentvariablevalues.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\pluginpackages\FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins\FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
+  </ItemGroup>
+
+</Project>
