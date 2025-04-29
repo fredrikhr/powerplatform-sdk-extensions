@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <NoWarn>$(NoWarn);NU5100;NU5118;NU5128</NoWarn>
+    <NoWarn>$(NoWarn);NU5100;NU5118;NU5123;NU5128</NoWarn>
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
   </PropertyGroup>
 
@@ -47,10 +47,10 @@
     </Reference>
 
     <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\LICENSE.txt">
-      <PackagePath>bundledLicenses\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
+      <PackagePath>bundled\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
     </TfmSpecificPackageFile>
     <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\3rdPartyNotice.txt">
-      <PackagePath>bundledLicenses\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
+      <PackagePath>bundled\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
     </TfmSpecificPackageFile>
 
     <TfmSpecificPackageFile
@@ -72,5 +72,14 @@
       <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
     </Content>
   </ItemGroup>
+
+  <Target Name="SetProjectVersionFromMicrosoftPowerAppsMSBuildSolutionVersion"
+    BeforeTargets="_GetOutputItemsFromPack;EnsureNuGetPackOutputFallbackFolderInstallPath;GetAssemblyVersion"
+  >
+    <PropertyGroup>
+      <Version>@(PackageVersion-&gt;WithMetadataValue('Identity', 'Microsoft.PowerApps.MSBuild.Solution')-&gt;'%(Version)')</Version>
+      <PackageVersion>$(Version)</PackageVersion>
+    </PropertyGroup>
+  </Target>
 
 </Project>
