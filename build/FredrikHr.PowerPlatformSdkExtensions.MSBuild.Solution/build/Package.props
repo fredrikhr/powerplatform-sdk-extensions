@@ -2,6 +2,11 @@
 <Project>
 
   <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendPlatformToOutputPath>false</AppendPlatformToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <SolutionPackageTypeSource Condition="'$(SolutionPackageTypeSource)' == ''">Project</SolutionPackageTypeSource>
     <SolutionVersionSource Condition="'$(SolutionVersionSource)' == ''">Project</SolutionVersionSource>
   </PropertyGroup>
