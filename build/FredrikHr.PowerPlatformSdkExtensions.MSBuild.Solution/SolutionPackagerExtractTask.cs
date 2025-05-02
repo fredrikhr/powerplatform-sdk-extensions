@@ -1,11 +1,17 @@
-using System.Diagnostics;
-
 using Microsoft.Crm.Tools.SolutionPackager;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
 
 public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase
 {
+    public string? SingleComponent { get; init; }
+
+    public bool AllowDeletes { get; init; }
+
+    public bool AllowWrites { get; init; }
+
+    public bool Clobber { get; init; }
+
     protected override PackagerArguments GetArguments()
     {
         var arguments = base.GetArguments();
@@ -15,17 +21,8 @@ public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase
         return arguments;
     }
 
-    protected override void LogErrorFromException(
-        Exception exception,
+    protected override string? GetLogSourceFile(
         PackagerArguments arguments,
         SolutionPackager runner
-        )
-    {
-        Log.LogErrorFromException(
-            exception,
-            showStackTrace: true,
-            showDetail: true,
-            file: arguments.PathToZipFile
-        );
-    }
+        ) => arguments.PathToZipFile;
 }
