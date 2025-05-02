@@ -31,6 +31,7 @@
   </Folder>
   <Folder Name="/pluginpackages/">
     <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
+    <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DummyPlugins/FredrikHr.PowerPlatformSdkExtensions.DummyPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
     <Project Path="solutions/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationCustomApis/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationCustomApis.cdsproj" Type="C#" />
