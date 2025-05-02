@@ -44,6 +44,9 @@
     <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
       <Version>1.42.1</Version>
     </PackageVersion>
+    <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution">
+      <Version>1.42.1</Version>
+    </PackageVersion>
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.CrmSdk.CoreAssemblies">

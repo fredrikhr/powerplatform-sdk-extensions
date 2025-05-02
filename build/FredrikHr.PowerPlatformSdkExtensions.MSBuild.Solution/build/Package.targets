@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <SolutionRootPath Condition="'$(SolutionRootPath)' == ''">.</SolutionRootPath>
+    <SolutionPackageErrorLevel Condition="'$(SolutionPackageErrorLevel)' == ''">Info</SolutionPackageErrorLevel>
+    <SolutionPackageEnableLocalization Condition="'$(SolutionPackageEnableLocalization)' == ''">false</SolutionPackageEnableLocalization>
+    <SolutionPackagerWorkingDirectory Condition="'$(SolutionPackagerWorkingDirectory)' == ''">$(IntermediateOutputPath)</SolutionPackagerWorkingDirectory>
+    <SolutionPackagerMetadataWorkingDirectory Condition="'$(SolutionPackagerMetadataWorkingDirectory)' == ''">$(SolutionPackagerWorkingDirectory)Metadata</SolutionPackagerMetadataWorkingDirectory>
+    <SolutionPackagerLocalizationWorkingDirectory Condition="'$(SolutionPackagerLocalizationWorkingDirectory)' == ''">$(SolutionPackagerWorkingDirectory)LocExt</SolutionPackagerLocalizationWorkingDirectory>
+    <SolutionPackageLogFilePath Condition="'$(SolutionPackageLogFilePath)' == ''">$(IntermediateOutputPath)SolutionPackager.log</SolutionPackageLogFilePath>
+    <SolutionPackageZipFilePath Condition="'$(SolutionPackageZipFilePath)' == ''">$(OutputPath)$(MSBuildProjectName).zip</SolutionPackageZipFilePath>
+    <SolutionPackageDefaultLocale Condition="'$(SolutionPackageDefaultLocale)' == ''">en-US</SolutionPackageDefaultLocale>
+    <SolutionPackageLocalTemplate Condition="'$(SolutionPackageEnableLocalization)' == 'true'">Auto</SolutionPackageLocalTemplate>
+    <PcfForceUpdate Condition="'$(PcfForceUpdate)' == ''">false</PcfForceUpdate>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- to avoid adding unintended files/folders with the newly introduced server-side sharding,
+      filter out files in solution folder (e.g. .cdsproj) and any its build artifact subfolders -->
+    <ExcludeDirectories Include= "$(SourceSolutionFileRoot)/*" />
+    <ExcludeDirectories Include= "$(SourceSolutionFileRoot)/bin/**" />
+    <ExcludeDirectories Include= "$(SourceSolutionFileRoot)/obj/**" />
+    <ExcludeDirectories Include= "$(SolutionPackageZipPath)/**" />
+    <ExcludeDirectories Include= "$(SolutionPackagerWorkingDirectory)/**" />
+    <ExcludeDirectories Include= "$(SolutionPackageLogFilePath)/**" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <SourceSolutionManifestFilePath>$(MSBuildProjectDirectory)\$(SolutionRootPath)\Other\Solution.xml</SourceSolutionManifestFilePath>
+    <SourceSolutionFileRoot>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)/$(SolutionRootPath)))</SourceSolutionFileRoot>
+    <SourceSolutionFilePath>$(SourceSolutionFileRoot)/**</SourceSolutionFilePath>
+    <SolutionPackageLogPath>$([System.IO.Directory]::GetParent($(SolutionPackageLogFilePath)))</SolutionPackageLogPath>
+    <SolutionPackageZipPath>$([System.IO.Directory]::GetParent($(SolutionPackageZipFilePath)))</SolutionPackageZipPath>
+    <SolutionPackageZipFile>$([System.IO.Path]::GetFileName($(SolutionPackageZipFilePath)))</SolutionPackageZipFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SourceSolutionManifestFile Include="$(SourceSolutionManifestFilePath)" />
+    <SourceSolutionFiles
+      Include="$(SourceSolutionFilePath)"
+      Exclude="@(ExcludeDirectories)"
+    />
+  </ItemGroup>
+
+  <Target
+    Name="CopyCdsSolutionContent"
+    BeforeTargets="ProcessCdsProjectReferencesOutputs"
+    Inputs="$(MSBuildAllProjects);@(SourceSolutionFiles)"
+    Outputs="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+  >
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesSpec
+        Include="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+      />
+    </ItemGroup>
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles
+        Include="$(SolutionPackagerMetadataWorkingDirectory)\**\*.*"
+        Exclude="@(SolutionPackagerMetadataWorkingDirectoryFilesSpec)"
+      />
+    </ItemGroup>
+
+    <Delete
+      Files="@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)"
+      Condition="'@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)' != ''"
+    />
+    <Copy
+      SourceFiles="@(SourceSolutionFiles)"
+      DestinationFiles="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true"
+    >
+      <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataCopiedFile" />
+    </Copy>
+  </Target>
+
+
+</Project>

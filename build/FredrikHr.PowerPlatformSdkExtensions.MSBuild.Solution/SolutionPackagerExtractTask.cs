@@ -4,13 +4,13 @@ using Microsoft.Crm.Tools.SolutionPackager;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
 
-public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase
+public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase
 {
     protected override PackagerArguments GetArguments()
     {
         var arguments = base.GetArguments();
 
-        arguments.Action = CommandAction.Pack;
+        arguments.Action = CommandAction.Extract;
 
         return arguments;
     }
@@ -21,15 +21,11 @@ public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase
         SolutionPackager runner
         )
     {
-        var context = runner.Context;
         Log.LogErrorFromException(
             exception,
             showStackTrace: true,
             showDetail: true,
-            file: Path.Combine(
-                context.RootFolder,
-                context.ComponentConfigurationManager.ConfigurationSection.SolutionFile
-            )
+            file: arguments.PathToZipFile
         );
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <SolutionPackageTypeSource Condition="'$(SolutionPackageTypeSource)' == ''">Project</SolutionPackageTypeSource>
+    <SolutionVersionSource Condition="'$(SolutionVersionSource)' == ''">Project</SolutionVersionSource>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Default package type based on Configuration">
+    <SolutionPackageType Condition="'$(SolutionPackageType)' == '' and '$(Configuration)' == 'Release'">Managed</SolutionPackageType>
+    <SolutionPackageType Condition="'$(SolutionPackageType)' == ''">Unmanaged</SolutionPackageType>
+  </PropertyGroup>
+
+</Project>

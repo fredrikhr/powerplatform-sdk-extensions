@@ -52,6 +52,9 @@
     <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\3rdPartyNotice.txt">
       <PackagePath>bundled\Microsoft.PowerApps.MSBuild.Solution</PackagePath>
     </TfmSpecificPackageFile>
+    <TfmSpecificPackageFile Include="$(PkgMicrosoft_PowerApps_MSBuild_Solution)\build\**\*.*">
+      <PackagePath>bundled\Microsoft.PowerApps.MSBuild.Solution\build\%(RecursiveDir)</PackagePath>
+    </TfmSpecificPackageFile>
 
     <TfmSpecificPackageFile
       Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net472'))"

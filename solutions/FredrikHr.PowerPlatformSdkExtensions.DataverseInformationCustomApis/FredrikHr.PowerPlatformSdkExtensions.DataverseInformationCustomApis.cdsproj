@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution">
+      <PrivateAssets>all</PrivateAssets>
+      <ProjectReference>..\..\build\FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution\FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.csproj</ProjectReference>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\**" />
     <ExcludeDirectories Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\PluginAssemblies\*\*.dll" />
     <ExcludeDirectories Include="$(MSBuildThisFileDirectory)$(SolutionRootPath)\pluginpackages\*\package\*.nupkg" />
