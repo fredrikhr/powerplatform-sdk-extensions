@@ -12,7 +12,9 @@
     </CallTarget>
 
     <ItemGroup>
-      <ProjectOutputPath Include="@(PluginPackageOutputPath)">
+      <ProjectOutputPath Include="@(PluginPackageOutputPath->WithMetadataValue('Extension', '.nupkg'))">
+        <PackageId>$(PackageId)</PackageId>
+        <PackageVersion>$(PackageVersion)</PackageVersion>
         <PowerAppsComponentType>$(PowerAppsComponentType)</PowerAppsComponentType>
       </ProjectOutputPath>
     </ItemGroup>
