@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project TreatAsLocalProperty="ThisPackageBuildExtensionsDirectory;CdsSolutionCustomTasksAssembly">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+
+    <!-- Update path to net8.0 after net6.0 decommission.  Machines with only net8.0 can succesfully run the net6.0 bits. -->
+    <ThisPackageBuildExtensionsDirectory Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)net8.0\</ThisPackageBuildExtensionsDirectory>
+    <ThisPackageBuildExtensionsDirectory Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)net472\</ThisPackageBuildExtensionsDirectory>
+  </PropertyGroup>
+
+  <Import Project="$(ThisPackageBuildExtensionsDirectory)Microsoft.PowerPlatform.MSBuild.Solution.Tasks.tasks" />
+
+  <PropertyGroup>
+    <CdsSolutionCustomTasksAssembly>$(ThisPackageBuildExtensionsDirectory)FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.dll</CdsSolutionCustomTasksAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="SolutionPackagerPackTask" AssemblyFile="$(CdsSolutionCustomTasksAssembly)" />
+  <UsingTask TaskName="SolutionPackagerExtractTask" AssemblyFile="$(CdsSolutionCustomTasksAssembly)" />
+
+</Project>

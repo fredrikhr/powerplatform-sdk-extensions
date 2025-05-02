@@ -74,6 +74,9 @@
     <Content Include="build\*.props;build\*.targets" Pack="true">
       <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
     </Content>
+    <Content Include="tasks\ThisPackage.tasks" Pack="true">
+      <PackagePath>tasks</PackagePath>
+    </Content>
   </ItemGroup>
 
   <Target Name="SetProjectVersionFromMicrosoftPowerAppsMSBuildSolutionVersion"

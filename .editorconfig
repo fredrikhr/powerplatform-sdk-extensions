@@ -8,7 +8,7 @@ indent_style = space
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{xml,slnx,props,targets,*proj}]
+[*.{xml,slnx,props,targets,tasks,*proj}]
 indent_size = 2
 
 [*.{json,yml,yaml}]
