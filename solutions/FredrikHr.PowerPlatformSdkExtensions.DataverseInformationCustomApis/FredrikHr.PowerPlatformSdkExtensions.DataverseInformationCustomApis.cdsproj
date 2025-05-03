@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\pluginpackages\FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins\FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
-    <ProjectReference Include="..\..\pluginpackages\FredrikHr.PowerPlatformSdkExtensions.DummyPlugins\FredrikHr.PowerPlatformSdkExtensions.DummyPlugins.csproj" />
   </ItemGroup>
 
 </Project>
