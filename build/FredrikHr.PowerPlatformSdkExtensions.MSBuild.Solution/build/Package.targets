@@ -252,4 +252,22 @@
     <Message Importance="Normal" Text="Solution Packager error level: $(SolutionPackageErrorLevel)." />
   </Target>
 
+  <Target Name="GetSolutionPackagerPackOutputClean"
+    AfterTargets="BeforeClean"
+    DependsOnTargets="GetSolutionPackagerPackOutput"
+  >
+    <ItemGroup>
+      <Clean Include="@(SolutionPackagerPackOutput)" />
+      <Clean Include="$(SolutionPackagerMetadataWorkingDirectory)\**;$(SolutionPackagerLocalizationWorkingDirectory)\**;$(SolutionPackageLogFilePath)" />
+      <AdditionalIntermediateClean Include="$(IntermediateOutputPath)**" Exclude="@(Clean)" />
+      <Clean Include="@(AdditionalIntermediateClean)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="SolutionPackagerWorkingDirectoryClean"
+    AfterTargets="AfterClean"
+  >
+    <RemoveDir Directories="$(SolutionPackagerMetadataWorkingDirectory);$(SolutionPackagerLocalizationWorkingDirectory)" />
+  </Target>
+
 </Project>
