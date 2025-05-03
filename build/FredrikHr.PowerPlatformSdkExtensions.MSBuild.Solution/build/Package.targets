@@ -11,7 +11,7 @@
     <SolutionPackageLogFilePath Condition="'$(SolutionPackageLogFilePath)' == ''">$(IntermediateOutputPath)SolutionPackager.log</SolutionPackageLogFilePath>
     <SolutionPackageZipFilePath Condition="'$(SolutionPackageZipFilePath)' == ''">$(OutputPath)$(MSBuildProjectName).zip</SolutionPackageZipFilePath>
     <SolutionPackageDefaultLocale Condition="'$(SolutionPackageDefaultLocale)' == ''">en-US</SolutionPackageDefaultLocale>
-    <SolutionPackageLocalTemplate Condition="'$(SolutionPackageEnableLocalization)' == 'true'">Auto</SolutionPackageLocalTemplate>
+    <SolutionPackageLocaleTemplate Condition="'$(SolutionPackageEnableLocalization)' == 'true'">Auto</SolutionPackageLocaleTemplate>
     <PcfForceUpdate Condition="'$(PcfForceUpdate)' == ''">false</PcfForceUpdate>
   </PropertyGroup>
 
@@ -190,6 +190,35 @@
     <ItemGroup>
       <SolutionPackagerPackInput Include="$(SolutionPackagerMetadataWorkingDirectory)\**" />
     </ItemGroup>
+  </Target>
+
+  <Target Name="PowerAppsRefreshLoc" DependsOnTargets="ProcessCdsProjectReferencesOutputs">
+    <Message Importance="High" Text="Running Solution Packager to build regular package: $(SolutionPackageType) $([MSBuild]::NormalizePath('$(SolutionPackagerLocalizationWorkingDirectory)', '$(MSBuildProjectName).zip'))" />
+    <SolutionPackagerPackTask
+      PackageType="$(SolutionPackageType)"
+      PathToZipFile="$(SolutionPackagerLocalizationWorkingDirectory)\$(MSBuildProjectName).zip"
+      MappingFile="$(SolutionPackageMapFilePath)"
+      SolutionRootDirectory="$(SolutionPackagerMetadataWorkingDirectory)"
+      ErrorLevel="$(SolutionPackageErrorLevel)"
+      LogFile="$(SolutionPackageLogFilePath)"
+    />
+
+    <Message Importance="High" Text="Running Solution Packager to build resource files: $([MSBuild]::NormalizePath('$(SolutionPackagerLocalizationWorkingDirectory)', 'Metadata'))" />
+    <SolutionPackagerExtractTask
+      PackageType="$(SolutionPackageType)"
+      MappingFile="$(SolutionPackageMapFilePath)"
+      SolutionRootDirectory="$(SolutionPackagerLocalizationWorkingDirectory)\Metadata"
+      PathToZipFile="$(SolutionPackagerLocalizationWorkingDirectory)\$(MSBuildProjectName).zip"
+      ErrorLevel="$(SolutionPackageErrorLevel)"
+      LogFile="$(SolutionPackageLogFilePath)"
+      LocaleTemplate="Auto"
+      Localize="true"
+    />
+    <Copy
+      SourceFiles="$(SolutionPackagerLocalizationWorkingDirectory)\Metadata\Resources\$(SolutionPackageDefaultLocale)\resources.$(SolutionPackageDefaultLocale).resx"
+      DestinationFolder="$(SolutionPackagerMetadataWorkingDirectory)\Resources\$(SolutionPackageDefaultLocale)\"
+      SkipUnchangedFiles="True"
+    />
   </Target>
 
   <Target Name="PowerAppsPackage" AfterTargets="AfterBuild"
