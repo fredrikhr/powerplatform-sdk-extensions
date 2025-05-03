@@ -1,7 +1,7 @@
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Organization;
 
-namespace FredrikHr.PowerPlatformSdkExtensions.WhoAmIExtended.Plugins;
+namespace FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins;
 
 public class WhoAmIExtendedPlugin : IPlugin
 {
@@ -40,6 +40,6 @@ public class WhoAmIExtendedPlugin : IPlugin
         envDetailsEntity[nameof(envDetails.AzureAuthorityHost)] = envDetails.AzureAuthorityHost;
         envDetailsEntity[nameof(envDetails.Geo)] = envDetails.Geo;
         envDetailsEntity[nameof(envDetails.AzureRegionName)] = envDetails.AzureRegionName;
-        outputs["EnvironmentDetails"] = endpointsEntity;
+        outputs["EnvironmentDetails"] = envDetails;
     }
 }

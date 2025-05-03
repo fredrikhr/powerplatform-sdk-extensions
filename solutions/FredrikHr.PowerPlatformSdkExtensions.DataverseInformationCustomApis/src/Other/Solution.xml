@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.25042.166" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25042.166" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25043.00176">
+<ImportExportXml version="9.2.25043.176" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25043.176" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25044.00160">
   <SolutionManifest>
     <UniqueName>DataverseInformationCustomApis</UniqueName>
     <LocalizedNames>
@@ -79,8 +79,7 @@
         </Address>
       </Addresses>
     </Publisher>
-    <RootComponents>
-    </RootComponents>
+    <RootComponents />
     <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>

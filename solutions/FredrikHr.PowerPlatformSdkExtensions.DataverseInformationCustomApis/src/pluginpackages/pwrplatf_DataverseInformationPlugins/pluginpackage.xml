@@ -1,9 +1,9 @@
-<pluginpackage uniquename="">
+<pluginpackage uniquename="pwrplatf_DataverseInformationPlugins">
   <exportkeyversion>1</exportkeyversion>
   <iscustomizable>1</iscustomizable>
-  <name />
-  <package mimetype="application/octet-stream" />
+  <name>pwrplatf_DataverseInformationPlugins</name>
+  <package mimetype="application/octet-stream">pwrplatf_DataverseInformationPlugins.nupkg</package>
   <statecode>0</statecode>
   <statuscode>1</statuscode>
-  <version />
+  <version>1.0.0</version>
 </pluginpackage>
