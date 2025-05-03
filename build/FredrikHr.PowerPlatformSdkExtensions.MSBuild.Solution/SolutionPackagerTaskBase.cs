@@ -67,6 +67,8 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
         try
         {
             runner.Run();
+            if (!string.IsNullOrWhiteSpace(arguments.LogFile))
+                RemoveTraceFileListener(arguments);
             var logSourceFile = GetLogSourceFile(arguments, runner);
             foreach (var warning in SolutionPackagerLogger.AllWarnings)
             {
@@ -143,4 +145,20 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
         PackagerArguments arguments,
         SolutionPackager runner
     );
+
+    private static void RemoveTraceFileListener(
+        PackagerArguments arguments
+        )
+    {
+        string logFilePath = Path.GetFullPath(arguments.LogFile);
+        foreach (var fileTracer in Trace.Listeners.OfType<TextWriterTraceListener>().ToList())
+        {
+            if (fileTracer.Writer is not StreamWriter { BaseStream: FileStream traceFileStream })
+                continue;
+            if (!logFilePath.Equals(traceFileStream.Name, StringComparison.OrdinalIgnoreCase))
+                continue;
+            Trace.Listeners.Remove(fileTracer);
+            fileTracer.Dispose();
+        }
+    }
 }
