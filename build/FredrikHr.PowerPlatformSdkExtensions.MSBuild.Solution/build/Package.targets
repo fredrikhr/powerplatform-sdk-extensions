@@ -75,7 +75,7 @@
 
   <Target Name="CopyCdsSolutionContent"
     BeforeTargets="ProcessCdsProjectReferencesOutputs"
-    Inputs="$(MSBuildAllProjects);@(SourceSolutionFiles)"
+    Inputs="@(SourceSolutionFiles)"
     Outputs="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
   >
     <ItemGroup>
@@ -83,17 +83,7 @@
         Include="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
       />
     </ItemGroup>
-    <ItemGroup>
-      <SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles
-        Include="$(SolutionPackagerMetadataWorkingDirectory)\**\*.*"
-        Exclude="@(SolutionPackagerMetadataWorkingDirectoryFilesSpec)"
-      />
-    </ItemGroup>
 
-    <Delete
-      Files="@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)"
-      Condition="'@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)' != ''"
-    />
     <Copy
       SourceFiles="@(SourceSolutionFiles)"
       DestinationFiles="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
@@ -103,18 +93,7 @@
     </Copy>
   </Target>
 
-  <!--
-    Project References are already built. Find the Output Path & Copy the output to Cds working directory
-
-    Allow all project types to be referenced from/to cdsproj. We don't block any project reference creation
-    as it is also used to define build order sometime in a solution while running in VS.
-
-    However, cdsproj would not process any project reference output that it doesn't understand. GetProjectOutputPath
-    Target must be defined in each of the valid referenced projects
-    Currently it understands pcfproj & csproj (plugins) only.
-  -->
-  <Target Name="ProcessCdsProjectReferencesOutputs"
-    BeforeTargets="PowerAppsPackage"
+  <Target Name="CollectProjectReferencesProjectOutputs"
     DependsOnTargets="ResolveProjectReferences"
   >
     <MSBuild Projects="@(ProjectReference)" Targets="GetProjectOutputPath">
@@ -132,7 +111,11 @@
         Include="@(ProjectReferenceProjectOutputPath->WithMetadataValue('PowerAppsComponentType', 'Pcf'))"
       />
     </ItemGroup>
+  </Target>
 
+  <Target Name="GetCdsPluginPackageComponentXmlItem"
+    DependsOnTargets="CollectProjectReferencesProjectOutputs"
+  >
     <ItemGroup>
       <SolutionPackagerMetadataPluginPackageComponentXmlFile
         Include="@(ProjectReferencePluginPackageNupkgOutputPath->'$(SolutionPackagerMetadataWorkingDirectory)\pluginpackages\%(PackageId)\pluginpackage.xml')"
@@ -142,6 +125,13 @@
         <SolutionMetadataNupkgPath>$(SolutionPackagerMetadataWorkingDirectory)\pluginpackages\%(ProjectReferencePluginPackageNupkgOutputPath.PackageId)\package\%(ProjectReferencePluginPackageNupkgOutputPath.PackageId)%(ProjectReferencePluginPackageNupkgOutputPath.Extension)</SolutionMetadataNupkgPath>
       </SolutionPackagerMetadataPluginPackageComponentXmlFile>
     </ItemGroup>
+  </Target>
+
+  <Target Name="ProcessCdsPluginPackageNupkgProjectOutput"
+    DependsOnTargets="GetCdsPluginPackageComponentXmlItem;GetSolutionPackagerPackOutput"
+    Inputs="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SourceNupkgPath);%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+    Outputs="@(SolutionPackagerPackOutput)"
+  >
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/@uniquename"
@@ -168,13 +158,22 @@
       Value="application/octet-stream"
     />
     <Copy
-      SourceFiles="@(SolutionPackagerMetadataPluginPackageComponentXmlFile->'%(SourceNupkgPath)')"
-      DestinationFiles="@(SolutionPackagerMetadataPluginPackageComponentXmlFile->'%(SolutionMetadataNupkgPath)')"
+      SourceFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SourceNupkgPath)"
+      DestinationFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SolutionMetadataNupkgPath)"
       SkipUnchangedFiles="true"
     >
       <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataPluginPackageNupkgFile" />
     </Copy>
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesSpec
+        Include="@(SolutionPackagerMetadataPluginPackageNupkgFile)"
+      />
+    </ItemGroup>
+  </Target>
 
+  <Target Name="ProcessCdsBundledTaskProcessableProjectOutput"
+    DependsOnTargets="CollectProjectReferencesProjectOutputs"
+  >
     <ProcessCdsProjectReferencesOutputs
       WorkingDirectoryPath="$(SolutionPackagerMetadataWorkingDirectory)"
       SourceFileItems="@(ProjectReferenceBundledTaskProcessableOutputPath)"
@@ -183,8 +182,39 @@
     />
   </Target>
 
-  <Target Name="GetSolutionPackagerPackInput"
+  <!--
+    Project References are already built. Find the Output Path & Copy the output to Cds working directory
+
+    Allow all project types to be referenced from/to cdsproj. We don't block any project reference creation
+    as it is also used to define build order sometime in a solution while running in VS.
+
+    However, cdsproj would not process any project reference output that it doesn't understand. GetProjectOutputPath
+    Target must be defined in each of the valid referenced projects
+    Currently it understands pcfproj & csproj (plugins) only.
+  -->
+  <Target Name="ProcessCdsProjectReferencesOutputs"
+    BeforeTargets="PowerAppsPackage"
+    DependsOnTargets="ProcessCdsPluginPackageNupkgProjectOutput;ProcessCdsBundledTaskProcessableProjectOutput"
+  />
+
+  <Target Name="PruneSolutionPackagerMetadataWorkingDirectory"
     DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs"
+  >
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles
+        Include="$(SolutionPackagerMetadataWorkingDirectory)\**\*.*"
+        Exclude="@(SolutionPackagerMetadataWorkingDirectoryFilesSpec)"
+      />
+    </ItemGroup>
+
+    <Delete
+      Files="@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)"
+      Condition="'@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)' != ''"
+    />
+  </Target>
+
+  <Target Name="GetSolutionPackagerPackInput"
+    DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs;PruneSolutionPackagerMetadataWorkingDirectory"
     Returns="@(SolutionPackagerPackInput)"
   >
     <ItemGroup>
