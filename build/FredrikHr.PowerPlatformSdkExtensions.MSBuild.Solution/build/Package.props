@@ -8,7 +8,6 @@
 
   <PropertyGroup>
     <SolutionPackageTypeSource Condition="'$(SolutionPackageTypeSource)' == ''">Project</SolutionPackageTypeSource>
-    <SolutionVersionSource Condition="'$(SolutionVersionSource)' == ''">Project</SolutionVersionSource>
   </PropertyGroup>
 
   <PropertyGroup Label="Default package type based on Configuration">

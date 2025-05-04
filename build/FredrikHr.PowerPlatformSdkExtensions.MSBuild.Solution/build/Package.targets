@@ -213,6 +213,21 @@
     />
   </Target>
 
+  <Target Name="GetSolutionPackagerMetadataWorkingDirectorySolutionPackageType"
+    DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs"
+  >
+    <PropertyGroup>
+      <SolutionPackagerMetadataWorkingDirectorySolutionXmlPath>$(SolutionPackagerMetadataWorkingDirectory)\Other\Solution.xml</SolutionPackagerMetadataWorkingDirectorySolutionXmlPath>
+    </PropertyGroup>
+
+    <XmlPeek
+      XmlInputPath="$(SolutionPackagerMetadataWorkingDirectorySolutionXmlPath)"
+      Query="/ImportExportXml/SolutionManifest/Managed/text()"
+    >
+      <Output TaskParameter="Result" PropertyName="SolutionPackageTypeNumberFromSolutionXml" />
+    </XmlPeek>
+  </Target>
+
   <Target Name="GetSolutionPackagerPackInput"
     DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs;PruneSolutionPackagerMetadataWorkingDirectory"
     Returns="@(SolutionPackagerPackInput)"
@@ -222,7 +237,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="PowerAppsRefreshLoc" DependsOnTargets="ProcessCdsProjectReferencesOutputs">
+  <Target Name="PowerAppsRefreshLoc" DependsOnTargets="ProcessCdsProjectReferencesOutputs;EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber">
     <Message Importance="High" Text="Running Solution Packager to build regular package: $(SolutionPackageType) $([MSBuild]::NormalizePath('$(SolutionPackagerLocalizationWorkingDirectory)', '$(MSBuildProjectName).zip'))" />
     <SolutionPackagerPackTask
       PackageType="$(SolutionPackageType)"
@@ -251,8 +266,29 @@
     />
   </Target>
 
+  <Target Name="GetSolutionPackageTypeNumberToEnforce"
+    DependsOnTargets="AssignCdsSolutionPackageTypeFromSolution"
+  >
+    <PropertyGroup>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Unmanaged'">0</SolutionPackageTypeNumberEnforced>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Managed'">1</SolutionPackageTypeNumberEnforced>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Both'">2</SolutionPackageTypeNumberEnforced>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber"
+    DependsOnTargets="GetSolutionPackagerMetadataWorkingDirectorySolutionPackageType;GetSolutionPackageTypeNumberToEnforce"
+  >
+    <XmlPoke
+      XmlInputPath="$(SolutionPackagerMetadataWorkingDirectorySolutionXmlPath)"
+      Query="/ImportExportXml/SolutionManifest/Managed"
+      Value="$(SolutionPackageTypeNumberEnforced)"
+      Condition="'$(SolutionPackageTypeNumberFromSolutionXml)' != '$(SolutionPackageTypeNumberEnforced)'"
+    />
+  </Target>
+
   <Target Name="PowerAppsPackage" AfterTargets="AfterBuild"
-    DependsOnTargets="GetSolutionPackagerPackOutput;GetSolutionPackagerPackInput"
+    DependsOnTargets="GetSolutionPackagerPackOutput;GetSolutionPackagerPackInput;EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber"
     Inputs="@(SolutionPackagerPackInput)"
     Outputs="@(SolutionPackagerPackOutput)"
   >
