@@ -1,0 +1,18 @@
+<customapi uniquename="pwrplatf_AcquireOnBehalfOfAccessToken">
+  <allowedcustomprocessingsteptype>0</allowedcustomprocessingsteptype>
+  <bindingtype>0</bindingtype>
+  <description default="Acquires an access token for the specified scopes on behalf of the executing user">
+    <label description="Acquires an access token for the specified scopes on behalf of the executing user" languagecode="1033" />
+  </description>
+  <displayname default="Acquire On-Behalf-Of Access Token">
+    <label description="Acquire On-Behalf-Of Access Token" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isfunction>0</isfunction>
+  <isprivate>0</isprivate>
+  <name>AcquireOnBehalfOfAccessToken</name>
+  <plugintypeid>
+    <plugintypeexportkey>5C9E0C4D3CB416E3EBFD3ECA8D1722BE5E320E37ADFA7FAE2BC167AA46904FA6</plugintypeexportkey>
+  </plugintypeid>
+  <workflowsdkstepenabled>0</workflowsdkstepenabled>
+</customapi>

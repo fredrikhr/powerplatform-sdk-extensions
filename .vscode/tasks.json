@@ -126,6 +126,131 @@
         "clear": true
       }
     },
+    // solutions/DataverseManagedIdentityCustomApis
+    {
+      "label": "DataverseManagedIdentityCustomApis | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/DataverseManagedIdentityCustomApis"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseManagedIdentityCustomApis | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--force-overwrite",
+        "--path",
+        "bin/DataverseManagedIdentityCustomApis/Debug/DataverseManagedIdentityCustomApis.zip"
+      ],
+      "dependsOn": ["DataverseManagedIdentityCustomApis | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseManagedIdentityCustomApis | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/DataverseManagedIdentityCustomApis/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseManagedIdentityCustomApis | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/DataverseManagedIdentityCustomApis"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseManagedIdentityCustomApis | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--convert-to-managed",
+        "--publish-changes",
+        "--path",
+        "bin/DataverseManagedIdentityCustomApis/Release/DataverseManagedIdentityCustomApis.zip"
+      ],
+      "dependsOn": ["DataverseManagedIdentityCustomApis | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
 
     // Repository solution tasks
     {

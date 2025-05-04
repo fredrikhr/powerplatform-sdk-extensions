@@ -31,8 +31,10 @@
   </Folder>
   <Folder Name="/pluginpackages/">
     <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
+    <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DataverseManagedIdentityPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseManagedIdentityPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
     <Project Path="solutions/DataverseInformationCustomApis/DataverseInformationCustomApis.cdsproj" Type="C#" />
+    <Project Path="solutions/DataverseManagedIdentityCustomApis/DataverseManagedIdentityCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>

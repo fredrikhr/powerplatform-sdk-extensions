@@ -16,6 +16,9 @@
     </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
+      <Version>1.0.0</Version>
+    </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackPackageReference">
       <Version>1.0.0</Version>
     </PackageVersion>
