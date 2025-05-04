@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ResourceId">
+  <description default="If found, the resource to use when acquiring an access token for the service, else an empty string.">
+    <label description="If found, the resource to use when acquiring an access token for the service, else an empty string." languagecode="1033" />
+  </description>
+  <displayname default="Resource">
+    <label description="Resource" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>RetrieveOAuthChallengeParameters-Out-ResourceId</name>
+  <type>10</type>
+</customapiresponseproperty>

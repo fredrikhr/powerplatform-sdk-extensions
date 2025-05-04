@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="ChallengeUrl">
+  <description default="URL of the target service that will respond to an AAD challenge response">
+    <label description="URL of the target service that will respond to an AAD challenge response" languagecode="1033" />
+  </description>
+  <displayname default="Challenge URL">
+    <label description="Challenge URL" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <isoptional>0</isoptional>
+  <name>RetrieveOAuthChallengeParameters-In-ChallengeUrl</name>
+  <type>10</type>
+</customapirequestparameter>
