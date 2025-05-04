@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="Endpoints">
+  <description default="Endpoint URLs of the services available for the Dataverse Environment">
+    <label description="Endpoint URLs of the services available for the Dataverse Environment" languagecode="1033" />
+  </description>
+  <displayname default="Endpoints">
+    <label description="Endpoints" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>WhoAmIExtended-Out-Endpoints</name>
+  <type>3</type>
+</customapiresponseproperty>

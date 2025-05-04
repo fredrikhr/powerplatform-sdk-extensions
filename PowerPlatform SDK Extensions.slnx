@@ -33,6 +33,6 @@
     <Project Path="pluginpackages/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
-    <Project Path="solutions/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationCustomApis/FredrikHr.PowerPlatformSdkExtensions.DataverseInformationCustomApis.cdsproj" Type="C#" />
+    <Project Path="solutions/DataverseInformationCustomApis/DataverseInformationCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>

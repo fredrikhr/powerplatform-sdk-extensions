@@ -4,7 +4,6 @@
     <UniqueName>DataverseInformationCustomApis</UniqueName>
     <LocalizedNames>
       <LocalizedName description="Dataverse Information Custom APIs" languagecode="1033" />
-      <LocalizedName description="Dataverse-Informasjon Custom APIer" languagecode="1044" />
     </LocalizedNames>
     <Descriptions />
     <Version>1.0.0</Version>
@@ -13,11 +12,10 @@
       <UniqueName>fredrikhr</UniqueName>
       <LocalizedNames>
         <LocalizedName description="Fredrik Høisæther Rasch" languagecode="1033" />
-        <LocalizedName description="Fredrik Høisæther Rasch" languagecode="1044" />
       </LocalizedNames>
       <Descriptions />
-      <EMailAddress xsi:nil="true">fredrik.rasch@gmail.com</EMailAddress>
-      <SupportingWebsiteUrl xsi:nil="true">https://github.com/fredrikhr</SupportingWebsiteUrl>
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
       <CustomizationPrefix>frh</CustomizationPrefix>
       <CustomizationOptionValuePrefix>79884</CustomizationOptionValuePrefix>
       <Addresses>
@@ -79,7 +77,9 @@
         </Address>
       </Addresses>
     </Publisher>
-    <RootComponents />
+    <RootComponents>
+      <RootComponent type="29" id="{8e45f216-d728-f011-8c4d-7c1e5226ec1f}" behavior="0" />
+    </RootComponents>
     <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>
