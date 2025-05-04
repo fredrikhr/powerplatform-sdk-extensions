@@ -1,12 +1,146 @@
 {
   "version": "2.0.0",
   "tasks": [
+    // solutions/DataverseInformationCustomApis
+    {
+      "label": "DataverseInformationCustomApis | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/DataverseInformationCustomApis"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseInformationCustomApis | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--force-overwrite",
+        "--path",
+        "bin/DataverseInformationCustomApis/Debug/DataverseInformationCustomApis.zip"
+      ],
+      "dependsOn": ["DataverseInformationCustomApis | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseInformationCustomApis | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/DataverseInformationCustomApis/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseInformationCustomApis | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/DataverseInformationCustomApis"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "DataverseInformationCustomApis | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--convert-to-managed",
+        "--publish-changes",
+        "--path",
+        "bin/DataverseInformationCustomApis/Release/DataverseInformationCustomApis.zip"
+      ],
+      "dependsOn": ["DataverseInformationCustomApis | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+
+    // Repository solution tasks
     {
       "type": "dotnet",
       "task": "build",
       "group": "build",
       "problemMatcher": ["$msCompile"],
       "label": "Build Solution"
+    },
+    {
+      "type": "dotnet",
+      "task": "clean",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "label": "Clean Solution"
     }
   ]
 }
