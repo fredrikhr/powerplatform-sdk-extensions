@@ -15,4 +15,11 @@
     <SolutionPackageType Condition="'$(SolutionPackageType)' == ''">Unmanaged</SolutionPackageType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\**" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\PluginAssemblies\*\*.dll" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\pluginpackages\*\package\*.nupkg" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\environmentvariabledefinitions\*\environmentvariablevalues.json" />
+  </ItemGroup>
+
 </Project>
