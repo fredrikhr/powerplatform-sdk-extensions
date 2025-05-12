@@ -2,6 +2,7 @@
 <Project>
 
   <PropertyGroup>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <SolutionRootPath Condition="'$(SolutionRootPath)' == ''">.</SolutionRootPath>
     <SolutionPackageErrorLevel Condition="'$(SolutionPackageErrorLevel)' == ''">Info</SolutionPackageErrorLevel>
     <SolutionPackageEnableLocalization Condition="'$(SolutionPackageEnableLocalization)' == ''">false</SolutionPackageEnableLocalization>
@@ -129,8 +130,6 @@
 
   <Target Name="ProcessCdsPluginPackageNupkgProjectOutput"
     DependsOnTargets="GetCdsPluginPackageComponentXmlItem;GetSolutionPackagerPackOutput"
-    Inputs="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SourceNupkgPath);%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
-    Outputs="@(SolutionPackagerPackOutput)"
   >
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"

@@ -11,6 +11,7 @@
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

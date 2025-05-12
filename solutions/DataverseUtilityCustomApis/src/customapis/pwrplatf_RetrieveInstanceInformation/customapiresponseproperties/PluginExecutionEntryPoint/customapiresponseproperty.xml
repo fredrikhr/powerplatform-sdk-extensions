@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="PluginExecutionEntryPoint">
+  <description default="The activating workflow or SdkMessageProcessingStep that is executing the plugin.">
+    <label description="The activating workflow or SdkMessageProcessingStep that is executing the plugin." languagecode="1033" />
+  </description>
+  <displayname default="Entry Point">
+    <label description="Entry Point" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>RetrieveInstanceInformation-Out-PluginExecutionEntryPoint</name>
+  <type>5</type>
+</customapiresponseproperty>

@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="EnvironmentDetails">
+  <description default="Details on the Azure hosting environment for Dataverse">
+    <label description="Details on the Azure hosting environment for Dataverse" languagecode="1033" />
+  </description>
+  <displayname default="Environment Details">
+    <label description="Environment Details" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>RetrieveInstanceInformation-Out-EnvironmentDetails</name>
+  <type>3</type>
+</customapiresponseproperty>

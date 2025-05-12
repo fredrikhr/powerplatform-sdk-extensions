@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="UserEntraObjectId">
+  <description default="Object Id in Entra Id of the executing user or service principal">
+    <label description="Object Id in Entra Id of the executing user or service principal" languagecode="1033" />
+  </description>
+  <displayname default="User Object Id">
+    <label description="User Object Id" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>RetrieveInstanceInformation-Out-UserEntraObjectId</name>
+  <type>12</type>
+</customapiresponseproperty>

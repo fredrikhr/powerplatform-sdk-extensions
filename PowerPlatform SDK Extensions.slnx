@@ -34,11 +34,11 @@
     <Project Path="pluginlibraries/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins.csproj" />
   </Folder>
   <Folder Name="/pluginpackages/">
-    <Project Path="pluginpackages/pwrplatf_DataverseInformationPlugins/pwrplatf_DataverseInformationPlugins.csproj" />
     <Project Path="pluginpackages/pwrplatf_DataverseManagedIdentityPlugins/pwrplatf_DataverseManagedIdentityPlugins.csproj" />
+    <Project Path="pluginpackages/pwrplatf_DataverseUtilityPlugins/pwrplatf_DataverseUtilityPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
-    <Project Path="solutions/DataverseInformationCustomApis/DataverseInformationCustomApis.cdsproj" Type="C#" />
     <Project Path="solutions/DataverseManagedIdentityCustomApis/DataverseManagedIdentityCustomApis.cdsproj" Type="C#" />
+    <Project Path="solutions/DataverseUtilityCustomApis/DataverseUtilityCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>

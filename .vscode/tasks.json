@@ -1,15 +1,15 @@
 {
   "version": "2.0.0",
   "tasks": [
-    // solutions/DataverseInformationCustomApis
+    // solutions/DataverseUtilityCustomApis
     {
-      "label": "DataverseInformationCustomApis | Build solution (Unmanaged)",
+      "label": "DataverseUtilityCustomApis | Build solution (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
         "build",
         "--configuration:Debug",
-        "solutions/DataverseInformationCustomApis"
+        "solutions/DataverseUtilityCustomApis"
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -23,7 +23,7 @@
       }
     },
     {
-      "label": "DataverseInformationCustomApis | Push to Power Platform (Unmanaged)",
+      "label": "DataverseUtilityCustomApis | Push to Power Platform (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -37,9 +37,9 @@
         "--activate-plugins",
         "--force-overwrite",
         "--path",
-        "bin/DataverseInformationCustomApis/Debug/DataverseInformationCustomApis.zip"
+        "bin/DataverseUtilityCustomApis/Debug/DataverseUtilityCustomApis.zip"
       ],
-      "dependsOn": ["DataverseInformationCustomApis | Build solution (Unmanaged)"],
+      "dependsOn": ["DataverseUtilityCustomApis | Build solution (Unmanaged)"],
       "problemMatcher": [],
       "presentation": {
         "echo": true,
@@ -51,7 +51,7 @@
       }
     },
     {
-      "label": "DataverseInformationCustomApis | Pull from Power Platform (Unmanaged)",
+      "label": "DataverseUtilityCustomApis | Pull from Power Platform (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -65,7 +65,7 @@
         "--packagetype",
         "Unmanaged",
         "--solution-folder",
-        "solutions/DataverseInformationCustomApis/src"
+        "solutions/DataverseUtilityCustomApis/src"
       ],
       "dependsOn": [],
       "problemMatcher": [],
@@ -79,13 +79,13 @@
       }
     },
     {
-      "label": "DataverseInformationCustomApis | Build solution (Managed)",
+      "label": "DataverseUtilityCustomApis | Build solution (Managed)",
       "type": "shell",
       "command": "dotnet",
       "args": [
         "build",
         "--configuration:Release",
-        "solutions/DataverseInformationCustomApis"
+        "solutions/DataverseUtilityCustomApis"
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -99,7 +99,7 @@
       }
     },
     {
-      "label": "DataverseInformationCustomApis | Push to Power Platform (Managed)",
+      "label": "DataverseUtilityCustomApis | Push to Power Platform (Managed)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -113,9 +113,9 @@
         "--convert-to-managed",
         "--publish-changes",
         "--path",
-        "bin/DataverseInformationCustomApis/Release/DataverseInformationCustomApis.zip"
+        "bin/DataverseUtilityCustomApis/Release/DataverseUtilityCustomApis.zip"
       ],
-      "dependsOn": ["DataverseInformationCustomApis | Build solution (Managed)"],
+      "dependsOn": ["DataverseUtilityCustomApis | Build solution (Managed)"],
       "problemMatcher": [],
       "presentation": {
         "echo": true,
