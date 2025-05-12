@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <PackageId>pwrplatf_DataverseManagedIdentityPlugins</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageSigningCertificatePath>SigningCertificate.pfx</PackageSigningCertificatePath>
+    <PackageSigningCertificatePassword>TestPassword</PackageSigningCertificatePassword>
+    <PackageSignatureTimestamper>http://timestamp.acs.microsoft.com</PackageSignatureTimestamper>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
+      <PrivateAssets>all</PrivateAssets>
+      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.PackageAuthorSigning\FredrikHr.NupkgMSBuild.PackageAuthorSigning.csproj</ProjectReference>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

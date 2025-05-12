@@ -1,4 +1,4 @@
-namespace FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins;
+namespace FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins;
 
 public class RetrieveOAuthChallengeParametersPlugin : IPlugin
 {

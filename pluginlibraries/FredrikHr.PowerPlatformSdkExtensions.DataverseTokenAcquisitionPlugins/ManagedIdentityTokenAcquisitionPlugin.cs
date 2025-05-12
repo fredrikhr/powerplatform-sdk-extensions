@@ -1,5 +1,5 @@
 
-namespace FredrikHr.PowerPlatformSdkExtensions.DataverseManagedIdentityPlugins;
+namespace FredrikHr.PowerPlatformSdkExtensions.DataverseTokenAcquisitionPlugins;
 
 public class ManagedIdentityTokenAcquisitionPlugin : IPlugin
 {

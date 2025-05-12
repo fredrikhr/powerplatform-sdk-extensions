@@ -1,7 +1,7 @@
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Organization;
 
-namespace FredrikHr.PowerPlatformSdkExtensions.DataverseInformationPlugins;
+namespace FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins;
 
 public class WhoAmIExtendedPlugin : IPlugin
 {

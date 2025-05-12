@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <PackageId>pwrplatf_DataverseInformationPlugins</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\pluginlibraries\FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins\FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Pack>true</Pack>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>
