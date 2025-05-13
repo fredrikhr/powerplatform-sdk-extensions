@@ -7,9 +7,15 @@
 
   <PropertyGroup>
     <PackageSigningCertificatePath>SigningCertificate.pfx</PackageSigningCertificatePath>
-    <PackageSigningCertificatePassword>TestPassword</PackageSigningCertificatePassword>
     <PackageSignatureTimestamper>http://timestamp.acs.microsoft.com</PackageSignatureTimestamper>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\pluginlibraries\FredrikHr.PowerPlatformSdkExtensions.DataverseTokenAcquisitionPlugins\FredrikHr.PowerPlatformSdkExtensions.DataverseTokenAcquisitionPlugins.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Pack>true</Pack>
+    </ProjectReference>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">

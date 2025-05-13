@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25043.176" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25044.00160">
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25041.226" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25042.00222">
   <Entities />
   <Roles />
   <Workflows />
@@ -14,5 +14,6 @@
   <managedidentities />
   <Languages>
     <Language>1033</Language>
+    <Language>1044</Language>
   </Languages>
 </ImportExportXml>

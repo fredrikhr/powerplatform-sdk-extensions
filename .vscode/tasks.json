@@ -134,7 +134,9 @@
       "args": [
         "build",
         "--configuration:Debug",
-        "solutions/DataverseManagedIdentityCustomApis"
+        "solutions/DataverseManagedIdentityCustomApis",
+        "--property:PackageSigningCertificatePath=${workspaceFolder}\\bld\\PluginPackage-SigningCertificate.pfx",
+        "--property:PackageSigningCertificatePassword="
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -210,7 +212,9 @@
       "args": [
         "build",
         "--configuration:Release",
-        "solutions/DataverseManagedIdentityCustomApis"
+        "solutions/DataverseManagedIdentityCustomApis",
+        "--property:PackageSigningCertificatePath=${workspaceFolder}\\bld\\PluginPackage-SigningCertificate.pfx",
+        "--property:PackageSigningCertificatePassword="
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],

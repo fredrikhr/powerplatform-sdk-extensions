@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <managedidentity managedidentityid="1304a7e4-ed28-f011-8c4d-7c1e5226ec1f" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <applicationid>{d765725d-8bfc-4d20-8221-32bc2a68ed8e}</applicationid>
+  <applicationid>{00000000-0000-0000-0000-000000000000}</applicationid>
   <credentialsource>2</credentialsource>
   <iscustomizable>1</iscustomizable>
   <name>Power Platform Federated Identity Service</name>
   <statecode>0</statecode>
   <statuscode>1</statuscode>
   <subjectscope>1</subjectscope>
-  <tenantid>{05bbe23f-0015-4e2f-877e-fe6cfceeae3b}</tenantid>
+  <tenantid>{00000000-0000-0000-0000-000000000000}</tenantid>
 </managedidentity>
