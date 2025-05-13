@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="IsImpersonating">
+  <description default="Whether the authenticated user is impersonating a different user.">
+    <label description="Whether the authenticated user is impersonating a different user." languagecode="1033" />
+  </description>
+  <displayname default="Impersonating">
+    <label description="Impersonating" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>RetrieveInstanceInformation-Out-IsImpersonating</name>
+  <type>0</type>
+</customapiresponseproperty>

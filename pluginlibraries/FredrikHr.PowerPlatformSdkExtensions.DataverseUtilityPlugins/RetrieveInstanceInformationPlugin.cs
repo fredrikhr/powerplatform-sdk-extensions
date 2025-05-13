@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Reflection;
+
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Organization;
 
@@ -5,19 +8,26 @@ namespace FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins;
 
 public class RetrieveInstanceInformationPlugin : IPlugin
 {
+    private const string ClusterCategory = "ClusterCategory";
+
     public void Execute(IServiceProvider serviceProvider)
     {
         var trace = serviceProvider.Get<ITracingService>();
         trace.Trace("Starting execution of {0}.", GetType().Name);
 
-        var context = serviceProvider.Get<IPluginExecutionContext2>();
+        var context = serviceProvider.Get<IPluginExecutionContext3>();
         var outputs = context.OutputParameters;
 
         outputs[nameof(context.BusinessUnitId)] = context.BusinessUnitId;
         outputs[nameof(context.UserId)] = context.UserId;
+        outputs[nameof(context.AuthenticatedUserId)] = context.AuthenticatedUserId;
+        outputs["IsImpersonating"] = context.UserId != context.AuthenticatedUserId;
         outputs["UserEntraObjectId"] = context.UserAzureActiveDirectoryObjectId;
         outputs["UserApplicationId"] = context.InitiatingUserApplicationId;
         outputs["PluginExecutionEntryPoint"] = context.OwningExtension;
+
+        var envDetails = serviceProvider.Get<IEnvironmentService>();
+        string clusterCategory = GetClusterCategory(envDetails, trace);
 
         var dataverseSvc = serviceProvider.Get<IOrganizationServiceFactory>()?
             .CreateOrganizationService(null) ??
@@ -77,19 +87,61 @@ public class RetrieveInstanceInformationPlugin : IPlugin
             }
             if (webAppEndpointUri is not null)
             {
-                endpointsEntity["TokenAudience"] = webAppEndpointUri.GetLeftPart(UriPartial.Authority);
+                endpointsEntity["DataverseTokenAudience"] = webAppEndpointUri.GetLeftPart(UriPartial.Authority);
             }
+
+            var (tenantApiHubEndpoint, envApiHubEndpoint, apiHubAudience) =
+                PowerPlatformApiUrls.GetApiInformation(
+                    orgDetails.TenantId,
+                    orgDetails.EnvironmentId,
+                    clusterCategory
+                    );
+            endpointsEntity["PowerPlatformApiTenantUrl"] = tenantApiHubEndpoint;
+            endpointsEntity["PowerPlatformApiEnvironmentUrl"] = envApiHubEndpoint;
+            endpointsEntity["PowerPlatformApiTokenAudience"] = apiHubAudience;
+
             outputs[nameof(orgDetails.Endpoints)] = endpointsEntity;
         }
 
         trace.Trace("Evaluating Environment information.");
-        var envDetails = serviceProvider.Get<IEnvironmentService>();
         Entity envDetailsEntity = new();
         envDetailsEntity[nameof(envDetails.AzureAuthorityHost)] = envDetails.AzureAuthorityHost.ToString();
         envDetailsEntity[nameof(envDetails.Geo)] = envDetails.Geo;
         envDetailsEntity[nameof(envDetails.AzureRegionName)] = envDetails.AzureRegionName;
+        envDetailsEntity[ClusterCategory] = clusterCategory;
         outputs["EnvironmentDetails"] = envDetailsEntity;
 
         trace.Trace("Execution of {0} completed.", GetType().Name);
+    }
+
+    private static string GetClusterCategory(
+        IEnvironmentService envDetails,
+        ITracingService trace
+        )
+    {
+        string? reflectedValue = null;
+        try
+        {
+            reflectedValue = envDetails.GetType().InvokeMember(
+                ClusterCategory,
+                BindingFlags.Instance |
+                BindingFlags.Public | BindingFlags.NonPublic |
+                BindingFlags.GetProperty,
+                Type.DefaultBinder,
+                envDetails,
+                args: default,
+                CultureInfo.InvariantCulture
+                ) as string;
+        }
+        catch (TargetInvocationException reflectExcept)
+        {
+            trace.Trace(
+                "{0} during reflection call to {1}: {2}",
+                nameof(TargetInvocationException),
+                envDetails.GetType(),
+                reflectExcept
+                );
+        }
+        return reflectedValue ?? "prod";
     }
 }
