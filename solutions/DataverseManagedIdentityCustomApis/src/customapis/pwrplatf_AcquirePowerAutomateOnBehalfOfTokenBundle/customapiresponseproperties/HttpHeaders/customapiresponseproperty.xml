@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="HttpHeaders">
+  <description default="General HTTP Response Headers">
+    <label description="General HTTP Response Headers" languagecode="1033" />
+  </description>
+  <displayname default="HTTP Headers">
+    <label description="HTTP Headers" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>AcquirePowerAutomateOnBehalfOfTokenBundle-Out-HttpHeaders</name>
+  <type>3</type>
+</customapiresponseproperty>

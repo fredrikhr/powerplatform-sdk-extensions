@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ContentBody">
+  <description default="HTTP Response body.">
+    <label description="HTTP Response body." languagecode="1033" />
+  </description>
+  <displayname default="Response Body">
+    <label description="Response Body" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>AcquirePowerAutomateOnBehalfOfTokenBundle-Out-ContentBody</name>
+  <type>10</type>
+</customapiresponseproperty>

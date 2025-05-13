@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ContentHeaders">
+  <description default="HTTP Response Headers describing the response body.">
+    <label description="HTTP Response Headers describing the response body." languagecode="1033" />
+  </description>
+  <displayname default="Content Headers">
+    <label description="Content Headers" languagecode="1033" />
+  </displayname>
+  <iscustomizable>1</iscustomizable>
+  <name>AcquirePowerAutomateOnBehalfOfTokenBundle-Out-ContentHeaders</name>
+  <type>3</type>
+</customapiresponseproperty>
