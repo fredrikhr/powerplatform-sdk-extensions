@@ -7,9 +7,11 @@ public class EntraIdTokenAcquisitionPlugin : IPlugin
         var context = serviceProvider.Get<IPluginExecutionContext6>();
         var outputs = context.OutputParameters;
 
-        var scopes = context.InputParameterOrDefault<string[]>("Scopes");
-
-        var tokenAcquirer = serviceProvider.Get<ITokenService>();
+        var tokenAcquirer = serviceProvider.Get<ITokenService>()
+            ?? throw new InvalidPluginExecutionException(
+                httpStatus: PluginHttpStatusCode.InternalServerError,
+                message: $"{nameof(ITokenService)} instance is not available."
+                );
         try
         {
             string accessToken = tokenAcquirer.RetrieveAADAccessToken(
