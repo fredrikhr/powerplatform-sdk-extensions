@@ -135,31 +135,37 @@
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/@uniquename"
       Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageId)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     />
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/name"
       Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageId)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     />
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/version"
       Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageVersion)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     />
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/package"
       Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.NupkgFilenameWithExtension)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     />
     <XmlPoke
       XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
       Query="/pluginpackage/package/@mimetype"
       Value="application/octet-stream"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     />
     <Copy
       SourceFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SourceNupkgPath)"
       DestinationFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SolutionMetadataNupkgPath)"
       SkipUnchangedFiles="true"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
     >
       <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataPluginPackageNupkgFile" />
     </Copy>
