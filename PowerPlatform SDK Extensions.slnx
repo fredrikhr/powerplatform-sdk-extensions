@@ -39,6 +39,7 @@
   </Folder>
   <Folder Name="/solutions/">
     <Project Path="solutions/DataverseManagedIdentityCustomApis/DataverseManagedIdentityCustomApis.cdsproj" Type="C#" />
+    <Project Path="solutions/DataverseServicePrincipalTokenAcquisition/DataverseServicePrincipalTokenAcquisition.cdsproj" Type="C#" />
     <Project Path="solutions/DataverseUtilityCustomApis/DataverseUtilityCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>
