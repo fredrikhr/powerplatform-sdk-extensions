@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <ProjectReference Include="..\..\pluginpackages\pwrplatf_DataverseManagedIdentityPlugins\pwrplatf_DataverseManagedIdentityPlugins.csproj" /> -->
+    <ProjectReference Include="..\..\pluginpackages\datav_CommonDataServiceTokenAcquisitionPlugins\datav_CommonDataServiceTokenAcquisitionPlugins.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.25042.222" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25042.222" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25042.00222">
+<ImportExportXml version="9.2.25051.184" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25051.184" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25051.00184">
   <SolutionManifest>
     <UniqueName>DataverseServicePrincipalTokenAcquisition</UniqueName>
     <LocalizedNames>
@@ -21,7 +21,20 @@
       <CustomizationOptionValuePrefix>79884</CustomizationOptionValuePrefix>
       <Addresses />
     </Publisher>
-    <RootComponents />
-    <MissingDependencies />
+    <RootComponents>
+      <RootComponent type="29" id="{50209e3f-7f31-f011-8c4e-000d3aac0dd8}" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="1" schemaName="keyvaultreference" displayName="Key Vault Reference" solution="ManagedIdentityExtensions (1.0.9.6)">
+          <package appName="ManagedIdentityApp Package" version="1.0.0.0">ManagedIdentityApp_Anchor (1.0.0.0)</package>
+        </Required>
+        <Dependent type="29" displayName="Acquire Common Data Service Access Token" id="{50209e3f-7f31-f011-8c4e-000d3aac0dd8}" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="ManagedIdentity" solution="DataverseManagedIdentityCustomApis (1.0.0)" id="{1304a7e4-ed28-f011-8c4d-7c1e5226ec1f}" />
+        <Dependent type="KeyVaultReference" id="{48dc2285-7a31-f011-8c4e-000d3aac0dd8}" />
+      </MissingDependency>
+    </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>

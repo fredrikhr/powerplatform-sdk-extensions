@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<managedidentity managedidentityid="71ee990f-7b31-f011-8c4e-000d3aac0dd8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <applicationid>{00000007-0000-0000-c000-000000000000}</applicationid>
+  <credentialsource>1</credentialsource>
+  <iscustomizable>1</iscustomizable>
+  <keyvaultreferenceid>
+    <keyvaultreferenceid>48dc2285-7a31-f011-8c4e-000d3aac0dd8</keyvaultreferenceid>
+  </keyvaultreferenceid>
+  <name>Common Data Service</name>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <subjectscope>0</subjectscope>
+</managedidentity>
