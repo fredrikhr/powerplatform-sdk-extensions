@@ -73,7 +73,7 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
             foreach (var warning in SolutionPackagerLogger.AllWarnings)
             {
                 Log.LogWarning(
-                    subcategory: nameof(SolutionPackagerLogger),
+                    subcategory: nameof(SolutionPackager),
                     warningCode: null,
                     helpKeyword: null,
                     message: warning,
@@ -85,7 +85,7 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
             foreach (var error in SolutionPackagerLogger.AllErrors)
             {
                 Log.LogError(
-                    subcategory: nameof(SolutionPackagerLogger),
+                    subcategory: nameof(SolutionPackager),
                     errorCode: null,
                     helpKeyword: null,
                     message: error,

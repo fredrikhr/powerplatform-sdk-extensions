@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using Microsoft.Crm.Tools.SolutionPackager;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
