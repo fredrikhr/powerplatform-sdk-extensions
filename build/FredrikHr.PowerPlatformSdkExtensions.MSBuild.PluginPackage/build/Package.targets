@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddProjectReferenceOutputAssemblyToPackageOutput</TargetsForTfmSpecificContentInPackage>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);AddProjectReferenceOutputAssemblyToPackageOutput</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
   <!-- This target is called to gather OutputPath property set in project file to be copied in a Project Reference -->
@@ -35,11 +35,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <TfmSpecificPackageFile Include="@(_ProjectReferenceCopyLocalPaths->ClearMetadata())"
+      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->ClearMetadata())"
         Condition="'%(_ProjectReferenceCopyLocalPaths.ProjectReferenceOriginalItemSpec)' == '%(_ProjectReferenceCopyLocalPaths.PossibleProjectReferencePackableItemSpec)'"
       >
-        <PackagePath>$(BuildOutputTargetFolder)/$(TargetFramework)</PackagePath>
-      </TfmSpecificPackageFile>
+        <ReferenceSourceTarget>ProjectReference</ReferenceSourceTarget>
+      </BuildOutputInPackage>
     </ItemGroup>
   </Target>
 
