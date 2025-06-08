@@ -11,6 +11,10 @@
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Description>No description provided.</Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
       <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.StripNuspecTfm\FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj</ProjectReference>
