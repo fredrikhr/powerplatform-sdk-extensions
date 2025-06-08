@@ -28,14 +28,10 @@
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj" />
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.csproj" />
   </Folder>
-  <Folder Name="/pluginlibraries/">
-    <Project Path="pluginlibraries/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins.csproj" />
-  </Folder>
-  <Folder Name="/pluginpackages/">
-    <Project Path="pluginpackages/pwrplatf_DataverseUtilityPlugins/pwrplatf_DataverseUtilityPlugins.csproj" />
+  <Folder Name="/plugins/">
+    <File Path="plugins/Directory.Build.props" />
   </Folder>
   <Folder Name="/solutions/">
     <File Path="solutions/Directory.Build.props" />
-    <Project Path="solutions/DataverseUtilityCustomApis/DataverseUtilityCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>

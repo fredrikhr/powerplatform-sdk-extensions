@@ -13,7 +13,16 @@
     <TargetFramework>net471</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
+      <PrivateAssets>all</PrivateAssets>
+      <ProjectReference>$(MSBuildThisFileDirectory)..\build\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj</ProjectReference>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
