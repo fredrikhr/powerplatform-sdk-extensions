@@ -29,16 +29,13 @@
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.csproj" />
   </Folder>
   <Folder Name="/pluginlibraries/">
-    <Project Path="pluginlibraries/FredrikHr.PowerPlatformSdkExtensions.DataverseTokenAcquisitionPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseTokenAcquisitionPlugins.csproj" />
     <Project Path="pluginlibraries/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins/FredrikHr.PowerPlatformSdkExtensions.DataverseUtilityPlugins.csproj" />
   </Folder>
   <Folder Name="/pluginpackages/">
-    <Project Path="pluginpackages/pwrplatf_DataverseManagedIdentityPlugins/pwrplatf_DataverseManagedIdentityPlugins.csproj" />
     <Project Path="pluginpackages/pwrplatf_DataverseUtilityPlugins/pwrplatf_DataverseUtilityPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
     <File Path="solutions/Directory.Build.props" />
-    <Project Path="solutions/DataverseManagedIdentityCustomApis/DataverseManagedIdentityCustomApis.cdsproj" Type="C#" />
     <Project Path="solutions/DataverseUtilityCustomApis/DataverseUtilityCustomApis.cdsproj" Type="C#" />
   </Folder>
 </Solution>
