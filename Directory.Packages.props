@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -22,9 +22,14 @@
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackPackageReference">
       <Version>1.1.0</Version>
     </PackageVersion>
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackProjectReference">
+      <Version>0.1.0</Version>
+    </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
       <Version>1.0.0</Version>
     </PackageVersion>
+    <PackageVersion Include="System.IO.Hashing" Version="9.0.6" />
+    <PackageVersion Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build.Framework">

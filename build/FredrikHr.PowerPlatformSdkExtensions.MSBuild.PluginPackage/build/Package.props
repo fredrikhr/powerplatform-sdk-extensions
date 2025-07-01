@@ -4,6 +4,8 @@
     <!-- By default, we create a nuget package for the plugin package, as this is the model going forward
     Note: Setting this property is ignored for inner builds, as it should get set in the 'buildMultiTargeting' folder props files for that case.
     -->
-    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)' == '' and '$(IsInnerBuild)' != 'true'">true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)' == ''">true</GeneratePackageOnBuild>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 </Project>

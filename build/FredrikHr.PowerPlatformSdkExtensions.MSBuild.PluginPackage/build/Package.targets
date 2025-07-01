@@ -5,10 +5,6 @@
     <PowerAppsComponentType>PluginPackage</PowerAppsComponentType>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);AddProjectReferenceOutputAssemblyToPackageOutput</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
-
   <!-- This target is called to gather OutputPath property set in project file to be copied in a Project Reference -->
   <Target Name="GetProjectOutputPath" Returns="@(ProjectOutputPath)">
     <CallTarget Targets="_GetOutputItemsFromPack">
@@ -21,25 +17,6 @@
         <PackageVersion>$(PackageVersion)</PackageVersion>
         <PowerAppsComponentType>$(PowerAppsComponentType)</PowerAppsComponentType>
       </ProjectOutputPath>
-    </ItemGroup>
-  </Target>
-
-  <Target Name="AddProjectReferenceOutputAssemblyToPackageOutput"
-    DependsOnTargets="ResolveReferences"
-  >
-    <ItemGroup>
-      <_ProjectReferencePackable Include="@(ProjectReference->WithMetadataValue('Pack', 'true'))" />
-      <_ProjectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))">
-        <PossibleProjectReferencePackableItemSpec>%(_ProjectReferencePackable.Identity)</PossibleProjectReferencePackableItemSpec>
-      </_ProjectReferenceCopyLocalPaths>
-    </ItemGroup>
-
-    <ItemGroup>
-      <BuildOutputInPackage Include="@(_ProjectReferenceCopyLocalPaths->ClearMetadata())"
-        Condition="'%(_ProjectReferenceCopyLocalPaths.ProjectReferenceOriginalItemSpec)' == '%(_ProjectReferenceCopyLocalPaths.PossibleProjectReferencePackableItemSpec)'"
-      >
-        <ReferenceSourceTarget>ProjectReference</ReferenceSourceTarget>
-      </BuildOutputInPackage>
     </ItemGroup>
   </Target>
 
