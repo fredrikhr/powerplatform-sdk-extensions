@@ -1,15 +1,15 @@
 {
   "version": "2.0.0",
   "tasks": [
-    // solutions/DataverseUtilityCustomApis
+    // solutions/PowerPlatformSdkExtSamplePluginPackgeSolution
     {
-      "label": "DataverseUtilityCustomApis | Build solution (Unmanaged)",
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
         "build",
         "--configuration:Debug",
-        "solutions/DataverseUtilityCustomApis"
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution"
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -23,7 +23,7 @@
       }
     },
     {
-      "label": "DataverseUtilityCustomApis | Push to Power Platform (Unmanaged)",
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Push to Power Platform (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -35,11 +35,10 @@
         "import",
         "--async",
         "--activate-plugins",
-        "--force-overwrite",
         "--path",
-        "bin/DataverseUtilityCustomApis/Debug/DataverseUtilityCustomApis.zip"
+        "bin/PowerPlatformSdkExtSamplePluginPackgeSolution/Debug/PowerPlatformSdkExtSamplePluginPackgeSolution.zip"
       ],
-      "dependsOn": ["DataverseUtilityCustomApis | Build solution (Unmanaged)"],
+      "dependsOn": ["PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Unmanaged)"],
       "problemMatcher": [],
       "presentation": {
         "echo": true,
@@ -51,7 +50,7 @@
       }
     },
     {
-      "label": "DataverseUtilityCustomApis | Pull from Power Platform (Unmanaged)",
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Pull from Power Platform (Unmanaged)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -65,7 +64,7 @@
         "--packagetype",
         "Unmanaged",
         "--solution-folder",
-        "solutions/DataverseUtilityCustomApis/src"
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/src"
       ],
       "dependsOn": [],
       "problemMatcher": [],
@@ -79,13 +78,13 @@
       }
     },
     {
-      "label": "DataverseUtilityCustomApis | Build solution (Managed)",
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Managed)",
       "type": "shell",
       "command": "dotnet",
       "args": [
         "build",
         "--configuration:Release",
-        "solutions/DataverseUtilityCustomApis"
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution"
       ],
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -99,7 +98,7 @@
       }
     },
     {
-      "label": "DataverseUtilityCustomApis | Push to Power Platform (Managed)",
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Push to Power Platform (Managed)",
       "type": "shell",
       "command": "dotnet",
       "args": [
@@ -113,9 +112,133 @@
         "--convert-to-managed",
         "--publish-changes",
         "--path",
-        "bin/DataverseUtilityCustomApis/Release/DataverseUtilityCustomApis.zip"
+        "bin/PowerPlatformSdkExtSamplePluginPackgeSolution/Release/PowerPlatformSdkExtSamplePluginPackgeSolution.zip"
       ],
-      "dependsOn": ["DataverseUtilityCustomApis | Build solution (Managed)"],
+      "dependsOn": ["PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    // solutions/PowerPlatformSdkExtSandboxWorkerCustomApi
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--path",
+        "bin/PowerPlatformSdkExtSandboxWorkerCustomApi/Debug/PowerPlatformSdkExtSandboxWorkerCustomApi.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--convert-to-managed",
+        "--publish-changes",
+        "--path",
+        "bin/PowerPlatformSdkExtSandboxWorkerCustomApi/Release/PowerPlatformSdkExtSandboxWorkerCustomApi.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Managed)"],
       "problemMatcher": [],
       "presentation": {
         "echo": true,

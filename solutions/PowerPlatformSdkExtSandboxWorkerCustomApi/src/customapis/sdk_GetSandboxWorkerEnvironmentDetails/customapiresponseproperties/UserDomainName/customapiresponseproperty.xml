@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="UserDomainName">
+  <description default="UserDomainName">
+    <label description="UserDomainName" languagecode="1033" />
+  </description>
+  <displayname default="UserDomainName">
+    <label description="UserDomainName" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-UserDomainName</name>
+  <type>10</type>
+</customapiresponseproperty>

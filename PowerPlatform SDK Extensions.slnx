@@ -31,13 +31,16 @@
   </Folder>
   <Folder Name="/libraries/">
     <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.SampleDependencyLib/FredrikHr.PowerPlatformSdkExtensions.SampleDependencyLib.csproj" />
+    <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.SandboxWorker.Reflection/FredrikHr.PowerPlatformSdkExtensions.SandboxWorker.Reflection.csproj" />
   </Folder>
   <Folder Name="/plugins/">
     <File Path="plugins/Directory.Build.props" />
     <Project Path="plugins/FredrikHr.PowerPlatformSdkExtensions.SamplePluginPackage/FredrikHr.PowerPlatformSdkExtensions.SamplePluginPackage.csproj" />
+    <Project Path="plugins/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins.csproj" />
   </Folder>
   <Folder Name="/solutions/">
     <File Path="solutions/Directory.Build.props" />
     <Project Path="solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/PowerPlatformSdkExtSamplePluginPackgeSolution.cdsproj" Type="C#" />
+    <Project Path="solutions/PowerPlatformSdkExtSandboxWorkerCustomApi/PowerPlatformSdkExtSandboxWorkerCustomApi.cdsproj" Type="C#" />
   </Folder>
 </Solution>

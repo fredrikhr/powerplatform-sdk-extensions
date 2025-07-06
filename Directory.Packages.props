@@ -16,6 +16,7 @@
     </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Autofac" Version="6.0.0" />
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
       <Version>1.0.0</Version>
     </PackageVersion>
@@ -28,6 +29,8 @@
     <PackageVersion Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
       <Version>1.0.0</Version>
     </PackageVersion>
+    <PackageVersion Include="Google.Protobuf" Version="3.21.6" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageVersion Include="System.IO.Hashing" Version="9.0.6" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
   </ItemGroup>

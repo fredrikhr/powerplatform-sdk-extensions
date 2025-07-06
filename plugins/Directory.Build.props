@@ -28,6 +28,7 @@
   <ItemGroup>
     <Using Include="Microsoft.Xrm.Sdk" />
     <Using Include="Microsoft.Xrm.Sdk.Extensions" />
+    <Using Include="Microsoft.Xrm.Sdk.PluginTelemetry" />
   </ItemGroup>
 
 </Project>
