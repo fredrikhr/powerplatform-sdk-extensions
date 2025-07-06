@@ -17,6 +17,10 @@
   </Folder>
   <Folder Name="/.submodules/" />
   <Folder Name="/.submodules/fredrikhr/" />
+  <Folder Name="/.submodules/fredrikhr/dotnet-generichost-extensions/">
+    <Project Path=".submodules/fredrikhr/dotnet-generichost-extensions/src/FredrikHr.Extensions.DependencyInjection.Msal/FredrikHr.Extensions.DependencyInjection.Msal.csproj" />
+    <Project Path=".submodules/fredrikhr/dotnet-generichost-extensions/src/FredrikHr.Extensions.Options.Helpers/FredrikHr.Extensions.Options.Helpers.csproj" />
+  </Folder>
   <Folder Name="/.submodules/fredrikhr/nuget-msbuild-extensions/">
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj" />
     <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackageAuthorSigning/FredrikHr.NupkgMSBuild.PackageAuthorSigning.csproj" />
@@ -42,5 +46,8 @@
     <File Path="solutions/Directory.Build.props" />
     <Project Path="solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/PowerPlatformSdkExtSamplePluginPackgeSolution.cdsproj" Type="C#" />
     <Project Path="solutions/PowerPlatformSdkExtSandboxWorkerCustomApi/PowerPlatformSdkExtSandboxWorkerCustomApi.cdsproj" Type="C#" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader.csproj" />
   </Folder>
 </Solution>

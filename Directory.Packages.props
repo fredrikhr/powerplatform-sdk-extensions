@@ -30,7 +30,10 @@
       <Version>1.0.0</Version>
     </PackageVersion>
     <PackageVersion Include="Google.Protobuf" Version="3.21.6" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.6" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Identity.Client" Version="4.73.1" />
     <PackageVersion Include="System.IO.Hashing" Version="9.0.6" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
