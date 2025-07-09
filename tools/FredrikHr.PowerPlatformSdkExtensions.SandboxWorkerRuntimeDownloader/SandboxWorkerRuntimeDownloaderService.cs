@@ -13,18 +13,13 @@ internal sealed class SandboxWorkerRuntimeDownloaderService : BackgroundService
 {
     private readonly IHostApplicationLifetime _lifetime;
     private readonly CancellationTokenRegistration _startedRegistration;
+    private readonly SandboxWorkerRuntimeDownloaderApp _app;
     private readonly TaskCompletionSource _started =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    private readonly IConfidentialClientApplication _msalClient;
-
-    private async Task ExecuteCoreAsync(CancellationToken cancelToken)
+    private Task ExecuteCoreAsync(CancellationToken cancelToken)
     {
-        var msalResult = await _msalClient
-            .AcquireTokenForClient(["https://graph.microsoft.com/.default"])
-            .ExecuteAsync(cancelToken)
-            .ConfigureAwait(continueOnCapturedContext: false);
-        var msalAccessToken = msalResult.AccessToken;
+        return _app.RunAsync(cancelToken);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -52,7 +47,7 @@ internal sealed class SandboxWorkerRuntimeDownloaderService : BackgroundService
     }
 
     public SandboxWorkerRuntimeDownloaderService(
-        IOptions<IConfidentialClientApplication> msalClientProvider,
+        SandboxWorkerRuntimeDownloaderApp app,
         IHostApplicationLifetime lifetime
         ) : base()
     {
@@ -63,7 +58,7 @@ internal sealed class SandboxWorkerRuntimeDownloaderService : BackgroundService
             _started
             );
 
-        _msalClient = msalClientProvider.Value;
+        _app = app;
     }
 
     public override void Dispose()

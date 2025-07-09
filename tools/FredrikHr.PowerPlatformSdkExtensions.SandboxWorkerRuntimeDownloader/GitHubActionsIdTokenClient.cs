@@ -4,11 +4,6 @@ using System.Text.Json;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Performance",
-    "CA1812: Avoid uninstantiated internal classes",
-    Justification = nameof(Microsoft.Extensions.DependencyInjection)
-    )]
 internal sealed class GitHubActionsIdTokenClient(
     HttpClient httpClient
     ) : IDisposable
@@ -21,21 +16,22 @@ internal sealed class GitHubActionsIdTokenClient(
         !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(TokenEnvVarName)) &&
         !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(UrlEnvVarName));
 
-    private readonly AuthenticationHeaderValue _idTokenRequestToken = new(
+    private readonly Lazy<AuthenticationHeaderValue> _idTokenRequestToken = new(
+        () => new(
         BearerAuthScheme,
         Environment.GetEnvironmentVariable(TokenEnvVarName)
-        );
+        ));
 
-    private readonly Uri _idTokenRequestUri = new(
+    private readonly Lazy<Uri> _idTokenRequestUri = new(() => new(
         Environment.GetEnvironmentVariable(UrlEnvVarName)!
-        );
+        ));
 
     public async Task<string?> GetIdTokenAsync(
         string? audience = default,
         CancellationToken cancelToken = default
         )
     {
-        Uri idTokenUri = _idTokenRequestUri;
+        Uri idTokenUri = _idTokenRequestUri.Value;
         if (audience is not null)
         {
             string query = idTokenUri.Query ?? "";
@@ -47,7 +43,7 @@ internal sealed class GitHubActionsIdTokenClient(
         {
             Headers =
             {
-                Authorization = _idTokenRequestToken,
+                Authorization = _idTokenRequestToken.Value,
             }
         };
         var idTokenResp = await httpClient

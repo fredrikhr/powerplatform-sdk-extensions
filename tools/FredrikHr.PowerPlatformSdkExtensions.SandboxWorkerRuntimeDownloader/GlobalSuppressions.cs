@@ -6,6 +6,12 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
+    "Performance",
+    "CA1812: Avoid uninstantiated internal classes",
+    Justification = nameof(Microsoft.Extensions.DependencyInjection)
+    )]
+
+[assembly: SuppressMessage(
     "CodeQuality",
     "IDE0079: Remove unnecessary suppression",
     Justification = "false positive"
