@@ -70,29 +70,36 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
             if (!string.IsNullOrWhiteSpace(arguments.LogFile))
                 RemoveTraceFileListener(arguments);
             var logSourceFile = GetLogSourceFile(arguments, runner);
-            foreach (var warning in SolutionPackagerLogger.AllWarnings)
+            lock (SolutionPackagerLogger.AllWarnings)
             {
-                Log.LogWarning(
-                    subcategory: nameof(SolutionPackager),
-                    warningCode: null,
-                    helpKeyword: null,
-                    message: warning,
-                    file: logSourceFile,
-                    lineNumber: 0, endLineNumber: 0,
-                    columnNumber: 0, endColumnNumber: 0
-                );
+                foreach (var warning in SolutionPackagerLogger.AllWarnings)
+                {
+                    Log.LogWarning(
+                        subcategory: nameof(SolutionPackager),
+                        warningCode: null,
+                        helpKeyword: null,
+                        message: warning,
+                        file: logSourceFile,
+                        lineNumber: 0, endLineNumber: 0,
+                        columnNumber: 0, endColumnNumber: 0
+                    );
+                }
+                SolutionPackagerLogger.AllWarnings.Clear();
             }
-            foreach (var error in SolutionPackagerLogger.AllErrors)
+            lock (SolutionPackagerLogger.AllErrors)
             {
-                Log.LogError(
-                    subcategory: nameof(SolutionPackager),
-                    errorCode: null,
-                    helpKeyword: null,
-                    message: error,
-                    file: logSourceFile,
-                    lineNumber: 0, endLineNumber: 0,
-                    columnNumber: 0, endColumnNumber: 0
-                );
+                foreach (var error in SolutionPackagerLogger.AllErrors)
+                {
+                    Log.LogError(
+                        subcategory: nameof(SolutionPackager),
+                        errorCode: null,
+                        helpKeyword: null,
+                        message: error,
+                        file: logSourceFile,
+                        lineNumber: 0, endLineNumber: 0,
+                        columnNumber: 0, endColumnNumber: 0
+                    );
+                }
             }
             return true;
         }
@@ -113,11 +120,11 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
             return defaultValue;
         try
         {
-            #if NET
+#if NET
             return Enum.Parse<TEnum>(value, ignoreCase: true);
-            #else
+#else
             return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase: true);
-            #endif
+#endif
         }
         catch (ArgumentException argExcept)
         {
