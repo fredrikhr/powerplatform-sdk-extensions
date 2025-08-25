@@ -34,7 +34,9 @@
     <SourceSolutionFiles
       Include="$(SourceSolutionFileRoot)\**"
       Exclude="@(ExcludeDirectories)"
-    />
+    >
+      <MetadataDirectoryFilePath>$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)</MetadataDirectoryFilePath>
+    </SourceSolutionFiles>
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\tasks\ThisPackage.tasks" />
@@ -77,17 +79,17 @@
   <Target Name="CopyCdsSolutionContent"
     BeforeTargets="ProcessCdsProjectReferencesOutputs"
     Inputs="@(SourceSolutionFiles)"
-    Outputs="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+    Outputs="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
   >
     <ItemGroup>
       <SolutionPackagerMetadataWorkingDirectoryFilesSpec
-        Include="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+        Include="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
       />
     </ItemGroup>
 
     <Copy
       SourceFiles="@(SourceSolutionFiles)"
-      DestinationFiles="@(SourceSolutionFiles -> '$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)')"
+      DestinationFiles="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
       SkipUnchangedFiles="true"
     >
       <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataCopiedFile" />
