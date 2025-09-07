@@ -3,7 +3,6 @@ using System.Runtime.Versioning;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Options;
@@ -52,30 +51,49 @@ internal static class HostSetup
         services.AddHttpClient<GitHubActionsIdTokenClient>("GitHubActionsOidc");
         services.AddMsal()
             .UseLogging(enablePiiLogging: host.Environment.IsDevelopment())
-            .WithConfidentialClient(msal => msal.UseHttpClient("Msal")
-                .PostConfigure<
-                    IOptionsMonitor<FederatedCredentialsOptions>,
+            ;
+        services.Add(ServiceDescriptor.Singleton<
+            IMsalHttpClientFactory,
+            MsalHttpClientFactory
+            >(sp => new(sp.GetRequiredService<IHttpMessageHandlerFactory>(), "Msal")));
+        services.ConfigureAll<
+            ConfidentialClientApplicationBuilder,
+            IMsalHttpClientFactory
+            >(
+            (_, msal, http) => msal.WithHttpClientFactory(http));
+        services.PostConfigureAll<
+            ConfidentialClientApplicationBuilder,
+            IServiceProvider
+            >((name, builder, sp) =>
+            {
+                var optionsProvider = sp.GetRequiredService<
+                    IOptionsMonitor<FederatedCredentialsOptions>
+                    >();
+                if (optionsProvider.CurrentValue.Provider != FederatedCredentialsOptions.ProviderType.GitHubActions ||
+                    !GitHubActionsIdTokenClient.IsAvailable)
+                    return;
+                var idTokenClient = sp.GetRequiredService<
                     GitHubActionsIdTokenClient
-                    >(static (builder, optionsProvider, idTokenClient) =>
-                    {
-                        if (optionsProvider.CurrentValue.Provider != FederatedCredentialsOptions.ProviderType.GitHubActions ||
-                            !GitHubActionsIdTokenClient.IsAvailable)
-                            return;
-                        builder.WithClientAssertion(async assertionContext =>
-                        {
-                            if (!GitHubActionsIdTokenClient.IsAvailable)
-                                return null;
-                            var options = optionsProvider.Get(Options.DefaultName);
-                            string? idToken = await idTokenClient.GetIdTokenAsync(
-                                options.Audience ?? FederatedCredentialsOptions.DefaultAudience,
-                                assertionContext.CancellationToken
-                                ).ConfigureAwait(continueOnCapturedContext: false);
-                            return idToken;
-                        });
-                    })
-            )
-            .WithPublicClient(msal => msal.UseHttpClient("Msal")
-                .Configure(b => b.WithDefaultRedirectUri())
+                    >();
+                builder.WithClientAssertion(async assertionContext =>
+                {
+                    if (!GitHubActionsIdTokenClient.IsAvailable)
+                        return null;
+                    var options = optionsProvider.Get(Options.DefaultName);
+                    string? idToken = await idTokenClient.GetIdTokenAsync(
+                        options.Audience ?? FederatedCredentialsOptions.DefaultAudience,
+                        assertionContext.CancellationToken
+                        ).ConfigureAwait(continueOnCapturedContext: false);
+                    return idToken;
+                });
+            });
+        services.ConfigureAll<
+            PublicClientApplicationBuilder,
+            IMsalHttpClientFactory
+            >(
+            (_, builder, msalHttp) => builder.WithHttpClientFactory(msalHttp));
+        services.ConfigureAll<PublicClientApplicationBuilder>(
+            builder => builder.WithDefaultRedirectUri()
             );
         services.AddOptions<ConfidentialClientApplicationOptions>()
             .BindConfiguration(nameof(ConfidentialClientApplication));
@@ -86,21 +104,15 @@ internal static class HostSetup
         {
             ConfigureWindowsAccountManagerBroker(host);
         }
-
-        services.AddSingleton<MsalDelegatingHandlerScopeRegistry>();
+        services.AddSingleton<MsalHttpAuthorizationResourceRegistry>();
         services.AddOptions<MsalDelegatingHandlerOptions>()
             .Configure(o => o.AuthenticationMode = MsalDelegatingHandlerAuthenticationMode.AppOnly)
             .BindConfiguration("MsalAuthenticationHandler");
-        services.AddTransient<
-            IOptionsFactory<MsalDelegatingHandler>,
-            MsalDelegatingHandlerFactory
-            >();
-        services.Configure<HttpClientFactoryOptions>(options =>
+        services.ConfigureAll<HttpClientFactoryOptions>(options =>
             options.HttpMessageHandlerBuilderActions.Add(http =>
             {
-                var delegatingHandler = http.Services
-                    .GetRequiredService<IOptionsMonitor<MsalDelegatingHandler>>()
-                    .Get(http.Name);
+                MsalHttpAuthorizationDelegatingHandler delegatingHandler =
+                    new(http.Name, http.Services);
                 http.AdditionalHandlers.Add(delegatingHandler);
             }));
 
@@ -120,7 +132,7 @@ internal static class HostSetup
         {
             services.AddMsal()
                 .ConfigureAllBrokerOptions(BrokerOptions.OperatingSystems.Windows);
-            services.ConfigureAllNamed<
+            services.ConfigureAll<
                 PublicClientApplicationBuilder,
                 IOptionsMonitor<BrokerOptions>
                 >((name, builder, brokerOptionsProvider) => builder

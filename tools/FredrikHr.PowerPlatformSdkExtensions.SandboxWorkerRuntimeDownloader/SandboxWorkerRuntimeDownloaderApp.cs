@@ -4,19 +4,23 @@ using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Client;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader;
 
 internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
     IOptionsMonitor<MsalDelegatingHandlerOptions> msalAuthOptionsProvider,
-    MsalDelegatingHandlerScopeRegistry scopeRegistry,
     IHttpClientFactory httpClientFactory,
+    MsalHttpAuthorizationResourceRegistry msalResourceRegistry,
     IConfiguration appConfig,
     ILogger<SandboxWorkerRuntimeDownloaderApp> logger
     )
 {
     public async Task RunAsync(CancellationToken cancelToken)
     {
+        MsalDelegatingHandlerOptions msalAuthOptions =
+            msalAuthOptionsProvider.CurrentValue;
+
         using var httpClient = httpClientFactory.CreateClient();
         var environmentId = appConfig["EnvironmentId"];
         if (environmentId is null)
@@ -25,14 +29,10 @@ internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
             return;
         }
 
-        if (IsUserAuthenticated())
+        if (IsUserAuthenticated(msalAuthOptions))
         {
             Uri globalDiscoveryUri = new("https://globaldisco.crm.dynamics.com");
-            scopeRegistry.AddEntry(
-                globalDiscoveryUri,
-                [$"{globalDiscoveryUri}/.default", "offline_access"]
-                );
-
+            msalResourceRegistry.AddEntry(globalDiscoveryUri);
             using var globalDiscoveryRequMsg = new HttpRequestMessage(
                 HttpMethod.Get,
                 new Uri(globalDiscoveryUri, "/api/discovery/v2.0/Instances" +
@@ -40,6 +40,7 @@ internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
                 );
             globalDiscoveryRequMsg.Headers.Add("OData-Version", "4.0");
             globalDiscoveryRequMsg.Headers.Add("OData-MaxVersion", "4.01");
+            globalDiscoveryRequMsg.AddMsalPermissionScopes(["user_impersonation"]);
             using var globalDiscoveryRespMsg = await httpClient.SendAsync(
                 globalDiscoveryRequMsg,
                 HttpCompletionOption.ResponseContentRead,
@@ -56,9 +57,9 @@ internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
         else
         {
             Uri powerAutomateApiUri = new("https://api.flow.microsoft.com");
-            scopeRegistry.AddEntry(
+            msalResourceRegistry.AddEntry(
                 powerAutomateApiUri,
-                ["https://service.flow.microsoft.com//.default"]
+                "https://service.flow.microsoft.com/"
                 );
 
             var environmentResource = await httpClient.GetFromJsonAsync<JsonElement>(
@@ -73,9 +74,8 @@ internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
         }
     }
 
-    private bool IsUserAuthenticated()
+    private static bool IsUserAuthenticated(MsalDelegatingHandlerOptions options)
     {
-        var options = msalAuthOptionsProvider.CurrentValue;
         return options.AuthenticationMode switch
         {
             MsalDelegatingHandlerAuthenticationMode.UserInteractive or
@@ -85,7 +85,9 @@ internal sealed partial class SandboxWorkerRuntimeDownloaderApp(
         };
     }
 
-    [LoggerMessage(LogLevel.Critical, EventName = "NoEnvironmentId",
+    [LoggerMessage(
+        Microsoft.Extensions.Logging.LogLevel.Critical,
+        EventName = "NoEnvironmentId",
         Message = "Missing configuration item: EnvironmentId"
     )]
     private static partial void LogMissingEnvironmentId(ILogger logger);
