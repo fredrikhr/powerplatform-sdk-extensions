@@ -109,8 +109,8 @@
         "solution",
         "import",
         "--async",
-        "--convert-to-managed",
         "--publish-changes",
+        "--force-overwrite",
         "--path",
         "bin/PowerPlatformSdkExtSamplePluginPackgeSolution/Release/PowerPlatformSdkExtSamplePluginPackgeSolution.zip"
       ],
@@ -233,7 +233,7 @@
         "solution",
         "import",
         "--async",
-        "--convert-to-managed",
+        "--force-overwrite",
         "--publish-changes",
         "--path",
         "bin/PowerPlatformSdkExtSandboxWorkerCustomApi/Release/PowerPlatformSdkExtSandboxWorkerCustomApi.zip"
