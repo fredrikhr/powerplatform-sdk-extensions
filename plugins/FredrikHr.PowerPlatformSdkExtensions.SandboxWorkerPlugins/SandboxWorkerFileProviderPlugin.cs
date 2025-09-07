@@ -1,3 +1,5 @@
+using System.Reflection;
+
 using static FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins.SandboxWorkerPluginHelpers;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins;
@@ -14,8 +16,14 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
         public const string ContentBase64 = nameof(ContentBase64);
         public const string FileInfo = nameof(FileInfo);
         public const string Uri = nameof(Uri);
+        public const string AssemblyName = nameof(System.Reflection.AssemblyName);
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1031: Do not catch general exception types",
+        Justification = nameof(ITracingService)
+        )]
     public void Execute(IServiceProvider serviceProvider)
     {
         if (serviceProvider is null) return;
@@ -63,6 +71,28 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
             fileUriEntity[nameof(fileUri.AbsolutePath)] = fileUri.AbsolutePath;
             fileUriEntity[nameof(fileUri.Segments)] = fileUri.Segments;
             paramsOut[OutputParameterNames.Uri] = fileUriEntity;
+        }
+
+        if (".dll".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase))
+        {
+            try
+            {
+                Assembly assemblyInfo = Assembly.ReflectionOnlyLoadFrom(fileInfo.FullName);
+                AssemblyName assemblyName = assemblyInfo.GetName();
+                Entity assemblyEntity = new();
+                assemblyEntity[nameof(assemblyName.Name)] = assemblyName.Name;
+                assemblyEntity[nameof(assemblyName.Version)] = assemblyName.Version.ToString();
+                assemblyEntity[nameof(assemblyName.ProcessorArchitecture)] = assemblyName.ProcessorArchitecture.ToString();
+                assemblyEntity["PublicKeyToken"] = assemblyName.GetPublicKeyToken() is byte[] publicKeyTokenBytes ? string.Concat(publicKeyTokenBytes.Select(b => b.ToString("x2", System.Globalization.CultureInfo.InvariantCulture))) : null;
+                assemblyEntity[nameof(assemblyName.CultureName)] = assemblyName.CultureName;
+                assemblyEntity[nameof(assemblyName.ContentType)] = assemblyName.ContentType.ToString();
+                assemblyEntity[nameof(assemblyName.FullName)] = assemblyName.FullName;
+                paramsOut[OutputParameterNames.AssemblyName] = assemblyEntity;
+            }
+            catch (Exception assemblyNameExcept)
+            {
+                trace.Trace("{0}", assemblyNameExcept);
+            }
         }
     }
 
