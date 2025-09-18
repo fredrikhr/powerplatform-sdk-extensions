@@ -9,6 +9,7 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
     private static class InputParameterNames
     {
         public const string FilePath = nameof(FilePath);
+        public const string InformationOnly = nameof(InformationOnly);
     }
 
     private static class OutputParameterNames
@@ -27,30 +28,33 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
     public void Execute(IServiceProvider serviceProvider)
     {
         if (serviceProvider is null) return;
-        var execCtx = serviceProvider.Get<IExecutionContext>() ??
+        var pluginCtx = serviceProvider.Get<IPluginExecutionContext>() ??
             throw new InvalidPluginExecutionException(
                 OperationStatus.Failed,
-                $"${nameof(IExecutionContext)} is null."
+                $"${nameof(IPluginExecutionContext)} is null."
                 );
 
         var trace = serviceProvider.Get<ITracingService>();
         var logger = serviceProvider.Get<ILogger>();
-        var paramsIn = execCtx.InputParameters;
-        var paramsOut = execCtx.OutputParameters;
-        void ExceptionLogger(Exception exception, LogLevel logLevel)
-        {
-            logger?.Log(logLevel, exception, LogExceptionFormat, exception);
-            trace?.Trace(TraceExceptionFormat, exception);
-        }
+        var paramsIn = pluginCtx.InputParameters;
+        var paramsOut = pluginCtx.OutputParameters;
 
         if (!paramsIn.TryGetValue(InputParameterNames.FilePath, out string filePath))
             throw new InvalidPluginExecutionException(
                 $"Missing input parameter: {InputParameterNames.FilePath}",
                 PluginHttpStatusCode.BadRequest
                 );
+        if (pluginCtx.InputParameterOrDefault<bool>(InputParameterNames.InformationOnly) == false)
+        {
+            void ExceptionLogger(Exception exception, LogLevel logLevel)
+            {
+                logger?.Log(logLevel, exception, LogExceptionFormat, exception);
+                trace?.Trace(TraceExceptionFormat, exception);
+            }
 
-        byte[] fileBytes = ReadFileBytes(filePath, ExceptionLogger);
-        paramsOut[OutputParameterNames.ContentBase64] = Convert.ToBase64String(fileBytes);
+            byte[] fileBytes = ReadFileBytes(filePath, ExceptionLogger);
+            paramsOut[OutputParameterNames.ContentBase64] = Convert.ToBase64String(fileBytes);
+        }
         FileInfo fileInfo = new(filePath);
         Entity fileInfoEntity = new();
         fileInfoEntity[nameof(fileInfo.Exists)] = fileInfo.Exists;
