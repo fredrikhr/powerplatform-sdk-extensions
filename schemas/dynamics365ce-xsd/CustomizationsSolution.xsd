@@ -576,7 +576,36 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="PublisherAddressType"></xs:complexType>
+  <xs:complexType name="PublisherAddressType">
+    <xs:sequence>
+      <xs:element name="AddressNumber" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="AddressTypeCode" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="City" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="County" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Country" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Fax" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="FreightTermsCode" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ImportSequenceNumber" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Latitude" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Line1" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Line2" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Line3" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Longitude" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Name" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="PostalCode" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="PostOfficeBox" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="PrimaryContactName" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="ShippingMethodCode" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="StateOrProvince" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Telephone1" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Telephone2" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Telephone3" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="TimeZoneRuleVersionNumber" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="UPSZone" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="UTCOffset" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="UTCConversionTimeZoneCode" nillable="true" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="PublisherType">
     <xs:sequence>
       <xs:element name="UniqueName" type="xs:NCName" minOccurs="1" maxOccurs="1" />
