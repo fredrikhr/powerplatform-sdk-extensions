@@ -5,6 +5,13 @@
     <xs:sequence>
       <xs:element name="exportkeyversion" type="xs:int" default="1" />
       <xs:element name="iscustomizable" type="TrueFalse01Type" default="1" />
+      <xs:element name="managedidentityid" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="managedidentityid" type="GuidType" minOccurs="1" maxOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="name" type="xs:string" />
       <xs:element name="package">
         <xs:complexType>
