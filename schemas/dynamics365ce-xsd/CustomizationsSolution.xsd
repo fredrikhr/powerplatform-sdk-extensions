@@ -674,23 +674,23 @@
               </xs:complexType>
             </xs:element>
           </xs:sequence>
-          <xs:attribute name="type" type="xs:integer" use="required" />
+          <xs:attribute name="type" use="required" />
           <xs:attribute name="id" type="GuidType" use="optional" />
           <xs:attribute name="schemaName" type="xs:string" use="optional" />
           <xs:attribute name="displayName" type="xs:string" use="optional" />
           <xs:attribute name="solution" type="xs:string" use="optional" />
           <xs:attribute name="parentSchemaName" type="xs:string" use="optional" />
           <xs:attribute name="parentDisplayName" type="xs:string" use="optional" />
-          <xs:anyAttribute />
+          <xs:anyAttribute processContents="lax" />
         </xs:complexType>
       </xs:element>
       <xs:element name="Dependent" minOccurs="1" maxOccurs="1">
         <xs:complexType>
-          <xs:attribute name="type" type="xs:integer" use="required" />
+          <xs:attribute name="type" use="required" />
           <xs:attribute name="id" type="GuidType" use="optional" />
           <xs:attribute name="schemaName" type="xs:string" use="optional" />
           <xs:attribute name="displayName" type="xs:string" use="optional" />
-          <xs:anyAttribute />
+          <xs:anyAttribute processContents="lax" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
