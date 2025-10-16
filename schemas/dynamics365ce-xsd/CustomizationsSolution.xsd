@@ -646,7 +646,7 @@
   </xs:complexType>
   <xs:complexType name="SolutionManifestRootComponentType">
     <xs:attribute name="type" type="xs:positiveInteger" use="required" />
-    <xs:attribute name="schemaName" type="xs:NCName" use="optional" />
+    <xs:attribute name="schemaName" type="xs:string" use="optional" />
     <xs:attribute name="id" type="GuidType" use="optional" />
     <xs:attribute name="behavior" use="optional">
       <xs:simpleType>
