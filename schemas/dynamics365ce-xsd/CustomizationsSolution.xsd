@@ -621,8 +621,8 @@
           <xs:field xpath="@languagecode" />
         </xs:unique>
       </xs:element>
-      <xs:element name="EMailAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
-      <xs:element name="SupportingWebsiteUrl" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="EMailAddress" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="SupportingWebsiteUrl" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1" />
       <xs:element name="CustomizationPrefix" minOccurs="1" maxOccurs="1">
         <xs:simpleType>
           <xs:restriction base="xs:string">
