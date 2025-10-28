@@ -12,22 +12,22 @@
     </GlobalPackageReference>
     <GlobalPackageReference Include="FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference">
       <ProjectReference>$(MSBuildThisFileDirectory).submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj</ProjectReference>
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
     </GlobalPackageReference>
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Autofac" Version="6.0.0" />
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
     </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackPackageReference">
-      <Version>1.1.0</Version>
+      <Version>1.1.1</Version>
     </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackProjectReference">
       <Version>0.1.0</Version>
     </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
-      <Version>1.0.0</Version>
+      <Version>1.0.1</Version>
     </PackageVersion>
     <PackageVersion Include="Google.Protobuf" Version="3.21.6" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
@@ -44,10 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build.Framework">
-      <Version>17.14.8</Version>
+      <Version>17.14.28</Version>
     </PackageVersion>
     <PackageVersion Include="Microsoft.Build.Utilities.Core">
-      <Version>17.14.8</Version>
+      <Version>17.14.28</Version>
     </PackageVersion>
   </ItemGroup>
   <ItemGroup>
