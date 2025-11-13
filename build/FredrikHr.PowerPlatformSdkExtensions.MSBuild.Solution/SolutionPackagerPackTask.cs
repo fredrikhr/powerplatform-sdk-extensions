@@ -1,8 +1,9 @@
+using Microsoft.Build.Framework;
 using Microsoft.Crm.Tools.SolutionPackager;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
 
-public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase
+public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase, ITask
 {
     public bool UseUnmanagedFileForManaged { get; init; }
 

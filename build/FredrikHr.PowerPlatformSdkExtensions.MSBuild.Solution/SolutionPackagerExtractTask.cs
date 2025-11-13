@@ -1,8 +1,9 @@
+using Microsoft.Build.Framework;
 using Microsoft.Crm.Tools.SolutionPackager;
 
 namespace FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution;
 
-public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase
+public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase, ITask
 {
     public string? SingleComponent { get; init; }
 

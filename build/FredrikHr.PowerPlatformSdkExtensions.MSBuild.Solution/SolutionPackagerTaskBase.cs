@@ -100,6 +100,7 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
                         columnNumber: 0, endColumnNumber: 0
                     );
                 }
+                SolutionPackagerLogger.AllErrors.Clear();
             }
             return true;
         }
