@@ -1,0 +1,10 @@
+<environmentvariabledefinition schemaname="frh_PowerPlatformSdkExtensions_RuntimeExport_DestinationPath">
+  <displayname default="Power Platform SDK Extensions Runtime Export Destination Folder">
+    <label description="Power Platform SDK Extensions Runtime Export Destination Folder" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000000</type>
+</environmentvariabledefinition>
