@@ -400,6 +400,28 @@
 	</xs:sequence>
 		<xs:attribute name="EntityDataSourceId" use="required" type="GuidType" />
 	</xs:complexType>
+  <xs:complexType name="connectionreferencestype">
+		<xs:sequence>
+			<xs:element name="connectionreference" type="connectionreferencetype" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="connectionreferencetype">
+		<xs:sequence>
+			<xs:element name="connectionreferencedisplayname" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="connectorid" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="\/providers\/Microsoft\.PowerApps\/apis\/[a-zA-z0-9_-]+" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="iscustomizable" type="TrueFalse01Type" minOccurs="0" maxOccurs="1" />
+      <xs:element name="promptingbehavior" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="statecode" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="statuscode" type="xs:int" minOccurs="0" maxOccurs="1" />
+	  </xs:sequence>
+		<xs:attribute name="connectionreferencelogicalname" use="required" type="xs:string" />
+	</xs:complexType>
 	<xs:complexType name="sdkmessageprocessingstepimagestype">
 		<xs:sequence>
 			<xs:element name="SdkMessageProcessingStepImage" type="sdkmessageprocessingstepimagetype" minOccurs="0" maxOccurs="unbounded" />
@@ -785,6 +807,7 @@
 				<xs:element name="AppModules" type="AppModulesType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="EntityDataProviders" type="EntityDataProvidersType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="EntityDataSources" type="entitydatasourcestype" minOccurs="0" maxOccurs="1" />
+				<xs:element name="connectionreferences" type="connectionreferencestype" minOccurs="0" maxOccurs="1" />
 				<xs:element name="Languages" type="LanguagesType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="GlobalSearchConfigurations" type="GlobalSearchConfigurationType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="StoredProcedures" type="StoredProceduresType" minOccurs="0" maxOccurs="1" />
