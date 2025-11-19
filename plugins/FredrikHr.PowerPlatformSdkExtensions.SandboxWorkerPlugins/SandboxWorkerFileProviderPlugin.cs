@@ -79,6 +79,20 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
 
         if (".dll".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase))
         {
+            string fileDirectoryPath = fileInfo.DirectoryName;
+            ResolveEventHandler assemblyResolveHandler = (sender, e) =>
+            {
+                AssemblyName assemblyName = new(e.Name);
+                string fileName = $"{assemblyName.Name}.dll";
+                string filePath = Path.Combine(fileDirectoryPath, fileName);
+                if (File.Exists(filePath))
+                {
+                    return Assembly.ReflectionOnlyLoadFrom(filePath);
+                }
+
+                return null!;
+            };
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += assemblyResolveHandler;
             try
             {
                 Assembly assemblyInfo = Assembly.ReflectionOnlyLoadFrom(fileInfo.FullName);
@@ -91,12 +105,47 @@ public class SandboxWorkerFileProviderPlugin : IPlugin
                 assemblyEntity[nameof(assemblyName.CultureName)] = assemblyName.CultureName;
                 assemblyEntity[nameof(assemblyName.ContentType)] = assemblyName.ContentType.ToString();
                 assemblyEntity[nameof(assemblyName.FullName)] = assemblyName.FullName;
+                TryExtractInformationalVersionAttribute(assemblyInfo, assemblyEntity.Attributes, trace);
                 paramsOut[OutputParameterNames.AssemblyName] = assemblyEntity;
             }
             catch (Exception assemblyNameExcept)
             {
                 trace.Trace("{0}", assemblyNameExcept);
             }
+            finally
+            {
+                AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve -= assemblyResolveHandler;
+            }
+        }
+    }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Design",
+        "CA1031: Do not catch general exception types",
+        Justification = nameof(ITracingService)
+        )]
+    private static void TryExtractInformationalVersionAttribute(
+        Assembly reflectionAssembly,
+        DataCollection<string, object> outputs,
+        ITracingService trace
+        )
+    {
+        try
+        {
+            CustomAttributeData? infoVersionAttrData = reflectionAssembly
+                .GetCustomAttributesData()
+                .FirstOrDefault(d => typeof(AssemblyInformationalVersionAttribute).FullName.Equals(d.AttributeType.FullName, StringComparison.OrdinalIgnoreCase));
+            if (infoVersionAttrData is null) return;
+            CustomAttributeTypedArgument infoVersionArg = infoVersionAttrData
+                .ConstructorArguments.First();
+            if (infoVersionArg.Value is string infoVersionValue)
+            {
+                outputs[nameof(AssemblyInformationalVersionAttribute.InformationalVersion)] = infoVersionValue;
+            }
+        }
+        catch (Exception reflectionExcept)
+        {
+            trace.Trace("While attempting to get assembly informational version attribute: {0}", reflectionExcept);
         }
     }
 

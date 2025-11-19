@@ -22,6 +22,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
+        <xs:element name="defaultvalue" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="description" type="LozalizedLabelsWithDefaultType" minOccurs="0" maxOccurs="1">
           <xs:unique name="uniqueDescriptionLanguageCode">
             <xs:selector xpath="label" />
