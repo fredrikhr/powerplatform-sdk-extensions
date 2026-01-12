@@ -415,6 +415,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
       <xs:element name="iscustomizable" type="TrueFalse01Type" minOccurs="0" maxOccurs="1" />
       <xs:element name="promptingbehavior" type="xs:int" minOccurs="0" maxOccurs="1" />
       <xs:element name="statecode" type="xs:int" minOccurs="0" maxOccurs="1" />
