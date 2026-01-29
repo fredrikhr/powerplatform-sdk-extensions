@@ -1,0 +1,23 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+    exclude:
+      - azdevops/*
+
+resources:
+  repositories:
+    - repository: AzureDevOpsMirror
+      type: git
+      name: $(System.TeamProject)/powerplatform-sdk-extensions
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+  path: repos/github-repo
+
+- checkout: AzureDevOpsMirror
+  path: repos/azdevops-repo
