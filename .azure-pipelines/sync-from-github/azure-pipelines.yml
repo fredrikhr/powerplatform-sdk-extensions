@@ -12,6 +12,8 @@ pool:
 steps:
 - checkout: self
   path: repos/github-repo
+  workspaceRepo: true
 
 - checkout: git://$(System.TeamProject)/powerplatform-sdk-extensions
   path: repos/azdevops-repo
+  workspaceRepo: false
