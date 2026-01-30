@@ -1,0 +1,22 @@
+name: Authenticate with Azure DevOps
+author: fredrikhr
+description: |
+  Uses GitHub Federated Credentials to configure git credentials for Azure DevOps
+inputs:
+  instance:
+    default: https://login.microsoftonline.com
+    description: |
+      Microsoft Entra ID Identity Provider Instance
+  tenant:
+    required: true
+    description: Microsoft Entra ID Tenant ID (aka. Directory ID) or registered Tenant Domain name
+  client-id:
+    required: true
+    description: Microsoft Entra ID Client ID (aka. App ID)
+  audience:
+    default: api://AzureADTokenExchange
+    description: |
+      Microsoft Entra ID Federated Credentials Token Audience
+runs:
+  using: node24
+  main: index.mjs

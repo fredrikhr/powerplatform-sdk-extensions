@@ -1,0 +1,41 @@
+{
+  "name": "@fredrikhr/powerplatform-sdk-extensions_github-actions_git-azdevops-auth",
+  "version": "0.0.0",
+  "private": true,
+  "author": {
+    "name": "Fredrik Høisæther Rasch",
+    "email": "fredrik.rasch@gmail.com",
+    "url": "https://github.com/fredrikhr"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 24"
+  },
+  "type": "module",
+  "scripts": {
+    "lint": "npm-run-all --continue-on-error lint:*",
+    "lint:tsc": "tsc --project ./jsconfig.json --noEmit",
+    "lint:eslint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39",
+    "@tsconfig/node24": "^24",
+    "@tsconfig/strictest": "^2",
+    "@types/node": "^24",
+    "eslint": "^9.39",
+    "eslint-config-prettier": "^10",
+    "eslint-plugin-jsdoc": "^62",
+    "eslint-plugin-n": "^17",
+    "eslint-plugin-prettier": "^5",
+    "npm-run-all2": "^8",
+    "prettier": "^3.8",
+    "typescript": "^5.9"
+  },
+  "dependencies": {
+    "@actions/core": "^3",
+    "@actions/exec": "^3",
+    "@azure/msal-node": "^5"
+  }
+}
