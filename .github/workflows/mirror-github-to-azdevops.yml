@@ -1,0 +1,27 @@
+name: Mirror to Azure DevOps
+
+on:
+  push:
+    branches-ignore:
+      - azdevops/**
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  id-token: write
+
+jobs:
+  mirror:
+    name: Push ${{ github.ref }} to Azure DevOps
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout ${{ github.repository }}@${{ github.ref }}
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Add remote ${{ vars.AZDEVOPS_REPO_URL }} and fetch
+        run: |
+          git remote add azdevops-repos "${{ vars.AZDEVOPS_REPO_URL }}"
+          git fetch azdevops-repos
