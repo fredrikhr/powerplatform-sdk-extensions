@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': SharedVariables
+  description:
+    '@default': SharedVariables
+    label:
+      '@description': SharedVariables
+      '@languagecode': 1033
+  displayname:
+    '@default': SharedVariables
+    label:
+      '@description': SharedVariables
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-SharedVariables
+  type: 4

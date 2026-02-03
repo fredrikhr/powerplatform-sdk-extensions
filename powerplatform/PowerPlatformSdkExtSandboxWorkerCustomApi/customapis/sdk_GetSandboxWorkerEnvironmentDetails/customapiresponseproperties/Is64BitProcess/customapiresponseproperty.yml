@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': Is64BitProcess
+  description:
+    '@default': Is64BitProcess
+    label:
+      '@description': Is64BitProcess
+      '@languagecode': 1033
+  displayname:
+    '@default': Is64BitProcess
+    label:
+      '@description': Is64BitProcess
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-Is64BitProcess
+  type: 0

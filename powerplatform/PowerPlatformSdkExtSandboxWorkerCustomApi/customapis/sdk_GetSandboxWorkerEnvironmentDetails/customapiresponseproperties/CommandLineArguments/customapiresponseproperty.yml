@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': CommandLineArguments
+  description:
+    '@default': CommandLineArguments
+    label:
+      '@description': CommandLineArguments
+      '@languagecode': 1033
+  displayname:
+    '@default': CommandLineArguments
+    label:
+      '@description': CommandLineArguments
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-CommandLineArguments
+  type: 11

@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': CurrentDirectory
+  description:
+    '@default': CurrentDirectory
+    label:
+      '@description': CurrentDirectory
+      '@languagecode': 1033
+  displayname:
+    '@default': CurrentDirectory
+    label:
+      '@description': CurrentDirectory
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-CurrentDirectory
+  type: 10

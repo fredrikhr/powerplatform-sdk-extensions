@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': FileInfo
+  description:
+    '@default': FileInfo
+    label:
+      '@description': FileInfo
+      '@languagecode': 1033
+  displayname:
+    '@default': FileInfo
+    label:
+      '@description': FileInfo
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerRuntimeFile-Out-FileInfo
+  type: 3

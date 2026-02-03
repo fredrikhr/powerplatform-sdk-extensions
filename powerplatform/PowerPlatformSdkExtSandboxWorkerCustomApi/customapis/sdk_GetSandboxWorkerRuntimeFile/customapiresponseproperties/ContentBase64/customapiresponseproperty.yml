@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': ContentBase64
+  description:
+    '@default': ContentBase64
+    label:
+      '@description': ContentBase64
+      '@languagecode': 1033
+  displayname:
+    '@default': ContentBase64
+    label:
+      '@description': ContentBase64
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerRuntimeFile-Out-ContentBase64
+  type: 10

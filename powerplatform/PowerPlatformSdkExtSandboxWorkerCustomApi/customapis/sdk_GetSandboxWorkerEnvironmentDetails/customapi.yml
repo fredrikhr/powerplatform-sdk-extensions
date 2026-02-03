@@ -1,0 +1,21 @@
+customapi:
+  '@uniquename': sdk_GetSandboxWorkerEnvironmentDetails
+  allowedcustomprocessingsteptype: 2
+  bindingtype: 0
+  description:
+    '@default': Retrieves details on the Plug-In runtime environment from the SandboxWorker executing the plugin.
+    label:
+      '@description': Retrieves details on the Plug-In runtime environment from the SandboxWorker executing the plugin.
+      '@languagecode': 1033
+  displayname:
+    '@default': Get SandboxWorker Environment
+    label:
+      '@description': Get SandboxWorker Environment
+      '@languagecode': 1033
+  iscustomizable: 1
+  isfunction: 1
+  isprivate: 0
+  name: Get SandboxWorker Environment Details
+  plugintypeid:
+    plugintypeexportkey: B63D654C3981A84A312B100E01A7F2B511D447B81F97949B9111634A4E6FE3C0
+  workflowsdkstepenabled: 0

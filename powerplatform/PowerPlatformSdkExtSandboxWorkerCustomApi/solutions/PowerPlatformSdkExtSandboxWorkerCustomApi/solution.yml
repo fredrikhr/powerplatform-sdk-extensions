@@ -1,0 +1,19 @@
+ImportExportXml:
+  '@version': 9.2.26013.141
+  '@SolutionPackageVersion': 9.2
+  '@languagecode': 1033
+  '@generatedBy': CrmLive
+  '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  SolutionManifest:
+    UniqueName: PowerPlatformSdkExtSandboxWorkerCustomApi
+    LocalizedNames:
+      LocalizedName:
+      - '@description': Power Platform SDK Extensions Sandbox Worker Custom API
+        '@languagecode': 1033
+      - '@description': Power Platform SDK Utvidelser Sandbox Worker Egendefinert API
+        '@languagecode': 1044
+    Descriptions: 
+    Version: 1.2.0
+    Managed: 0
+    Publisher:
+      UniqueName: fredrikhr

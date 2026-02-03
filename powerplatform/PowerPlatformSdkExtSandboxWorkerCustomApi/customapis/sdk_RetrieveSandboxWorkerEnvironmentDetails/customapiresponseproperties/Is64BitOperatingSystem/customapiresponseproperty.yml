@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': Is64BitOperatingSystem
+  description:
+    '@default': Is64BitOperatingSystem
+    label:
+      '@description': Is64BitOperatingSystem
+      '@languagecode': 1033
+  displayname:
+    '@default': Is64BitOperatingSystem
+    label:
+      '@description': Is64BitOperatingSystem
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-Is64BitOperatingSystem
+  type: 0

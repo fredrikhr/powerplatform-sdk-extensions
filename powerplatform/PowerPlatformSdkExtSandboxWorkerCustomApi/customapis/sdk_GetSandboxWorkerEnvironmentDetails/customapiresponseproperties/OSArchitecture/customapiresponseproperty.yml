@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': OSArchitecture
+  description:
+    '@default': OSArchitecture
+    label:
+      '@description': OSArchitecture
+      '@languagecode': 1033
+  displayname:
+    '@default': OSArchitecture
+    label:
+      '@description': OSArchitecture
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-OSArchitecture
+  type: 10

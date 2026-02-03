@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': MachineName
+  description:
+    '@default': MachineName
+    label:
+      '@description': MachineName
+      '@languagecode': 1033
+  displayname:
+    '@default': MachineName
+    label:
+      '@description': MachineName
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-MachineName
+  type: 10

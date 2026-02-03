@@ -13,20 +13,6 @@
   <Folder Name="/.github/">
     <File Path=".github/dependabot.yml" />
   </Folder>
-  <Folder Name="/.submodules/" />
-  <Folder Name="/.submodules/fredrikhr/" />
-  <Folder Name="/.submodules/fredrikhr/dotnet-generichost-extensions/">
-    <Project Path=".submodules/fredrikhr/dotnet-generichost-extensions/src/FredrikHr.Extensions.DependencyInjection.Msal/FredrikHr.Extensions.DependencyInjection.Msal.csproj" />
-    <Project Path=".submodules/fredrikhr/dotnet-generichost-extensions/src/FredrikHr.Extensions.Options.Helpers/FredrikHr.Extensions.Options.Helpers.csproj" />
-  </Folder>
-  <Folder Name="/.submodules/fredrikhr/nuget-msbuild-extensions/">
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference/FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj" />
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackageAuthorSigning/FredrikHr.NupkgMSBuild.PackageAuthorSigning.csproj" />
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackPackageReference/FredrikHr.NupkgMSBuild.PackPackageReference.csproj" />
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.PackProjectReference/FredrikHr.NupkgMSBuild.PackProjectReference.csproj" />
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.ProjectReferenceAsPackageReference/FredrikHr.NupkgMSBuild.ProjectReferenceAsPackageReference.csproj" />
-    <Project Path=".submodules/fredrikhr/nuget-msbuild-extensions/build/FredrikHr.NupkgMSBuild.StripNuspecTfm/FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj" />
-  </Folder>
   <Folder Name="/build/">
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj" />
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.csproj" />
@@ -43,7 +29,6 @@
   <Folder Name="/solutions/">
     <File Path="solutions/Directory.Build.props" />
     <Project Path="solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/PowerPlatformSdkExtSamplePluginPackgeSolution.cdsproj" Type="C#" />
-    <Project Path="solutions/PowerPlatformSdkExtSandboxWorkerCustomApi/PowerPlatformSdkExtSandboxWorkerCustomApi.cdsproj" Type="C#" />
     <Project Path="solutions/PowerPlatformSdkExtRuntimeToOneDriveExport/PowerPlatformSdkExtRuntimeToOneDriveExport.cdsproj" Type="C#" />
   </Folder>
   <Folder Name="/tools/">

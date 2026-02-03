@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': Uri
+  description:
+    '@default': Uri
+    label:
+      '@description': Uri
+      '@languagecode': 1033
+  displayname:
+    '@default': Uri
+    label:
+      '@description': Uri
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerRuntimeFile-Out-Uri
+  type: 3

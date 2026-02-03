@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': AssemblyName
+  description:
+    '@default': AssemblyName
+    label:
+      '@description': AssemblyName
+      '@languagecode': 1033
+  displayname:
+    '@default': AssemblyName
+    label:
+      '@description': AssemblyName
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerRuntimeFile-Out-AssemblyName
+  type: 3

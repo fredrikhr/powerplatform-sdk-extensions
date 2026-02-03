@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': UserDomainName
+  description:
+    '@default': UserDomainName
+    label:
+      '@description': UserDomainName
+      '@languagecode': 1033
+  displayname:
+    '@default': UserDomainName
+    label:
+      '@description': UserDomainName
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-UserDomainName
+  type: 10

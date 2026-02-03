@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': ContainerContext
+  description:
+    '@default': ContainerContext
+    label:
+      '@description': ContainerContext
+      '@languagecode': 1033
+  displayname:
+    '@default': ContainerContext
+    label:
+      '@description': ContainerContext
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-ContainerContext
+  type: 3

@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': ClrDescription
+  description:
+    '@default': ClrDescription
+    label:
+      '@description': ClrDescription
+      '@languagecode': 1033
+  displayname:
+    '@default': ClrDescription
+    label:
+      '@description': ClrDescription
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-ClrDescription
+  type: 10

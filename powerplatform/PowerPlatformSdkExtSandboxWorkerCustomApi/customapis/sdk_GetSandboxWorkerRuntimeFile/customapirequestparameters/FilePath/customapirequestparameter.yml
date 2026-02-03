@@ -1,0 +1,16 @@
+customapirequestparameter:
+  '@uniquename': FilePath
+  description:
+    '@default': FilePath
+    label:
+      '@description': FilePath
+      '@languagecode': 1033
+  displayname:
+    '@default': FilePath
+    label:
+      '@description': FilePath
+      '@languagecode': 1033
+  iscustomizable: 0
+  isoptional: 0
+  name: sdk_GetSandboxWorkerRuntimeFile-In-FilePath
+  type: 10

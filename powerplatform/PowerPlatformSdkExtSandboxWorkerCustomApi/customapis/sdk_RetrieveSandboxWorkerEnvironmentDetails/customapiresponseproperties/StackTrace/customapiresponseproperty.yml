@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': StackTrace
+  description:
+    '@default': StackTrace
+    label:
+      '@description': StackTrace
+      '@languagecode': 1033
+  displayname:
+    '@default': StackTrace
+    label:
+      '@description': StackTrace
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-StackTrace
+  type: 10

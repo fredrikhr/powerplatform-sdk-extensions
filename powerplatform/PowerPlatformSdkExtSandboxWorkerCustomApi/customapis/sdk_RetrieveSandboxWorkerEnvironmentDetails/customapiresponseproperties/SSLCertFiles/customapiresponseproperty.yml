@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': SSLCertFiles
+  description:
+    '@default': SSLCertFiles
+    label:
+      '@description': SSLCertFiles
+      '@languagecode': 1033
+  displayname:
+    '@default': SSLCertFiles
+    label:
+      '@description': SSLCertFiles
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-SSLCertFiles
+  type: 3

@@ -1,0 +1,16 @@
+customapirequestparameter:
+  '@uniquename': InformationOnly
+  description:
+    '@default': InformationOnly
+    label:
+      '@description': InformationOnly
+      '@languagecode': 1033
+  displayname:
+    '@default': InformationOnly
+    label:
+      '@description': InformationOnly
+      '@languagecode': 1033
+  iscustomizable: 0
+  isoptional: 1
+  name: sdk_GetSandboxWorkerRuntimeFile-In-InformationOnly
+  type: 0

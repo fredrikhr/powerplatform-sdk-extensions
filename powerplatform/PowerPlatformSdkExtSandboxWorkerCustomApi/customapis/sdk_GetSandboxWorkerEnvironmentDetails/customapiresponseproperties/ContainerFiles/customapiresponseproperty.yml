@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': ContainerFiles
+  description:
+    '@default': ContainerFiles
+    label:
+      '@description': ContainerFiles
+      '@languagecode': 1033
+  displayname:
+    '@default': ContainerFiles
+    label:
+      '@description': ContainerFiles
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-ContainerFiles
+  type: 3

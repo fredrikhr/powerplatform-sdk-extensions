@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': EnvironmentVariables
+  description:
+    '@default': EnvironmentVariables
+    label:
+      '@description': EnvironmentVariables
+      '@languagecode': 1033
+  displayname:
+    '@default': EnvironmentVariables
+    label:
+      '@description': EnvironmentVariables
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-EnvironmentVariables
+  type: 4

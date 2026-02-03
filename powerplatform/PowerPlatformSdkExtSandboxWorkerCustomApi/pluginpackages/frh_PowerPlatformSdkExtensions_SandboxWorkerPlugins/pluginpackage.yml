@@ -1,0 +1,11 @@
+pluginpackage:
+  '@uniquename': frh_PowerPlatformSdkExtensions_SandboxWorkerPlugins
+  exportkeyversion: 1
+  iscustomizable: 1
+  name: frh_PowerPlatformSdkExtensions_SandboxWorkerPlugins
+  package:
+    '@mimetype': application/octet-stream
+    '#text': frh_PowerPlatformSdkExtensions_SandboxWorkerPlugins.nupkg
+  statecode: 0
+  statuscode: 1
+  version: 1.2.0

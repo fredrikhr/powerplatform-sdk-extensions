@@ -1,0 +1,21 @@
+customapi:
+  '@uniquename': sdk_GetSandboxWorkerRuntimeFile
+  allowedcustomprocessingsteptype: 2
+  bindingtype: 0
+  description:
+    '@default': Retrieves a file from the Plug-In runtime environment in which the plugin is executed.
+    label:
+      '@description': Retrieves a file from the Plug-In runtime environment in which the plugin is executed.
+      '@languagecode': 1033
+  displayname:
+    '@default': Get SandboxWorker File
+    label:
+      '@description': Get SandboxWorker File
+      '@languagecode': 1033
+  iscustomizable: 1
+  isfunction: 1
+  isprivate: 0
+  name: Get SandboxWorker File
+  plugintypeid:
+    plugintypeexportkey: 27C052D5FFA3F7E9DD39024FB12312AE14E151C5AC08032681254DB821F7499B
+  workflowsdkstepenabled: 0

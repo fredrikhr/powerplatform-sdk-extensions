@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PowerPlatformTargetSolutionFolder Include="..\..\powerplatform\PowerPlatformSdkExtSandboxWorkerCustomApi" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FredrikHr.NupkgMSBuild.PackProjectReference">
       <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.PackProjectReference\FredrikHr.NupkgMSBuild.PackProjectReference.csproj</ProjectReference>
       <PrivateAssets>all</PrivateAssets>

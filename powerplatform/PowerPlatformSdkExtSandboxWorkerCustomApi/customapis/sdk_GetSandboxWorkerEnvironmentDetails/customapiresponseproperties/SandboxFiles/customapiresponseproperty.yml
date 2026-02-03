@@ -1,0 +1,15 @@
+customapiresponseproperty:
+  '@uniquename': SandboxFiles
+  description:
+    '@default': SandboxFiles
+    label:
+      '@description': SandboxFiles
+      '@languagecode': 1033
+  displayname:
+    '@default': SandboxFiles
+    label:
+      '@description': SandboxFiles
+      '@languagecode': 1033
+  iscustomizable: 0
+  name: sdk_GetSandboxWorkerEnvironmentDetails-Out-SandboxFiles
+  type: 3
