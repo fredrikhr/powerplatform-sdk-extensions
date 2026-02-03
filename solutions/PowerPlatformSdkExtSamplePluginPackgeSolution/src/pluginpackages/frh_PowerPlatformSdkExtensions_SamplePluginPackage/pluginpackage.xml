@@ -1,9 +1,0 @@
-<pluginpackage uniquename="frh_PowerPlatformSdkExtensions_SamplePluginPackage">
-  <exportkeyversion>1</exportkeyversion>
-  <iscustomizable>1</iscustomizable>
-  <name>frh_PowerPlatformSdkExtensions_SamplePluginPackage</name>
-  <package mimetype="application/octet-stream">frh_PowerPlatformSdkExtensions_SamplePluginPackage.nupkg</package>
-  <statecode>0</statecode>
-  <statuscode>1</statuscode>
-  <version>1.0.0</version>
-</pluginpackage>

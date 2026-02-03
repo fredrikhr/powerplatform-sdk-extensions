@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PowerPlatformTargetSolutionFolder Include="..\..\powerplatform\PowerPlatformSdkExtSamplePluginPackgeSolution" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FredrikHr.NupkgMSBuild.PackPackageReference">
       <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.PackPackageReference\FredrikHr.NupkgMSBuild.PackPackageReference.csproj</ProjectReference>
       <PrivateAssets>all</PrivateAssets>

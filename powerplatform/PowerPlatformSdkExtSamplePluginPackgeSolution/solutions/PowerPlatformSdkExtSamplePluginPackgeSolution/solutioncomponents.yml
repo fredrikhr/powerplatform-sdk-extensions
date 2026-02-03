@@ -1,0 +1,4 @@
+SolutionComponents:
+  Component:
+  - '@path': /pluginpackages/frh_PowerPlatformSdkExtensions_SamplePluginPackage
+  - '@path': /publishers/fredrikhr

@@ -28,7 +28,6 @@
   </Folder>
   <Folder Name="/solutions/">
     <File Path="solutions/Directory.Build.props" />
-    <Project Path="solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/PowerPlatformSdkExtSamplePluginPackgeSolution.cdsproj" Type="C#" />
     <Project Path="solutions/PowerPlatformSdkExtRuntimeToOneDriveExport/PowerPlatformSdkExtRuntimeToOneDriveExport.cdsproj" Type="C#" />
   </Folder>
   <Folder Name="/tools/">
