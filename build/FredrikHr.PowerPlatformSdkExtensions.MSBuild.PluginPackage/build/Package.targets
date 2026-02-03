@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <PowerAppsComponentType>PluginPackage</PowerAppsComponentType>
+  </PropertyGroup>
+
+  <!-- This target is called to gather OutputPath property set in project file to be copied in a Project Reference -->
+  <Target Name="GetProjectOutputPath" Returns="@(ProjectOutputPath)">
+    <CallTarget Targets="_GetOutputItemsFromPack">
+      <Output TaskParameter="TargetOutputs" ItemName="PluginPackageOutputPath"/>
+    </CallTarget>
+
+    <ItemGroup>
+      <ProjectOutputPath Include="@(PluginPackageOutputPath->WithMetadataValue('Extension', '.nupkg'))">
+        <PackageId>$(PackageId)</PackageId>
+        <PackageVersion>$(PackageVersion)</PackageVersion>
+        <PowerAppsComponentType>$(PowerAppsComponentType)</PowerAppsComponentType>
+      </ProjectOutputPath>
+    </ItemGroup>
+  </Target>
+
+</Project>

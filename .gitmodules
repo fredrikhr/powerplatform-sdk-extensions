@@ -1,0 +1,8 @@
+[submodule "github.com/fredrikhr/nuget-msbuild-extensions"]
+	path = .submodules/fredrikhr/nuget-msbuild-extensions
+	url = https://github.com/fredrikhr/nuget-msbuild-extensions.git
+	branch = main
+[submodule "github.com/fredrikhr/dotnet-generichost-extensions"]
+	path = .submodules/fredrikhr/dotnet-generichost-extensions
+	url = https://github.com/fredrikhr/dotnet-generichost-extensions.git
+	branch = main

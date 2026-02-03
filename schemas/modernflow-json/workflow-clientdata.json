@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft-04/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "connectionReferences": {
+          "type": "object"
+        },
+        "definition": {
+          "$ref": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#"
+        }
+      },
+      "required": ["connectionReferences", "definition"]
+    }
+  },
+  "required": ["schemaVersion", "properties"]
+}

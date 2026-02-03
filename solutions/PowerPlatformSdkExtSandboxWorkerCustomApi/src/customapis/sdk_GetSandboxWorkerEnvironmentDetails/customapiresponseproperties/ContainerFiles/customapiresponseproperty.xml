@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ContainerFiles">
+  <description default="ContainerFiles">
+    <label description="ContainerFiles" languagecode="1033" />
+  </description>
+  <displayname default="ContainerFiles">
+    <label description="ContainerFiles" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-ContainerFiles</name>
+  <type>3</type>
+</customapiresponseproperty>

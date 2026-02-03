@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <SolutionRootPath Condition="'$(SolutionRootPath)' == ''">.</SolutionRootPath>
+    <SolutionPackageErrorLevel Condition="'$(SolutionPackageErrorLevel)' == ''">Info</SolutionPackageErrorLevel>
+    <SolutionPackageEnableLocalization Condition="'$(SolutionPackageEnableLocalization)' == ''">false</SolutionPackageEnableLocalization>
+    <SolutionPackagerWorkingDirectory Condition="'$(SolutionPackagerWorkingDirectory)' == ''">$(IntermediateOutputPath)</SolutionPackagerWorkingDirectory>
+    <SolutionPackagerMetadataWorkingDirectory Condition="'$(SolutionPackagerMetadataWorkingDirectory)' == ''">$(SolutionPackagerWorkingDirectory)Metadata</SolutionPackagerMetadataWorkingDirectory>
+    <SolutionPackagerLocalizationWorkingDirectory Condition="'$(SolutionPackagerLocalizationWorkingDirectory)' == ''">$(SolutionPackagerWorkingDirectory)LocExt</SolutionPackagerLocalizationWorkingDirectory>
+    <SolutionPackageLogFilePath Condition="'$(SolutionPackageLogFilePath)' == ''">$(IntermediateOutputPath)SolutionPackager.log</SolutionPackageLogFilePath>
+    <SolutionPackageZipFilePath Condition="'$(SolutionPackageZipFilePath)' == ''">$(OutputPath)$(MSBuildProjectName).zip</SolutionPackageZipFilePath>
+    <SolutionPackageDefaultLocale Condition="'$(SolutionPackageDefaultLocale)' == ''">en-US</SolutionPackageDefaultLocale>
+    <SolutionPackageLocaleTemplate Condition="'$(SolutionPackageEnableLocalization)' == 'true'">Auto</SolutionPackageLocaleTemplate>
+    <PcfForceUpdate Condition="'$(PcfForceUpdate)' == ''">false</PcfForceUpdate>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SourceSolutionManifestFilePath>$(MSBuildProjectDirectory)\$(SolutionRootPath)\Other\Solution.xml</SourceSolutionManifestFilePath>
+    <SourceSolutionFileRoot>$(MSBuildProjectDirectory)\$(SolutionRootPath)</SourceSolutionFileRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- to avoid adding unintended files/folders with the newly introduced server-side sharding,
+      filter out files in solution folder (e.g. .cdsproj) and any its build artifact subfolders -->
+    <ExcludeDirectories Include= "$(SourceSolutionFileRoot)\*" />
+    <ExcludeDirectories Include= "$(IntermediateOutputPath)\**" />
+    <ExcludeDirectories Include= "$(OutputPath)\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SourceSolutionManifestFile Include="$(SourceSolutionManifestFilePath)" />
+    <SourceSolutionFiles
+      Include="$(SourceSolutionFileRoot)\**"
+      Exclude="@(ExcludeDirectories)"
+    >
+      <MetadataDirectoryFilePath>$(SolutionPackagerMetadataWorkingDirectory)\%(RecursiveDir)%(Filename)%(Extension)</MetadataDirectoryFilePath>
+    </SourceSolutionFiles>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\tasks\ThisPackage.tasks" />
+
+  <Target Name="AssignCdsSolutionPackageTypeFromSolution"
+    Condition="'$(SolutionPackageTypeSource)' == 'SolutionXml'"
+  >
+    <XmlPeek
+      XmlInputPath="$(SourceSolutionManifestFilePath)"
+      Query="/ImportExportXml/SolutionManifest/Managed/text()"
+    >
+      <Output TaskParameter="Result" PropertyName="SolutionPackageTypeNumber" />
+    </XmlPeek>
+    <PropertyGroup>
+      <SolutionPackageType Condition="'$(SolutionPackageTypeNumber)' == '0'">Unmanaged</SolutionPackageType>
+      <SolutionPackageType Condition="'$(SolutionPackageTypeNumber)' == '1'">Managed</SolutionPackageType>
+      <SolutionPackageType Condition="'$(SolutionPackageTypeNumber)' != '0' AND '$(SolutionPackageTypeNumber)' != '1'">Both</SolutionPackageType>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GetSolutionPackagerPackOutput"
+    DependsOnTargets="AssignCdsSolutionPackageTypeFromSolution"
+    Returns="@(SolutionPackagerPackOutput)"
+  >
+    <ItemGroup Condition="'$(SolutionPackageType)' == 'Both'">
+      <SolutionPackagerPackOutput Include="$(SolutionPackageZipFilePath)">
+        <SolutionPackageType>Unmanaged</SolutionPackageType>
+      </SolutionPackagerPackOutput>
+      <SolutionPackagerPackOutput Include="@(SolutionPackagerPackOutput->'%(RootDir)%(Directory)%(Filename)_managed%(Extension)')">
+        <SolutionPackageType>Managed</SolutionPackageType>
+      </SolutionPackagerPackOutput>
+    </ItemGroup>
+    <ItemGroup Condition="'$(SolutionPackageType)' != 'Both'">
+      <SolutionPackagerPackOutput Include="$(SolutionPackageZipFilePath)">
+        <SolutionPackageType>$(SolutionPackageType)</SolutionPackageType>
+      </SolutionPackagerPackOutput>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyCdsSolutionContent"
+    BeforeTargets="ProcessCdsProjectReferencesOutputs"
+    Inputs="@(SourceSolutionFiles)"
+    Outputs="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
+  >
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesSpec
+        Include="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
+      />
+    </ItemGroup>
+
+    <Copy
+      SourceFiles="@(SourceSolutionFiles)"
+      DestinationFiles="@(SourceSolutionFiles -> '%(MetadataDirectoryFilePath)')"
+      SkipUnchangedFiles="true"
+    >
+      <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataCopiedFile" />
+    </Copy>
+  </Target>
+
+  <Target Name="CollectProjectReferencesProjectOutputs"
+    DependsOnTargets="ResolveProjectReferences"
+  >
+    <MSBuild Projects="@(ProjectReference)" Targets="GetProjectOutputPath">
+      <Output TaskParameter="TargetOutputs" ItemName="ProjectReferenceProjectOutputPath"/>
+    </MSBuild>
+
+    <ItemGroup>
+      <ProjectReferencePluginPackageNupkgOutputPath
+        Include="@(ProjectReferenceProjectOutputPath->WithMetadataValue('PowerAppsComponentType', 'PluginPackage')->WithMetadataValue('Extension', '.nupkg'))"
+      />
+      <ProjectReferenceBundledTaskProcessableOutputPath
+        Include="@(ProjectReferenceProjectOutputPath->WithMetadataValue('PowerAppsComponentType', 'Plugin'))"
+      />
+      <ProjectReferenceBundledTaskProcessableOutputPath
+        Include="@(ProjectReferenceProjectOutputPath->WithMetadataValue('PowerAppsComponentType', 'Pcf'))"
+      />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GetCdsPluginPackageComponentXmlItem"
+    DependsOnTargets="CollectProjectReferencesProjectOutputs"
+  >
+    <ItemGroup>
+      <SolutionPackagerMetadataPluginPackageComponentXmlFile
+        Include="@(ProjectReferencePluginPackageNupkgOutputPath->'$(SolutionPackagerMetadataWorkingDirectory)\pluginpackages\%(PackageId)\pluginpackage.xml')"
+      >
+        <NupkgFilenameWithExtension>%(ProjectReferencePluginPackageNupkgOutputPath.PackageId)%(ProjectReferencePluginPackageNupkgOutputPath.Extension)</NupkgFilenameWithExtension>
+        <SourceNupkgPath>%(ProjectReferencePluginPackageNupkgOutputPath.Identity)</SourceNupkgPath>
+        <SolutionMetadataNupkgPath>$(SolutionPackagerMetadataWorkingDirectory)\pluginpackages\%(ProjectReferencePluginPackageNupkgOutputPath.PackageId)\package\%(ProjectReferencePluginPackageNupkgOutputPath.PackageId)%(ProjectReferencePluginPackageNupkgOutputPath.Extension)</SolutionMetadataNupkgPath>
+      </SolutionPackagerMetadataPluginPackageComponentXmlFile>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ProcessCdsPluginPackageNupkgProjectOutput"
+    DependsOnTargets="GetCdsPluginPackageComponentXmlItem;GetSolutionPackagerPackOutput"
+  >
+    <XmlPoke
+      XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+      Query="/pluginpackage/@uniquename"
+      Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageId)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    />
+    <XmlPoke
+      XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+      Query="/pluginpackage/name"
+      Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageId)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    />
+    <XmlPoke
+      XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+      Query="/pluginpackage/version"
+      Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.PackageVersion)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    />
+    <XmlPoke
+      XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+      Query="/pluginpackage/package"
+      Value="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.NupkgFilenameWithExtension)"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    />
+    <XmlPoke
+      XmlInputPath="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.Identity)"
+      Query="/pluginpackage/package/@mimetype"
+      Value="application/octet-stream"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    />
+    <Copy
+      SourceFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SourceNupkgPath)"
+      DestinationFiles="%(SolutionPackagerMetadataPluginPackageComponentXmlFile.SolutionMetadataNupkgPath)"
+      SkipUnchangedFiles="true"
+      Condition="'@(SolutionPackagerMetadataPluginPackageComponentXmlFile)' != ''"
+    >
+      <Output TaskParameter="CopiedFiles" ItemName="SolutionPackagerMetadataPluginPackageNupkgFile" />
+    </Copy>
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesSpec
+        Include="@(SolutionPackagerMetadataPluginPackageNupkgFile)"
+      />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ProcessCdsBundledTaskProcessableProjectOutput"
+    DependsOnTargets="CollectProjectReferencesProjectOutputs"
+  >
+    <ProcessCdsProjectReferencesOutputs
+      WorkingDirectoryPath="$(SolutionPackagerMetadataWorkingDirectory)"
+      SourceFileItems="@(ProjectReferenceBundledTaskProcessableOutputPath)"
+      PcfForceUpdateFlag="$(PcfForceUpdate)"
+      Condition="'@(ProjectReferenceBundledTaskProcessableOutputPath)' != ''"
+    />
+  </Target>
+
+  <!--
+    Project References are already built. Find the Output Path & Copy the output to Cds working directory
+
+    Allow all project types to be referenced from/to cdsproj. We don't block any project reference creation
+    as it is also used to define build order sometime in a solution while running in VS.
+
+    However, cdsproj would not process any project reference output that it doesn't understand. GetProjectOutputPath
+    Target must be defined in each of the valid referenced projects
+    Currently it understands pcfproj & csproj (plugins) only.
+  -->
+  <Target Name="ProcessCdsProjectReferencesOutputs"
+    BeforeTargets="PowerAppsPackage"
+    DependsOnTargets="ProcessCdsPluginPackageNupkgProjectOutput;ProcessCdsBundledTaskProcessableProjectOutput"
+  />
+
+  <Target Name="PruneSolutionPackagerMetadataWorkingDirectory"
+    DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs"
+  >
+    <ItemGroup>
+      <SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles
+        Include="$(SolutionPackagerMetadataWorkingDirectory)\**\*.*"
+        Exclude="@(SolutionPackagerMetadataWorkingDirectoryFilesSpec)"
+      />
+    </ItemGroup>
+
+    <Delete
+      Files="@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)"
+      Condition="'@(SolutionPackagerMetadataWorkingDirectoryFilesExtranousFiles)' != ''"
+    />
+  </Target>
+
+  <Target Name="GetSolutionPackagerMetadataWorkingDirectorySolutionPackageType"
+    DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs"
+  >
+    <PropertyGroup>
+      <SolutionPackagerMetadataWorkingDirectorySolutionXmlPath>$(SolutionPackagerMetadataWorkingDirectory)\Other\Solution.xml</SolutionPackagerMetadataWorkingDirectorySolutionXmlPath>
+    </PropertyGroup>
+
+    <XmlPeek
+      XmlInputPath="$(SolutionPackagerMetadataWorkingDirectorySolutionXmlPath)"
+      Query="/ImportExportXml/SolutionManifest/Managed/text()"
+    >
+      <Output TaskParameter="Result" PropertyName="SolutionPackageTypeNumberFromSolutionXml" />
+    </XmlPeek>
+  </Target>
+
+  <Target Name="GetSolutionPackagerPackInput"
+    DependsOnTargets="CopyCdsSolutionContent;ProcessCdsProjectReferencesOutputs;PruneSolutionPackagerMetadataWorkingDirectory"
+    Returns="@(SolutionPackagerPackInput)"
+  >
+    <ItemGroup>
+      <SolutionPackagerPackInput Include="$(SolutionPackagerMetadataWorkingDirectory)\**" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PowerAppsRefreshLoc" DependsOnTargets="ProcessCdsProjectReferencesOutputs;EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber">
+    <Message Importance="High" Text="Running Solution Packager to build regular package: $(SolutionPackageType) $([MSBuild]::NormalizePath('$(SolutionPackagerLocalizationWorkingDirectory)', '$(MSBuildProjectName).zip'))" />
+    <SolutionPackagerPackTask
+      PackageType="$(SolutionPackageType)"
+      PathToZipFile="$(SolutionPackagerLocalizationWorkingDirectory)\$(MSBuildProjectName).zip"
+      MappingFile="$(SolutionPackageMapFilePath)"
+      SolutionRootDirectory="$(SolutionPackagerMetadataWorkingDirectory)"
+      ErrorLevel="$(SolutionPackageErrorLevel)"
+      LogFile="$(SolutionPackageLogFilePath)"
+    />
+
+    <Message Importance="High" Text="Running Solution Packager to build resource files: $([MSBuild]::NormalizePath('$(SolutionPackagerLocalizationWorkingDirectory)', 'Metadata'))" />
+    <SolutionPackagerExtractTask
+      PackageType="$(SolutionPackageType)"
+      MappingFile="$(SolutionPackageMapFilePath)"
+      SolutionRootDirectory="$(SolutionPackagerLocalizationWorkingDirectory)\Metadata"
+      PathToZipFile="$(SolutionPackagerLocalizationWorkingDirectory)\$(MSBuildProjectName).zip"
+      ErrorLevel="$(SolutionPackageErrorLevel)"
+      LogFile="$(SolutionPackageLogFilePath)"
+      LocaleTemplate="Auto"
+      Localize="true"
+    />
+    <Copy
+      SourceFiles="$(SolutionPackagerLocalizationWorkingDirectory)\Metadata\Resources\$(SolutionPackageDefaultLocale)\resources.$(SolutionPackageDefaultLocale).resx"
+      DestinationFolder="$(SolutionPackagerMetadataWorkingDirectory)\Resources\$(SolutionPackageDefaultLocale)\"
+      SkipUnchangedFiles="True"
+    />
+  </Target>
+
+  <Target Name="GetSolutionPackageTypeNumberToEnforce"
+    DependsOnTargets="AssignCdsSolutionPackageTypeFromSolution"
+  >
+    <PropertyGroup>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Unmanaged'">0</SolutionPackageTypeNumberEnforced>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Managed'">1</SolutionPackageTypeNumberEnforced>
+      <SolutionPackageTypeNumberEnforced Condition="'$(SolutionPackageType)' == 'Both'">2</SolutionPackageTypeNumberEnforced>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber"
+    DependsOnTargets="GetSolutionPackagerMetadataWorkingDirectorySolutionPackageType;GetSolutionPackageTypeNumberToEnforce"
+  >
+    <XmlPoke
+      XmlInputPath="$(SolutionPackagerMetadataWorkingDirectorySolutionXmlPath)"
+      Query="/ImportExportXml/SolutionManifest/Managed"
+      Value="$(SolutionPackageTypeNumberEnforced)"
+      Condition="'$(SolutionPackageTypeNumberFromSolutionXml)' != '$(SolutionPackageTypeNumberEnforced)'"
+    />
+  </Target>
+
+  <Target Name="PowerAppsPackage" AfterTargets="AfterBuild"
+    DependsOnTargets="GetSolutionPackagerPackOutput;GetSolutionPackagerPackInput;EnforceSolutionPackagerMetadataWorkingDirectoryPackageTypeNumber"
+    Inputs="@(SolutionPackagerPackInput)"
+    Outputs="@(SolutionPackagerPackOutput)"
+  >
+    <Message Importance="High" Text="Running Solution Packager to build package type: $(SolutionPackageType) $(SolutionPackageZipFilePath)" />
+    <SolutionPackagerPackTask
+      PackageType="$(SolutionPackageType)"
+      PathToZipFile="$(SolutionPackageZipFilePath)"
+      SolutionRootDirectory="$(SolutionPackagerMetadataWorkingDirectory)"
+      MappingFile="$(SolutionPackageMapFilePath)"
+
+      Localize="$(SolutionPackageEnableLocalization)"
+      LocaleTemplate="$(SolutionPackageLocaleTemplate)"
+      UseLcid="$(SolutionPackagerUseLcid)"
+
+      UseUnmanagedFileForManaged="$(SolutionPackageUseUnmanagedFileForManaged)"
+      DisablePluginAssemblyTypeNameRemapping="$(SolutionPackageDisablePluginAssemblyTypeNameRemapping)"
+
+      ErrorLevel="$(SolutionPackageErrorLevel)"
+      LogFile="$(SolutionPackageLogFilePath)"
+
+      NoLogo="$(SolutionPackagerNoLogo)"
+      DisableTelemetry="$(SolutionPackagerDisableTelemetry)"
+    />
+    <Message Importance="High" Text="Solution: $(SolutionPackageZipFilePath) generated." />
+    <Message Importance="High" Text="Solution Package Type: $(SolutionPackageType) generated." />
+    <Message Importance="Normal" Text="Solution Packager log path: $(SolutionPackageLogFilePath)." />
+    <Message Importance="Normal" Text="Solution Packager error level: $(SolutionPackageErrorLevel)." />
+  </Target>
+
+  <Target Name="GetSolutionPackagerPackOutputClean"
+    AfterTargets="BeforeClean"
+    DependsOnTargets="GetSolutionPackagerPackOutput"
+  >
+    <ItemGroup>
+      <Clean Include="@(SolutionPackagerPackOutput)" />
+      <Clean Include="$(SolutionPackagerMetadataWorkingDirectory)\**;$(SolutionPackagerLocalizationWorkingDirectory)\**;$(SolutionPackageLogFilePath)" />
+      <AdditionalIntermediateClean Include="$(IntermediateOutputPath)**" Exclude="@(Clean)" />
+      <Clean Include="@(AdditionalIntermediateClean)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="SolutionPackagerWorkingDirectoryClean"
+    AfterTargets="AfterClean"
+  >
+    <RemoveDir Directories="$(SolutionPackagerMetadataWorkingDirectory);$(SolutionPackagerLocalizationWorkingDirectory)" />
+  </Target>
+
+</Project>

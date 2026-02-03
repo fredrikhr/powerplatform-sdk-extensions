@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub">
+      <Version>8.0.0</Version>
+    </GlobalPackageReference>
+    <GlobalPackageReference Include="PolySharp">
+      <Version>1.15.0</Version>
+    </GlobalPackageReference>
+    <GlobalPackageReference Include="FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference">
+      <ProjectReference>$(MSBuildThisFileDirectory).submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj</ProjectReference>
+      <Version>1.0.1</Version>
+    </GlobalPackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Autofac" Version="6.0.0" />
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
+      <Version>1.1.0</Version>
+    </PackageVersion>
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackPackageReference">
+      <Version>1.1.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackProjectReference">
+      <Version>0.1.0</Version>
+    </PackageVersion>
+    <PackageVersion Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
+      <Version>1.0.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="Google.Protobuf" Version="3.21.6" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Identity.Client" Version="4.77.0" />
+    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.77.0" />
+    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.205">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="System.IO.Hashing" Version="9.0.9" />
+    <PackageVersion Include="System.Memory" Version="4.6.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Build.Framework">
+      <Version>17.14.28</Version>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.Build.Utilities.Core">
+      <Version>17.14.28</Version>
+    </PackageVersion>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.PowerApps.CLI">
+      <Version>1.51.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.PowerApps.MSBuild.Plugin">
+      <Version>1.51.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.PowerApps.MSBuild.Solution ">
+      <Version>1.51.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
+      <Version>1.51.1</Version>
+    </PackageVersion>
+    <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution">
+      <Version>1.51.1</Version>
+    </PackageVersion>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.CrmSdk.CoreAssemblies">
+      <Version>9.0.2.59</Version>
+    </PackageVersion>
+  </ItemGroup>
+</Project>

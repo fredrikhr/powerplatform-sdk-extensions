@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="./CustomizationsSolution.xsd" />
+  <xs:complexType name="LozalizedLabelsWithDefaultType">
+    <xs:sequence>
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="description" type="xs:string" use="required" />
+          <xs:attribute name="languagecode" type="LCIDType_SiteMap" use="required" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="default" use="optional" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="EnvironmentVariableDefinitionType">
+    <xs:sequence>
+      <xs:sequence>
+        <xs:element name="apiid" minOccurs="0" maxOccurs="1" default="/providers/microsoft.powerapps/apis/shared_sharepointonline">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:pattern value="\/providers\/microsoft\.powerapps\/apis\/[a-zA-z0-9_-]+" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="defaultvalue" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="description" type="LozalizedLabelsWithDefaultType" minOccurs="0" maxOccurs="1">
+          <xs:unique name="uniqueDescriptionLanguageCode">
+            <xs:selector xpath="label" />
+            <xs:field xpath="@languagecode" />
+          </xs:unique>
+        </xs:element>
+        <xs:element name="displayname" type="LozalizedLabelsWithDefaultType" minOccurs="0" maxOccurs="1">
+          <xs:unique name="uniqueDisplayNameLanguageCode">
+            <xs:selector xpath="label" />
+            <xs:field xpath="@languagecode" />
+          </xs:unique>
+        </xs:element>
+        <xs:element name="hint" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="introducedversion" type="VersionType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="iscustomizable" type="TrueFalse01Type" minOccurs="0" maxOccurs="1" />
+        <xs:element name="isrequired" type="TrueFalse01Type" minOccurs="0" maxOccurs="1" />
+        <xs:element name="learnmoreurl" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
+        <xs:element name="parameterkey" type="xs:NCName" minOccurs="0" maxOccurs="1" />
+        <xs:element name="parentdefinitionid" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:all minOccurs="1" maxOccurs="1">
+              <xs:element name="schemaname" type="CRM_Identifier_SiteMap" minOccurs="1" maxOccurs="1" />
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="secretstore" minOccurs="0" maxOccurs="1" default="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:enumeration value="0">
+                <xs:annotation>
+                  <xs:documentation>Azure Key Vault</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="1">
+                <xs:annotation>
+                  <xs:documentation>Microsoft Dataverse</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="type" minOccurs="1" maxOccurs="1" default="100000000">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:enumeration value="100000000">
+                <xs:annotation>
+                  <xs:documentation>String</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="100000001">
+                <xs:annotation>
+                  <xs:documentation>Number</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="100000002">
+                <xs:annotation>
+                  <xs:documentation>Boolean</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="100000003">
+                <xs:annotation>
+                  <xs:documentation>JSON</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="100000004">
+                <xs:annotation>
+                  <xs:documentation>Data Source</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="100000005">
+                <xs:annotation>
+                  <xs:documentation>Secret</xs:documentation>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="valueschema" minOccurs="0" maxOccurs="1" />
+      </xs:sequence>
+    </xs:sequence>
+    <xs:attribute name="schemaname" type="CRM_Identifier_SiteMap" use="required" />
+  </xs:complexType>
+  <xs:element name="environmentvariabledefinition" type="EnvironmentVariableDefinitionType" />
+</xs:schema>

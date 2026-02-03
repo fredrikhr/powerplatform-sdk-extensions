@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <AutoGenerateAssemblyVersion>false</AutoGenerateAssemblyVersion>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendPlatformToOutputPath>false</AppendPlatformToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SolutionPackageTypeSource Condition="'$(SolutionPackageTypeSource)' == ''">Project</SolutionPackageTypeSource>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Default package type based on Configuration">
+    <SolutionPackageType Condition="'$(SolutionPackageType)' == '' and '$(Configuration)' == 'Release'">Managed</SolutionPackageType>
+    <SolutionPackageType Condition="'$(SolutionPackageType)' == ''">Unmanaged</SolutionPackageType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\**" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\PluginAssemblies\*\*.dll" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\pluginpackages\*\package\*.nupkg" />
+    <ExcludeDirectories Include="$(MSBuildProjectDirectory)\$(SolutionRootPath)\environmentvariabledefinitions\*\environmentvariablevalues.json" />
+  </ItemGroup>
+
+</Project>

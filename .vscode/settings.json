@@ -1,0 +1,48 @@
+{
+  "files.associations": {
+    "*.slnx": "xml",
+    "*.tasks": "xml"
+  },
+  "dotnet.defaultSolution": "PowerPlatform SDK Extensions.slnx",
+  "dotnet.testWindow.useTestingPlatformProtocol": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["{solutions,test,thirdparty}/*/src/Workflows/*.json"],
+      "url": "./schemas/modernflow-json/workflow-clientdata.json"
+    },
+    {
+      "fileMatch": ["{solutions,test,thirdparty}/*/src/Connectors/*_openapidefinition.json"],
+      "url": "https://github.com/microsoft/PowerPlatformConnectors/raw/master/schemas/apiDefinition.swagger.schema.json"
+    }
+  ],
+  "xml.fileAssociations": [
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/Other/{Customizations,Solution}.xml",
+      "systemId": "schemas/dynamics365ce-xsd/CustomizationsSolution.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/Entities/*/Entity.xml",
+      "systemId": "schemas/dynamics365ce-xsd/Entity.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/Entities/*/FormXml/*/*.xml",
+      "systemId": "schemas/dynamics365ce-xsd/FormXmlSystemforms.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/Entities/*/SavedQueries/*.xml",
+      "systemId": "schemas/dynamics365ce-xsd/SavedQueries.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/environmentvariabledefinitions/*/environmentvariabledefinition.xml",
+      "systemId": "schemas/dynamics365ce-xsd/EnvironmentVariableDefinition.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/pluginpackages/*/pluginpackage.xml",
+      "systemId": "schemas/dynamics365ce-xsd/PluginPackage.xsd"
+    },
+    {
+      "pattern": "{solutions,test,thirdparty}/*/src/Workflows/*.data.xml",
+      "systemId": "schemas/dynamics365ce-xsd/Workflow.xsd"
+    }
+  ]
+}

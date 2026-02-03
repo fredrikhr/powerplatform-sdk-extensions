@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="./CustomizationsSolution.xsd" />
+  <xs:complexType name="PluginPackageType">
+    <xs:sequence>
+      <xs:element name="exportkeyversion" type="xs:int" default="1" />
+      <xs:element name="iscustomizable" type="TrueFalse01Type" default="1" />
+      <xs:element name="managedidentityid" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="managedidentityid" type="GuidType" minOccurs="1" maxOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="name" type="xs:string" />
+      <xs:element name="package">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="mimetype" default="application/octet-stream" use="optional" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="statecode" type="xs:nonNegativeInteger" />
+      <xs:element name="statuscode" type="xs:nonNegativeInteger" />
+      <xs:element name="version" type="VersionType" />
+    </xs:sequence>
+    <xs:attribute name="uniquename" type="CRM_Identifier_SiteMap" use="required" />
+  </xs:complexType>
+  <xs:element name="pluginpackage" type="PluginPackageType" />
+</xs:schema>

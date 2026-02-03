@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <!-- Import Directory.Build file from parent directory -->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);$(MSBuildThisFileDirectory)..\$(MSBuildThisFileName)$(MSBuildThisFileExtension)</MSBuildAllProjects>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
+
+  <PropertyGroup>
+    <GenerateNuspecStripTargetFrameworkAttributes>true</GenerateNuspecStripTargetFrameworkAttributes>
+  </PropertyGroup>
+
+  <!-- This target adds the generated deps.json file to our package output -->
+  <Target
+    Name="AddBuildDependencyFileToBuiltProjectOutputGroupOutput"
+    BeforeTargets="BuiltProjectOutputGroup"
+    Condition=" '$(GenerateDependencyFile)' == 'true'"
+  >
+    <ItemGroup>
+      <BuiltProjectOutputGroupOutput
+        Include="$(ProjectDepsFilePath)"
+        TargetPath="$(ProjectDepsFileName)"
+        FinalOutputPath="$(ProjectDepsFilePath)"
+      />
+    </ItemGroup>
+  </Target>
+
+</Project>

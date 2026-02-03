@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IsPackable>true</IsPackable>
+    <NoWarn>$(NoWarn);CS2008;CA1016;NU5128</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>No description provided.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <AutoGenerateAssemblyVersion>false</AutoGenerateAssemblyVersion>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
+      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.StripNuspecTfm\FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj</ProjectReference>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="build\Package.*" Pack="true">
+      <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="SetProjectVersionFromMicrosoftPowerAppsMSBuildPluginVersion"
+    BeforeTargets="_GetOutputItemsFromPack;EnsureNuGetPackOutputFallbackFolderInstallPath;GetAssemblyVersion"
+  >
+    <PropertyGroup>
+      <Version>@(PackageVersion-&gt;WithMetadataValue('Identity', 'Microsoft.PowerApps.MSBuild.Plugin')-&gt;'%(Version)')</Version>
+      <PackageVersion>$(Version)</PackageVersion>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GetTargetPath" />
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <Language>Nupkg</Language>
+  </PropertyGroup>
+
+</Project>

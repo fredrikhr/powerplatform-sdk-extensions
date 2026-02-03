@@ -1,0 +1,393 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // solutions/PowerPlatformSdkExtRuntimeToOneDriveExport
+    {
+      "label": "PowerPlatformSdkExtRuntimeToOneDriveExport | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/PowerPlatformSdkExtRuntimeToOneDriveExport"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtRuntimeToOneDriveExport | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--path",
+        "bin/PowerPlatformSdkExtRuntimeToOneDriveExport/Debug/PowerPlatformSdkExtRuntimeToOneDriveExport.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtRuntimeToOneDriveExport | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtRuntimeToOneDriveExport | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/PowerPlatformSdkExtRuntimeToOneDriveExport/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtRuntimeToOneDriveExport | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/PowerPlatformSdkExtRuntimeToOneDriveExport"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtRuntimeToOneDriveExport | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--publish-changes",
+        "--force-overwrite",
+        "--path",
+        "bin/PowerPlatformSdkExtRuntimeToOneDriveExport/Release/PowerPlatformSdkExtRuntimeToOneDriveExport.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtRuntimeToOneDriveExport | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    // solutions/PowerPlatformSdkExtSamplePluginPackgeSolution
+    {
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--path",
+        "bin/PowerPlatformSdkExtSamplePluginPackgeSolution/Debug/PowerPlatformSdkExtSamplePluginPackgeSolution.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/PowerPlatformSdkExtSamplePluginPackgeSolution"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSamplePluginPackgeSolution | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--publish-changes",
+        "--force-overwrite",
+        "--path",
+        "bin/PowerPlatformSdkExtSamplePluginPackgeSolution/Release/PowerPlatformSdkExtSamplePluginPackgeSolution.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSamplePluginPackgeSolution | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    // solutions/PowerPlatformSdkExtSandboxWorkerCustomApi
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Debug",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Push to Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--activate-plugins",
+        "--path",
+        "bin/PowerPlatformSdkExtSandboxWorkerCustomApi/Debug/PowerPlatformSdkExtSandboxWorkerCustomApi.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Unmanaged)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Pull from Power Platform (Unmanaged)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "sync",
+        "--async",
+        "--packagetype",
+        "Unmanaged",
+        "--solution-folder",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi/src"
+      ],
+      "dependsOn": [],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration:Release",
+        "solutions/PowerPlatformSdkExtSandboxWorkerCustomApi"
+      ],
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "PowerPlatformSdkExtSandboxWorkerCustomApi | Push to Power Platform (Managed)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "pac",
+        "--",
+        "solution",
+        "import",
+        "--async",
+        "--force-overwrite",
+        "--publish-changes",
+        "--path",
+        "bin/PowerPlatformSdkExtSandboxWorkerCustomApi/Release/PowerPlatformSdkExtSandboxWorkerCustomApi.zip"
+      ],
+      "dependsOn": ["PowerPlatformSdkExtSandboxWorkerCustomApi | Build solution (Managed)"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+
+    // Repository solution tasks
+    {
+      "type": "dotnet",
+      "task": "build",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "label": "Build Solution"
+    },
+    {
+      "type": "dotnet",
+      "task": "clean",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "label": "Clean Solution"
+    }
+  ]
+}

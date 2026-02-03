@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ContainerContext">
+  <description default="ContainerContext">
+    <label description="ContainerContext" languagecode="1033" />
+  </description>
+  <displayname default="ContainerContext">
+    <label description="ContainerContext" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-ContainerContext</name>
+  <type>3</type>
+</customapiresponseproperty>
