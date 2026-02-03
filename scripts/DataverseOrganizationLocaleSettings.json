@@ -1,0 +1,20 @@
+{
+  "localeid": 1044,
+  "decimalsymbol": ",",
+  "numberseparator": " ",
+  "numbergroupformat": "3",
+  "negativeformatcode": 1,
+  "currencyformatcode": 2,
+  "negativecurrencyformatcode": 9,
+  "timeformatcode": 0,
+  "timeseparator": ":",
+  "amdesignator": "a.m.",
+  "pmdesignator": "p.m.",
+  "weekstartdaycode": 1,
+  "yearstartweekcode": 0,
+  "dateformatcode": 1,
+  "dateseparator": ".",
+  "longdateformatcode": 1,
+  "calendartype": 0,
+  "defaultcountrycode": "+47"
+}
