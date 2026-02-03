@@ -26,10 +26,6 @@
     <Project Path="plugins/FredrikHr.PowerPlatformSdkExtensions.SamplePluginPackage/FredrikHr.PowerPlatformSdkExtensions.SamplePluginPackage.csproj" />
     <Project Path="plugins/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins.csproj" />
   </Folder>
-  <Folder Name="/solutions/">
-    <File Path="solutions/Directory.Build.props" />
-    <Project Path="solutions/PowerPlatformSdkExtRuntimeToOneDriveExport/PowerPlatformSdkExtRuntimeToOneDriveExport.cdsproj" Type="C#" />
-  </Folder>
   <Folder Name="/tools/">
     <Project Path="tools/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader.csproj" />
   </Folder>

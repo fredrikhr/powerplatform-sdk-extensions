@@ -17,9 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Autofac" Version="6.0.0" />
-    <PackageVersion Include="FredrikHr.NupkgMSBuild.PackageAuthorSigning">
-      <Version>1.1.0</Version>
-    </PackageVersion>
     <PackageVersion Include="FredrikHr.NupkgMSBuild.PackPackageReference">
       <Version>1.1.1</Version>
     </PackageVersion>
@@ -51,19 +48,10 @@
     </PackageVersion>
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.PowerApps.CLI">
-      <Version>2.1.2</Version>
-    </PackageVersion>
     <PackageVersion Include="Microsoft.PowerApps.MSBuild.Plugin">
       <Version>2.1.2</Version>
     </PackageVersion>
     <PackageVersion Include="Microsoft.PowerApps.MSBuild.Solution ">
-      <Version>2.1.2</Version>
-    </PackageVersion>
-    <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
-      <Version>2.1.2</Version>
-    </PackageVersion>
-    <PackageVersion Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution">
       <Version>2.1.2</Version>
     </PackageVersion>
   </ItemGroup>

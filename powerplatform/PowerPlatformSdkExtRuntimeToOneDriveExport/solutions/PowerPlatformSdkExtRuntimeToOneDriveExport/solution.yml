@@ -1,0 +1,19 @@
+ImportExportXml:
+  '@version': 9.2.26013.141
+  '@SolutionPackageVersion': 9.2
+  '@languagecode': 1033
+  '@generatedBy': CrmLive
+  '@xmlns:xsi': http://www.w3.org/2001/XMLSchema-instance
+  SolutionManifest:
+    UniqueName: PowerPlatformSdkExtRuntimeToOneDriveExport
+    LocalizedNames:
+      LocalizedName:
+      - '@description': Power Platform SDK Runtime Assemblies Export to OneDrive for Business
+        '@languagecode': 1033
+      - '@description': Power Platform SDK Runtime Assemblies Eksport til OneDrive for Business
+        '@languagecode': 1044
+    Descriptions: 
+    Version: 1.0.0
+    Managed: 0
+    Publisher:
+      UniqueName: fredrikhr

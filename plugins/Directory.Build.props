@@ -13,13 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
-      <PrivateAssets>all</PrivateAssets>
-      <ProjectReference>$(MSBuildThisFileDirectory)..\build\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage\FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj</ProjectReference>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

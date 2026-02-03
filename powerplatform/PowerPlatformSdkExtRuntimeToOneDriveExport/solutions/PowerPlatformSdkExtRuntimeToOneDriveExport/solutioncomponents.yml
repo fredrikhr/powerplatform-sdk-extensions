@@ -1,0 +1,6 @@
+SolutionComponents:
+  Component:
+  - '@path': /environmentvariabledefinitions/frh_PowerPlatformSdkExtensions_RuntimeExport_DestinationPath
+  - '@path': /environmentvariabledefinitions/frh_PowerPlatformSdkExtensions_RuntimeExport_SkipMainPathSegmentCount
+  - '@path': /modernflows/02e09746-97c3-f011-bbd3-6045bd96b90f
+  - '@path': /publishers/fredrikhr

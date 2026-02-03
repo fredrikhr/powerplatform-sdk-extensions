@@ -1,0 +1,12 @@
+environmentvariabledefinition:
+  '@schemaname': frh_PowerPlatformSdkExtensions_RuntimeExport_DestinationPath
+  displayname:
+    '@default': Power Platform SDK Extensions Runtime Export Destination Folder
+    label:
+      '@description': Power Platform SDK Extensions Runtime Export Destination Folder
+      '@languagecode': 1033
+  introducedversion: 1.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000000

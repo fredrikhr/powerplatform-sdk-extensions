@@ -7,11 +7,16 @@
   "dotnet.testWindow.useTestingPlatformProtocol": true,
   "json.schemas": [
     {
-      "fileMatch": ["{solutions,test,thirdparty}/*/src/Workflows/*.json"],
+      "fileMatch": [
+        "{solutions,test,thirdparty}/*/src/Workflows/*.json",
+        "powerplatform/**/modernflows/*/*.json"
+      ],
       "url": "./schemas/modernflow-json/workflow-clientdata.json"
     },
     {
-      "fileMatch": ["{solutions,test,thirdparty}/*/src/Connectors/*_openapidefinition.json"],
+      "fileMatch": [
+        "{solutions,test,thirdparty}/*/src/Connectors/*_openapidefinition.json"
+      ],
       "url": "https://github.com/microsoft/PowerPlatformConnectors/raw/master/schemas/apiDefinition.swagger.schema.json"
     }
   ],

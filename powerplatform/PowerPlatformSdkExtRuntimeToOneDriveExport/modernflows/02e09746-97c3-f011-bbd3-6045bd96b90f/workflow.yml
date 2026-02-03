@@ -1,0 +1,27 @@
+Workflow:
+  '@WorkflowId': '{02e09746-97c3-f011-bbd3-6045bd96b90f}'
+  '@Name': Power Platform SDK Extensions Runtime Export Assemblies to OneDrive for Business
+  JsonFileName: /modernflows/02e09746-97c3-f011-bbd3-6045bd96b90f/PowerPlatformSDKExtensionsRuntimeExportAssembliest-02E09746-97C3-F011-BBD3-6045BD96B90F.json
+  Type: 1
+  Subprocess: 0
+  Category: 5
+  Mode: 0
+  Scope: 4
+  OnDemand: 0
+  TriggerOnCreate: 0
+  TriggerOnDelete: 0
+  AsyncAutodelete: 0
+  SyncWorkflowLogOnFailure: 0
+  StateCode: 0
+  StatusCode: 1
+  RunAs: 1
+  IsTransacted: 1
+  IntroducedVersion: 1.0.0
+  IsCustomizable: 1
+  IsCustomProcessingStepAllowedForOtherPublishers: 1
+  ModernFlowType: 0
+  PrimaryEntity: none
+  LocalizedNames:
+    LocalizedName:
+      '@languagecode': 1033
+      '@description': Power Platform SDK Extensions Runtime Export Assemblies to OneDrive for Business
