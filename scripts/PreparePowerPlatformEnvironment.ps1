@@ -85,18 +85,6 @@ process {
                 -Verbose:($VerbosePreference -ne 'SilentlyContinue')
             $ProvisionLanguageOperationRecord | Format-List -Property "*", @{ N = "timetocompletion"; E = { if ($_.completedon) { $_.completedon - $_.startedon } else { $null } } }, @{ N = "timesincecreation"; E = { if ($_.completedon) { $_.completedon - $_.createdon } else { $null } } }
         } until ($ProvisionLanguageOperationRecord.statecode -eq 3) # statecode 3 = Completed
-        [uri]$DataverseRequestUri = New-Object uri $DataverseApiUrl, "RetrieveProvisionedLanguages()"
-        if ($VerbosePreference -ne 'SilentlyContinue') {
-            Write-Verbose "URI $DataverseRequestUri"
-        }
-        $LanguagesResponse = Invoke-RestMethod -Authentication OAuth `
-            -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
-            -Method Get `
-            -Uri $DataverseRequestUri `
-            -Headers $DataverseHeaders `
-            -WebSession $DataverseWebSession `
-            -Verbose:($VerbosePreference -ne 'SilentlyContinue')
-        $LanguagesResponse | Format-List -Property "RetrieveProvisionedLanguages"
     }
 
     $DataverseRequestUri = New-Object uri $DataverseApiUrl, "organizations(${OrganizationId})"
