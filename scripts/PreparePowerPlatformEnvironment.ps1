@@ -32,7 +32,7 @@ begin {
 process {
     [uri]$DataverseRequestUri = New-Object uri $DataverseApiUrl, "WhoAmI"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "GET $DataverseRequestUri"
     }
     $WhoAmIResponse = Invoke-RestMethod -Authentication OAuth `
         -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -40,12 +40,12 @@ process {
         -Uri $DataverseRequestUri `
         -Headers $DataverseHeaders `
         -SessionVariable "DataverseWebSession" `
-        -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+        -Verbose:$false
     [ValidateNotNullOrEmpty()][string]$OrganizationId = $WhoAmIResponse.OrganizationId
 
     [uri]$DataverseRequestUri = New-Object uri $DataverseApiUrl, "RetrieveProvisionedLanguages()"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "GET $DataverseRequestUri"
     }
     $LanguagesResponse = Invoke-RestMethod -Authentication OAuth `
         -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -53,13 +53,13 @@ process {
         -Uri $DataverseRequestUri `
         -Headers $DataverseHeaders `
         -WebSession $DataverseWebSession `
-        -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+        -Verbose:$false
     $LanguagesResponse | Format-List -Property "RetrieveProvisionedLanguages"
     [ValidateNotNullOrEmpty()][int[]]$ProvisionedLanguages = $LanguagesResponse.RetrieveProvisionedLanguages
     if ($OrganizationSettings.localeid -notin $ProvisionedLanguages) {
         [uri]$DataverseRequestUri = New-Object uri $DataverseApiUrl, "ProvisionLanguageAsync()"
         if ($VerbosePreference -ne 'SilentlyContinue') {
-            Write-Verbose "URI $DataverseRequestUri"
+            Write-Verbose "POST $DataverseRequestUri"
         }
         $ProvisionLangaugeResponse = Invoke-RestMethod -Authentication OAuth `
             -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -68,13 +68,13 @@ process {
             -Headers $DataverseHeaders `
             -Body (ConvertTo-Json -InputObject @{ Language = $OrganizationSettings.localeid }) `
             -WebSession $DataverseWebSession `
-            -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+            -Verbose:$false
         [ValidateNotNullOrEmpty()][string]$ProvisionLangaugeOperationId = $ProvisionLangaugeResponse.AsyncOperationId
         [uri]$DataverseRequestUri = New-Object uri $DataverseApiUrl, "asyncoperations(${ProvisionLangaugeOperationId})?`$select=asyncoperationid,name,operationtype,messagename,message,friendlymessage,errorcode,statecode,statuscode,createdon,startedon,modifiedon,completedon,executiontimespan"
         do {
             [void](Start-Sleep -Seconds 5)
             if ($VerbosePreference -ne 'SilentlyContinue') {
-                Write-Verbose "URI $DataverseRequestUri"
+                Write-Verbose "GET $DataverseRequestUri"
             }
             $ProvisionLanguageOperationRecord = Invoke-RestMethod -Authentication OAuth `
                 -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -82,14 +82,14 @@ process {
                 -Uri $DataverseRequestUri `
                 -Headers $DataverseHeaders `
                 -WebSession $DataverseWebSession `
-                -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+                -Verbose:$false
             $ProvisionLanguageOperationRecord | Format-List -Property "*", @{ N = "timetocompletion"; E = { if ($_.completedon) { $_.completedon - $_.startedon } else { $null } } }, @{ N = "timesincecreation"; E = { if ($_.completedon) { $_.completedon - $_.createdon } else { $null } } }
         } until ($ProvisionLanguageOperationRecord.statecode -eq 3) # statecode 3 = Completed
     }
 
     $DataverseRequestUri = New-Object uri $DataverseApiUrl, "organizations(${OrganizationId})"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "PATCH $DataverseRequestUri"
     }
     [void](
         Invoke-RestMethod -Authentication OAuth `
@@ -99,12 +99,12 @@ process {
             -Headers $DataverseHeaders `
             -Body (ConvertTo-Json -InputObject $OrganizationSettings -Depth 20) `
             -WebSession $DataverseWebSession `
-            -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+            -Verbose:$false
     )
 
     $DataverseRequestUri = New-Object uri $DataverseApiUrl, "timezonedefinitions?`$select=timezonecode,userinterfacename,standardname&`$filter=standardname eq '$($UserSettingsTemplate.timezonename)'&`$top=1"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "GET $DataverseRequestUri"
     }
     $TimeZoneDefinitionResponse = Invoke-RestMethod -Authentication OAuth `
         -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -112,7 +112,7 @@ process {
         -Uri $DataverseRequestUri `
         -Headers $DataverseHeaders `
         -WebSession $DataverseWebSession `
-        -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+        -Verbose:$false
     $TimeZoneDefinitionResponse.value | Format-List -Property "*"
     [ValidateNotNull()]$TimeZoneDefinition = $TimeZoneDefinitionResponse.value |
     Select-Object -First 1
@@ -122,7 +122,7 @@ process {
 
     $DataverseRequestUri = New-Object uri $DataverseApiUrl, "transactioncurrencies?`$select=transactioncurrencyid,isocurrencycode,currencyname,currencysymbol&`$filter=isocurrencycode eq '$($UserSettingsTemplate.currencycode)'&`$top=1"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "GET $DataverseRequestUri"
     }
     $CurrenciesResponse = Invoke-RestMethod -Authentication OAuth `
         -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -130,7 +130,7 @@ process {
         -Uri $DataverseRequestUri `
         -Headers $DataverseHeaders `
         -WebSession $DataverseWebSession `
-        -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+        -Verbose:$false
     $CurrenciesResponse.value | Format-List -Property "*"
     [ValidateNotNull()]$CurrencyDefinition = $CurrenciesResponse.value |
     Select-Object -First 1
@@ -140,7 +140,7 @@ process {
 
     $DataverseRequestUri = New-Object uri $DataverseApiUrl, "usersettingscollection?`$select=systemuserid&`$filter=systemuserid_systemuser/azureactivedirectoryobjectid ne null"
     if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "URI $DataverseRequestUri"
+        Write-Verbose "GET $DataverseRequestUri"
     }
     $UserSettingsCollectionResponse = Invoke-RestMethod -Authentication OAuth `
         -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
@@ -148,7 +148,7 @@ process {
         -Uri $DataverseRequestUri `
         -Headers $DataverseHeaders `
         -WebSession $DataverseWebSession `
-        -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+        -Verbose:$false
     [ValidateNotNullOrEmpty()][PSObject[]]$UserSettingsReferences = $UserSettingsCollectionResponse.value
     if ($VerbosePreference -ne 'SilentlyContinue') {
         Write-Verbose "Updating $($UserSettingsReferences.Length) user settings"
@@ -157,7 +157,7 @@ process {
     foreach ($UserSettingsReferenceRecord in $UserSettingsReferences) {
         $DataverseRequestUri = New-Object uri $DataverseApiUrl, "usersettingscollection($($UserSettingsReferenceRecord.systemuserid))"
         if ($VerbosePreference -ne 'SilentlyContinue') {
-            Write-Verbose "URI $DataverseRequestUri"
+            Write-Verbose "PATCH $DataverseRequestUri"
         }
         [void](
             Invoke-RestMethod -Authentication OAuth `
@@ -167,7 +167,7 @@ process {
                 -Headers $DataverseHeaders `
                 -Body $UserSettingsPatchBody `
                 -WebSession $DataverseWebSession `
-                -Verbose:($VerbosePreference -ne 'SilentlyContinue')
+                -Verbose:$false
         )
     }
 }
