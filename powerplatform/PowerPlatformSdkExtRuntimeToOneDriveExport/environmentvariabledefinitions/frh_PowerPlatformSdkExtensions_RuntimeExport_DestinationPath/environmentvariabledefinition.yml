@@ -1,5 +1,11 @@
 environmentvariabledefinition:
   '@schemaname': frh_PowerPlatformSdkExtensions_RuntimeExport_DestinationPath
+  defaultvalue: /PowerPlatform/SandboxWorker
+  description:
+    '@default': Folder path in OneDrive where the exported assemblies will be stored. Include leading slash, but exclude trailing slash.
+    label:
+      '@description': Folder path in OneDrive where the exported assemblies will be stored. Include leading slash, but exclude trailing slash.
+      '@languagecode': 1033
   displayname:
     '@default': Power Platform SDK Extensions Runtime Export Destination Folder
     label:
