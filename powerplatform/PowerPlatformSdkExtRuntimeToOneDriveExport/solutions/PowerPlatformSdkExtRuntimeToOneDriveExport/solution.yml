@@ -1,5 +1,5 @@
 ImportExportXml:
-  '@version': 9.2.26013.141
+  '@version': 9.2.26024.151
   '@SolutionPackageVersion': 9.2
   '@languagecode': 1033
   '@generatedBy': CrmLive
@@ -13,7 +13,7 @@ ImportExportXml:
       - '@description': Power Platform SDK Runtime Assemblies Eksport til OneDrive for Business
         '@languagecode': 1044
     Descriptions: 
-    Version: 1.0.0
+    Version: 1.0.1
     Managed: 0
     Publisher:
       UniqueName: fredrikhr
