@@ -215,7 +215,6 @@ public readonly record struct IContainerContext
         culture: System.Globalization.CultureInfo.InvariantCulture
         );
 
-    /*
     public readonly IslandEnvironmentContext GetIslandEnvironmentContext(ISandboxWorkerShimServiceClient shimServiceClient) => new(TypeReference.InvokeMember(
         nameof(GetIslandEnvironmentContext),
         BindingFlags.Instance |
@@ -226,7 +225,6 @@ public readonly record struct IContainerContext
         args: [shimServiceClient.Target],
         culture: System.Globalization.CultureInfo.InvariantCulture
         ));
-    */
 
     public readonly string GetAllowedAppIds(ISandboxWorkerShimServiceClient shimServiceClient) => (string)TypeReference.InvokeMember(
         nameof(GetAllowedAppIds),

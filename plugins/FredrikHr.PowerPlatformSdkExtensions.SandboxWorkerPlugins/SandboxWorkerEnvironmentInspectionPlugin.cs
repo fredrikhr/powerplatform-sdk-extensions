@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 using Microsoft.CDSRuntime.SandboxCommon;
 using Microsoft.CDSRuntime.SandboxWorker;
+using Microsoft.PowerApps.CoreFramework.PowerPlatform.ResourceDiscovery;
 
 using static FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins.SandboxWorkerPluginHelpers;
 
@@ -118,7 +119,6 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
             containerContextEntity[containerContextProperty.Name] =
                 containerContextProperty.GetValue(containerContext.Target);
         }
-        /*
         var islandEnvCtx = containerContext.GetIslandEnvironmentContext(
             SandboxWorkerMain.ShimClient
             );
@@ -129,7 +129,22 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
                 islandEnvCtxProp.GetValue(islandEnvCtx.Target);
         }
         containerContextEntity[IslandEnvironmentContext.TypeReference.Name] = islandEnvCtxEntity;
-        */
+        IslandEnvironmentInfoSource envInfoSource = new(islandEnvCtx);
+        EnvironmentInfo envInfo = envInfoSource.GetEnvironmentInfo();
+        Entity envInfoEntity = new()
+        {
+            Attributes =
+            {
+                { nameof(envInfo.EnvironmentName), envInfo.EnvironmentName },
+                { nameof(envInfo.RegionShortName), envInfo.RegionShortName },
+                { nameof(envInfo.RegionShortNames), envInfo.RegionShortNames },
+                { nameof(envInfo.ClusterCategory), envInfo.ClusterCategory },
+                { nameof(envInfo.ClusterNumber), envInfo.ClusterNumber },
+                { nameof(envInfo.GeoName), envInfo.GeoName },
+                { "PowerAppsDefaultDnsZone", envInfo.GetDefaultPowerappsDnsZone() },
+            },
+        };
+        containerContextEntity[nameof(EnvironmentInfo)] = envInfoEntity;
         var allowedAppIds = containerContext.GetAllowedAppIds(
             SandboxWorkerMain.ShimClient
             );
