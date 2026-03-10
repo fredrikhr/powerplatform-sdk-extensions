@@ -137,7 +137,7 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
             {
                 { nameof(envInfo.EnvironmentName), envInfo.EnvironmentName },
                 { nameof(envInfo.RegionShortName), envInfo.RegionShortName },
-                { nameof(envInfo.RegionShortNames), envInfo.RegionShortNames },
+                { nameof(envInfo.RegionShortNames), envInfo.RegionShortNames?.ToArray() },
                 { nameof(envInfo.ClusterCategory), envInfo.ClusterCategory },
                 { nameof(envInfo.ClusterNumber), envInfo.ClusterNumber },
                 { nameof(envInfo.GeoName), envInfo.GeoName },
