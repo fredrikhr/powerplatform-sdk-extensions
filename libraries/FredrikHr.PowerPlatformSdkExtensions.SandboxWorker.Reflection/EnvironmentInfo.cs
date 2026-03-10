@@ -81,7 +81,7 @@ public readonly record struct EnvironmentInfo
         object clusterCategory;
         try
         {
-            clusterCategory = Enum.Parse(clusterCategoryTypeRef, ClusterCategory);
+            clusterCategory = Enum.Parse(clusterCategoryTypeRef, ClusterCategory, ignoreCase: true);
         }
         catch (Exception clusterCategoryExcept)
         {
