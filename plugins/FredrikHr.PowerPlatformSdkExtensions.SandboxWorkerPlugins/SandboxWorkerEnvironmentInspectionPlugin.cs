@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 using Microsoft.CDSRuntime.SandboxCommon;
 using Microsoft.CDSRuntime.SandboxWorker;
+using Microsoft.PowerApps.CoreFramework.CapCoreServices.TopologyModel;
 using Microsoft.PowerApps.CoreFramework.PowerPlatform.ResourceDiscovery;
 
 using static FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins.SandboxWorkerPluginHelpers;
@@ -141,7 +142,12 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
                 { nameof(envInfo.ClusterCategory), envInfo.ClusterCategory },
                 { nameof(envInfo.ClusterNumber), envInfo.ClusterNumber },
                 { nameof(envInfo.GeoName), envInfo.GeoName },
-                { "PowerAppsDefaultDnsZone", envInfo.GetDefaultPowerappsDnsZone() },
+                {
+                    "PowerAppsDefaultDnsZone",
+                    Enum.TryParse(envInfo.ClusterCategory, out ClusterCategory clusterCategory)
+                    ? clusterCategory.GetDefaultPowerappsDnsZone()
+                    : null
+                },
             },
         };
         containerContextEntity[nameof(EnvironmentInfo)] = envInfoEntity;

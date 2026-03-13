@@ -25,21 +25,8 @@ public readonly record struct IslandEnvironmentInfoSource
     { }
 
     public readonly IEnvironmentInfoSource AsIEnvironmentInfoSource() =>
-        new(Target);
+        (IEnvironmentInfoSource)Target;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "Usage",
-        "CA2225: Operator overloads have named alternates",
-        Justification = nameof(AsIEnvironmentInfoSource))]
-    public static implicit operator IEnvironmentInfoSource(IslandEnvironmentInfoSource source) =>
-        source.AsIEnvironmentInfoSource();
-
-    public readonly EnvironmentInfo GetEnvironmentInfo() => new(TypeReference.InvokeMember(
-        nameof(GetEnvironmentInfo),
-        BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
-        Type.DefaultBinder,
-        Target,
-        args: [],
-        System.Globalization.CultureInfo.InvariantCulture
-        ));
+    public readonly EnvironmentInfo GetEnvironmentInfo() =>
+        AsIEnvironmentInfoSource().GetEnvironmentInfo();
 }
