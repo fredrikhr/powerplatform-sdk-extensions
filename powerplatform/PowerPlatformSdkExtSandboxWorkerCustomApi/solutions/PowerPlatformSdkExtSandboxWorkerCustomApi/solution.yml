@@ -13,7 +13,7 @@ ImportExportXml:
       - '@description': Power Platform SDK Utvidelser Sandbox Worker Egendefinert API
         '@languagecode': 1044
     Descriptions:
-    Version: 1.3.0
+    Version: 1.4.0
     Managed: 0
     Publisher:
       UniqueName: fredrikhr
