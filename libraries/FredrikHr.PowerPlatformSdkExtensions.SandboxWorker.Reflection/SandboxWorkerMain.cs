@@ -1,6 +1,7 @@
 using Autofac;
 
 using Microsoft.Extensions.Logging;
+using Microsoft.PowerPlatform.Plex.SidecarContract;
 
 namespace Microsoft.CDSRuntime.SandboxWorker;
 
@@ -73,4 +74,24 @@ public static class SandboxWorkerMain
         ).GetMethod.CreateDelegate(typeof(Func<Guid>));
 
     public static Guid WorkerProcessGuid => WorkerProcessGuidGetter();
+
+    public static SidecarService.SidecarServiceClient SidecarServiceClient
+    {
+        get
+        {
+            object shimClient = ShimClient.Target;
+            var sidecarServiceClient = (SidecarService.SidecarServiceClient)
+                shimClient.GetType().InvokeMember(
+                    "_client",
+                    BindingFlags.Instance |
+                    BindingFlags.Public | BindingFlags.NonPublic |
+                    BindingFlags.GetField,
+                    Type.DefaultBinder,
+                    target: shimClient,
+                    args: null,
+                    System.Globalization.CultureInfo.InvariantCulture
+                    );
+            return sidecarServiceClient;
+        }
+    }
 }
