@@ -12,6 +12,11 @@ namespace FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerPlugins;
 
 public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
 {
+    static SandboxWorkerEnvironmentInspectionPlugin()
+    {
+        PluginDependencyAssemblyLoader.DeregisterTracingService(null);
+    }
+
     private static class OutputParameterNames
     {
         public const string CurrentDirectory = nameof(Environment.CurrentDirectory);
@@ -44,6 +49,7 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
     public void Execute(IServiceProvider serviceProvider)
     {
         if (serviceProvider is null) return;
+
         var execCtx = serviceProvider.Get<IExecutionContext>() ??
             throw new InvalidPluginExecutionException(
                 OperationStatus.Failed,
@@ -52,6 +58,8 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
 
         var trace = serviceProvider.Get<ITracingService>();
         var logger = serviceProvider.Get<ILogger>();
+
+        PluginDependencyAssemblyLoader.RegisterTracingService(trace);
 
         try { ExecuteCore(execCtx, trace); }
         catch (TypeInitializationException typeInitExcept)
@@ -64,6 +72,10 @@ public class SandboxWorkerEnvironmentInspectionPlugin : IPlugin
                 errorCode: typeInitExcept.HResult,
                 httpStatus: PluginHttpStatusCode.InternalServerError
                 );
+        }
+        finally
+        {
+            PluginDependencyAssemblyLoader.DeregisterTracingService(trace);
         }
     }
 
