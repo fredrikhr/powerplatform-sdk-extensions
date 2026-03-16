@@ -9,7 +9,9 @@ public readonly record struct IContainerContext
 
     public readonly object Target { get; }
 
-    public IContainerContext(object target)
+    public static IContainerContext Wrap(object target) => new(target);
+
+    private IContainerContext(object target)
     {
         _ = target ?? throw new ArgumentNullException(nameof(target));
         if (!TypeReference.IsAssignableFrom(target.GetType()))
@@ -215,7 +217,8 @@ public readonly record struct IContainerContext
         culture: System.Globalization.CultureInfo.InvariantCulture
         );
 
-    public readonly IslandEnvironmentContext GetIslandEnvironmentContext(ISandboxWorkerShimServiceClient shimServiceClient) => new(TypeReference.InvokeMember(
+    public readonly IslandEnvironmentContext GetIslandEnvironmentContext(ISandboxWorkerShimServiceClient shimServiceClient) =>
+        IslandEnvironmentContext.Wrap(TypeReference.InvokeMember(
         nameof(GetIslandEnvironmentContext),
         BindingFlags.Instance |
         BindingFlags.Public |

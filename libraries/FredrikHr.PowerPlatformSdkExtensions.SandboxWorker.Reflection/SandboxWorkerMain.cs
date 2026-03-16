@@ -38,7 +38,8 @@ public static class SandboxWorkerMain
         culture: System.Globalization.CultureInfo.InvariantCulture
         );
 
-    public static IContainerContext ContainerContext => new(TypeReference.InvokeMember(
+    public static IContainerContext ContainerContext =>
+        IContainerContext.Wrap(TypeReference.InvokeMember(
         "_containerContext",
         BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField,
         binder: default,
@@ -47,7 +48,8 @@ public static class SandboxWorkerMain
         culture: System.Globalization.CultureInfo.InvariantCulture
         ));
 
-    public static ISandboxWorkerShimServiceClient ShimClient => new(TypeReference.InvokeMember(
+    public static ISandboxWorkerShimServiceClient ShimClient =>
+        ISandboxWorkerShimServiceClient.Wrap(TypeReference.InvokeMember(
         "_shimClient",
         BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField,
         binder: default,

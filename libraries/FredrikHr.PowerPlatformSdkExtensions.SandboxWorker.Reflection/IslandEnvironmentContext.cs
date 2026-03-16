@@ -9,7 +9,9 @@ public readonly record struct IslandEnvironmentContext
 
     public readonly object Target { get; }
 
-    public IslandEnvironmentContext(object target)
+    public static IslandEnvironmentContext Wrap(object target) => new(target);
+
+    private IslandEnvironmentContext(object target)
     {
         _ = target ?? throw new ArgumentNullException(nameof(target));
         if (!TypeReference.IsAssignableFrom(target.GetType()))

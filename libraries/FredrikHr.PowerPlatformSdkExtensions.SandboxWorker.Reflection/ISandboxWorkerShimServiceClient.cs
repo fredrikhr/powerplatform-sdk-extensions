@@ -12,7 +12,9 @@ public readonly record struct ISandboxWorkerShimServiceClient
 
     public readonly object Target { get; }
 
-    public ISandboxWorkerShimServiceClient(object target)
+    public static ISandboxWorkerShimServiceClient Wrap(object target) => new(target);
+
+    private ISandboxWorkerShimServiceClient(object target)
     {
         _ = target ?? throw new ArgumentNullException(nameof(target));
         if (!TypeReference.IsAssignableFrom(target.GetType()))
