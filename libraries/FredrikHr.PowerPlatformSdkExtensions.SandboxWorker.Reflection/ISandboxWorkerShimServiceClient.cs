@@ -1,3 +1,5 @@
+using Microsoft.PowerPlatform.Plex.SidecarContract;
+
 namespace Microsoft.CDSRuntime.SandboxWorker;
 
 public readonly record struct ISandboxWorkerShimServiceClient
@@ -18,12 +20,13 @@ public readonly record struct ISandboxWorkerShimServiceClient
         Target = target;
     }
 
-    public readonly WorkerMetadataResponse GetWorkerAssignedMetadata(Guid workerProcessGuid) => new(TypeReference.InvokeMember(
+    public readonly WorkerMetadataResponse GetWorkerAssignedMetadata(Guid workerProcessGuid) =>
+        (WorkerMetadataResponse)TypeReference.InvokeMember(
         nameof(GetWorkerAssignedMetadata),
         BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
         Type.DefaultBinder,
         Target,
         [workerProcessGuid],
         culture: System.Globalization.CultureInfo.InvariantCulture
-        ));
+        );
 }

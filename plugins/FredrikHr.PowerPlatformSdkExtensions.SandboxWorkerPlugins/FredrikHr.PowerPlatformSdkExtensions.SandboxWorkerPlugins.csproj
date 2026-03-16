@@ -37,6 +37,10 @@
       <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.PowerPlatform.ResourceDiscovery.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="Microsoft.PowerPlatform.Plex.SidecarContract, Version=1.26014.214.7, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\bld\dataversesandboxworker\Microsoft.PowerPlatform.Plex.SidecarContract.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
 </Project>
