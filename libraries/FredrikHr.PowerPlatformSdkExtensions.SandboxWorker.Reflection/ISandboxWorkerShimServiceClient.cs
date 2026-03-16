@@ -28,7 +28,27 @@ public readonly record struct ISandboxWorkerShimServiceClient
         BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
         Type.DefaultBinder,
         Target,
-        [workerProcessGuid],
+        args: [workerProcessGuid],
+        culture: System.Globalization.CultureInfo.InvariantCulture
+        );
+
+    public readonly ServiceParametersResponse GetServiceParameters() =>
+        (ServiceParametersResponse)TypeReference.InvokeMember(
+        nameof(GetServiceParameters),
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
+        Type.DefaultBinder,
+        Target,
+        args: [],
+        culture: System.Globalization.CultureInfo.InvariantCulture
+        );
+
+    public readonly OpenIdResponse GetOpenIdSigningKeys(string authority) =>
+        (OpenIdResponse)TypeReference.InvokeMember(
+        nameof(GetOpenIdSigningKeys),
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod,
+        Type.DefaultBinder,
+        Target,
+        args: [authority],
         culture: System.Globalization.CultureInfo.InvariantCulture
         );
 }
