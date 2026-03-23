@@ -33,11 +33,11 @@
       <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.CapCoreServices.TopologyModel.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="CoreFramework.PowerPlatform.ResourceDiscovery, Version=7.33.0.34, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="CoreFramework.PowerPlatform.ResourceDiscovery, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.PowerPlatform.ResourceDiscovery.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <Reference Include="Microsoft.PowerPlatform.Plex.SidecarContract, Version=1.26014.214.7, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+    <Reference Include="Microsoft.PowerPlatform.Plex.SidecarContract, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\..\bld\dataversesandboxworker\Microsoft.PowerPlatform.Plex.SidecarContract.dll</HintPath>
       <Private>true</Private>
     </Reference>
