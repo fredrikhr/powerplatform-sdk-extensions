@@ -29,6 +29,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="CoreFramework.Common, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.Common.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="CoreFramework.Configuration, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.Configuration.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
     <Reference Include="CoreFramework.CapCoreServices.TopologyModel, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.CapCoreServices.TopologyModel.dll</HintPath>
       <Private>true</Private>
@@ -37,8 +45,16 @@
       <HintPath>..\..\bld\dataversesandboxworker\CoreFramework.PowerPlatform.ResourceDiscovery.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="Grpc.Core.Api, Culture=neutral, PublicKeyToken=d754f35622e28bad">
+      <HintPath>..\..\bld\dataversesandboxworker\Grpc.Core.Api.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
     <Reference Include="Microsoft.PowerPlatform.Plex.SidecarContract, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\..\bld\dataversesandboxworker\Microsoft.PowerPlatform.Plex.SidecarContract.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\bld\dataversesandboxworker\Newtonsoft.Json.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>

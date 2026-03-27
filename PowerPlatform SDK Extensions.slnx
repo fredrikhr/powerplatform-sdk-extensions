@@ -13,6 +13,10 @@
   <Folder Name="/.github/">
     <File Path=".github/dependabot.yml" />
   </Folder>
+  <Folder Name="/bld/" />
+  <Folder Name="/bld/dataversesandboxworker/">
+    <File Path="bld/dataversesandboxworker/AssemblyList.txt" />
+  </Folder>
   <Folder Name="/build/">
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage/FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage.csproj" />
     <Project Path="build/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution/FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution.csproj" />
