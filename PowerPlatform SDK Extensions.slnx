@@ -36,7 +36,4 @@
     <Project Path="powerplatform/PowerPlatformSdkExtSamplePluginPackgeSolution/PowerPlatformSdkExtSamplePluginPackgeSolution.cdsproj" Type="C#" />
     <Project Path="powerplatform/PowerPlatformSdkExtSandboxWorkerCustomApi/PowerPlatformSdkExtSandboxWorkerCustomApi.cdsproj" Type="C#" />
   </Folder>
-  <Folder Name="/tools/">
-    <Project Path="tools/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader/FredrikHr.PowerPlatformSdkExtensions.SandboxWorkerRuntimeDownloader.csproj" />
-  </Folder>
 </Solution>

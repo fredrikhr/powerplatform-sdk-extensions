@@ -1,2 +1,0 @@
-GetConsoleWindow
-GetAncestor
