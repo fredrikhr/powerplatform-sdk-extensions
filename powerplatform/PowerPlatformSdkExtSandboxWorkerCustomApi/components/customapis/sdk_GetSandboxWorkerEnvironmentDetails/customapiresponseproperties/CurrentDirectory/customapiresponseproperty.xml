@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="CurrentDirectory">
+  <description default="CurrentDirectory">
+    <label description="CurrentDirectory" languagecode="1033" />
+  </description>
+  <displayname default="CurrentDirectory">
+    <label description="CurrentDirectory" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-CurrentDirectory</name>
+  <type>10</type>
+</customapiresponseproperty>

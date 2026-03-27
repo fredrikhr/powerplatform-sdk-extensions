@@ -9,26 +9,18 @@
   <Import Project="$(MSBuildThisFileDirectory)..\$(MSBuildThisFileName)$(MSBuildThisFileExtension)" />
 
   <PropertyGroup>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <TargetFramework>net471</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <SolutionRootPath>components</SolutionRootPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage">
+    <PackageReference Include="FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution">
       <PrivateAssets>all</PrivateAssets>
       <ProjectReference>$(MSBuildThisFileDirectory)..\build\%(PackageReference.Identity)\%(PackageReference.Identity).csproj</ProjectReference>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Microsoft.Xrm.Sdk" />
-    <Using Include="Microsoft.Xrm.Sdk.Extensions" />
-    <Using Include="Microsoft.Xrm.Sdk.PluginTelemetry" />
   </ItemGroup>
 
 </Project>

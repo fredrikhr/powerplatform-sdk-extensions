@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="SSLCertFiles">
+  <description default="SSLCertFiles">
+    <label description="SSLCertFiles" languagecode="1033" />
+  </description>
+  <displayname default="SSLCertFiles">
+    <label description="SSLCertFiles" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-SSLCertFiles</name>
+  <type>3</type>
+</customapiresponseproperty>

@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ClrVersion">
+  <description default="ClrVersion">
+    <label description="ClrVersion" languagecode="1033" />
+  </description>
+  <displayname default="ClrVersion">
+    <label description="ClrVersion" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-ClrVersion</name>
+  <type>10</type>
+</customapiresponseproperty>

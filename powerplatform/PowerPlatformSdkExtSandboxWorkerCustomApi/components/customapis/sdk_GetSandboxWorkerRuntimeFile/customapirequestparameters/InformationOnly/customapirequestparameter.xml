@@ -1,0 +1,12 @@
+<customapirequestparameter uniquename="InformationOnly">
+  <description default="InformationOnly">
+    <label description="InformationOnly" languagecode="1033" />
+  </description>
+  <displayname default="InformationOnly">
+    <label description="InformationOnly" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <isoptional>1</isoptional>
+  <name>sdk_GetSandboxWorkerRuntimeFile-In-InformationOnly</name>
+  <type>0</type>
+</customapirequestparameter>

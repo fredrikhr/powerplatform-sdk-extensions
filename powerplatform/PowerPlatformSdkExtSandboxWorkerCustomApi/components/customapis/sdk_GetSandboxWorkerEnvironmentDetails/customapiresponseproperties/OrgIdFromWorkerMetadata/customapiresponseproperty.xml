@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="OrgIdFromWorkerMetadata">
+  <description default="OrgIdFromWorkerMetadata">
+    <label description="OrgIdFromWorkerMetadata" languagecode="1033" />
+  </description>
+  <displayname default="OrgIdFromWorkerMetadata">
+    <label description="OrgIdFromWorkerMetadata" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-OrgIdFromWorkerMetadata</name>
+  <type>12</type>
+</customapiresponseproperty>

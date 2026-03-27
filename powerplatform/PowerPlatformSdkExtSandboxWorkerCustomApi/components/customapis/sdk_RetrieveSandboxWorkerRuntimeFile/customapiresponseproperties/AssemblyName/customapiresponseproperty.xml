@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="AssemblyName">
+  <description default="AssemblyName">
+    <label description="AssemblyName" languagecode="1033" />
+  </description>
+  <displayname default="AssemblyName">
+    <label description="AssemblyName" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_RetrieveSandboxWorkerRuntimeFile-Out-AssemblyName</name>
+  <type>3</type>
+</customapiresponseproperty>

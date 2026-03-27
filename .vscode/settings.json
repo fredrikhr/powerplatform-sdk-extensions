@@ -9,5 +9,35 @@
       "fileMatch": ["powerplatform/**/modernflows/*/*.json"],
       "url": "./schemas/modernflow-json/workflow-clientdata.json"
     }
+  ],
+  "xml.fileAssociations": [
+    {
+      "pattern": "powerplatform/*/components/Other/{Customizations,Solution}.xml",
+      "systemId": "schemas/dynamics365ce-xsd/CustomizationsSolution.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/Entities/*/Entity.xml",
+      "systemId": "schemas/dynamics365ce-xsd/Entity.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/Entities/*/FormXml/*/*.xml",
+      "systemId": "schemas/dynamics365ce-xsd/FormXmlSystemforms.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/Entities/*/SavedQueries/*.xml",
+      "systemId": "schemas/dynamics365ce-xsd/SavedQueries.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/environmentvariabledefinitions/*/environmentvariabledefinition.xml",
+      "systemId": "schemas/dynamics365ce-xsd/EnvironmentVariableDefinition.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/pluginpackages/*/pluginpackage.xml",
+      "systemId": "schemas/dynamics365ce-xsd/PluginPackage.xsd"
+    },
+    {
+      "pattern": "powerplatform/*/components/Workflows/*.data.xml",
+      "systemId": "schemas/dynamics365ce-xsd/Workflow.xsd"
+    }
   ]
 }

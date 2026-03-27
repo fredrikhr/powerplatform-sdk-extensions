@@ -1,0 +1,14 @@
+<environmentvariabledefinition schemaname="frh_PowerPlatformSdkExtensions_RuntimeExport_SkipMainPathSegmentCount">
+  <defaultvalue>2</defaultvalue>
+  <description default="The number of segments to skip from the Main Files Directory path when exporting runtime files">
+    <label description="The number of segments to skip from the Main Files Directory path when exporting runtime files" languagecode="1033" />
+  </description>
+  <displayname default="Power Platform SDK Extensions Runtime Export Skip Main Path Segment Count">
+    <label description="Power Platform SDK Extensions Runtime Export Skip Main Path Segment Count" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000001</type>
+</environmentvariabledefinition>

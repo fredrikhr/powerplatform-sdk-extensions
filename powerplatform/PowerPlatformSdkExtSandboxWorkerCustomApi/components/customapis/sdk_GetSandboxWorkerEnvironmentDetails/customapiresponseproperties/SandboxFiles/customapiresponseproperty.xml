@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="SandboxFiles">
+  <description default="SandboxFiles">
+    <label description="SandboxFiles" languagecode="1033" />
+  </description>
+  <displayname default="SandboxFiles">
+    <label description="SandboxFiles" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-SandboxFiles</name>
+  <type>3</type>
+</customapiresponseproperty>

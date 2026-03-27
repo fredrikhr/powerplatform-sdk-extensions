@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="OSDescription">
+  <description default="OSDescription">
+    <label description="OSDescription" languagecode="1033" />
+  </description>
+  <displayname default="OSDescription">
+    <label description="OSDescription" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_GetSandboxWorkerEnvironmentDetails-Out-OSDescription</name>
+  <type>10</type>
+</customapiresponseproperty>

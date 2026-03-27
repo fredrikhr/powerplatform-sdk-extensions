@@ -1,0 +1,11 @@
+<customapiresponseproperty uniquename="ApplicationInsightsKey">
+  <description default="ApplicationInsightsKey">
+    <label description="ApplicationInsightsKey" languagecode="1033" />
+  </description>
+  <displayname default="ApplicationInsightsKey">
+    <label description="ApplicationInsightsKey" languagecode="1033" />
+  </displayname>
+  <iscustomizable>0</iscustomizable>
+  <name>sdk_RetrieveSandboxWorkerEnvironmentDetails-Out-ApplicationInsightsKey</name>
+  <type>10</type>
+</customapiresponseproperty>
