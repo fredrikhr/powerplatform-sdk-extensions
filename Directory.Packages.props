@@ -51,7 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <PackageVersion
-      Include="Microsoft.PowerApps.MSBuild.Plugin;Microsoft.PowerApps.MSBuild.Solution"
+      Include="
+        Microsoft.PowerApps.MSBuild.Plugin;
+        Microsoft.PowerApps.MSBuild.Solution;
+        FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage;
+        FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution
+        "
       Version="2.4.1"
     />
     <PackageVersion Include="Microsoft.CrmSdk.CoreAssemblies">
