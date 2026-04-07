@@ -17,16 +17,22 @@ begin {
     $TypeDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
     [ValidateNotNullOrEmpty()]
     [string]$FolderName = $FileInfo.Directory.Parent.Name
-    [ValidateSet("EntityDefinitions", "GlobalOptionSetDefinitions")]
+    [ValidateSet(
+        "EntityDefinitions",
+        "GlobalOptionSetDefinitions",
+        "RelationshipDefinitions"
+        )]
     [ValidateNotNullOrEmpty()]
     [string]$TypeSetName = switch ($FolderName) {
         "Entities" { "EntityDefinitions"; break }
         "OptionSets" { "GlobalOptionSetDefinitions"; break }
+        "Relationships" { "RelationshipDefinitions"; break }
     }
     [ValidateNotNullOrEmpty()]
     [string]$TypeLookup = switch ($TypeSetName) {
         "EntityDefinitions" { "LogicalName='$($TypeDefinitionData.LogicalName)'"; break }
         "GlobalOptionSetDefinitions" { "Name='$($TypeDefinitionData.Name)'"; break }
+        "RelationshipDefinitions" { "SchemaName='$($TypeDefinitionData.SchemaName)'"; break }
     }
     [hashtable]$ODataHeaders = @{
         "Accept"           = "application/json"
