@@ -405,6 +405,11 @@
 			<xs:element name="connectionreference" type="connectionreferencetype" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
+  <xs:complexType name="customconnectorlookuptype">
+    <xs:sequence>
+      <xs:element name="connectorid" type="GuidType" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
 	<xs:complexType name="connectionreferencetype">
 		<xs:sequence>
 			<xs:element name="connectionreferencedisplayname" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -415,6 +420,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="customconnectorid" type="customconnectorlookuptype" minOccurs="0" maxOccurs="1" />
       <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
       <xs:element name="iscustomizable" type="TrueFalse01Type" minOccurs="0" maxOccurs="1" />
       <xs:element name="promptingbehavior" type="xs:int" minOccurs="0" maxOccurs="1" />
