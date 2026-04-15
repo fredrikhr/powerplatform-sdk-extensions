@@ -2,29 +2,14 @@
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+    [Alias("PSPath")]
     [string]$FilePath,
     [Parameter(Mandatory = $false)]
     [string]$SolutionName
 )
 
 begin {
-    [ValidateNotNull()]
-    [System.IO.FileInfo]$FileInfo = Get-Item -LiteralPath $FilePath
-    [ValidateNotNullOrEmpty()]
-    [string]$FileContent = Get-Content -Raw -LiteralPath $FilePath
-    [ValidateNotNull()]
-    $SubComponentDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
-    [ValidateNotNullOrEmpty()]
-    [ValidateSet("Attributes", "Keys")]
-    [string]$SubComponentType = $FileInfo.Directory.Name
-    [ValidateNotNullOrEmpty()]
-    [string]$SubComponentTypeLookup = switch ($SubComponentType) {
-        "Attributes" { "LogicalName='$($SubComponentDefinitionData.LogicalName)'"; break }
-        "Keys" { "LogicalName='$($SubComponentDefinitionData.LogicalName)'"; break }
-    }
-    [ValidateNotNullOrEmpty()]
-    [string]$EntityLogicalName = $FileInfo.Directory.Parent.Name
     [hashtable]$ODataHeaders = @{
         "Accept"           = "application/json"
         "OData-Version"    = "4.0"
@@ -62,6 +47,23 @@ begin {
 }
 
 process {
+    [ValidateNotNull()]
+    [System.IO.FileInfo]$FileInfo = Get-Item -Path $FilePath
+    [ValidateNotNullOrEmpty()]
+    [string]$FileContent = Get-Content -Raw -Path $FilePath
+    [ValidateNotNull()]
+    $SubComponentDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
+    [ValidateNotNullOrEmpty()]
+    [ValidateSet("Attributes", "Keys")]
+    [string]$SubComponentType = $FileInfo.Directory.Name
+    [ValidateNotNullOrEmpty()]
+    [string]$SubComponentTypeLookup = switch ($SubComponentType) {
+        "Attributes" { "LogicalName='$($SubComponentDefinitionData.LogicalName)'"; break }
+        "Keys" { "LogicalName='$($SubComponentDefinitionData.LogicalName)'"; break }
+    }
+    [ValidateNotNullOrEmpty()]
+    [string]$EntityLogicalName = $FileInfo.Directory.Parent.Name
+
     $DataverseApiUri = New-Object uri $DataverseApiBase, "EntityDefinitions(LogicalName='${EntityLogicalName}')/${SubComponentType}(${SubComponentTypeLookup})"
     if ($VerbosePreference -ne 'SilentlyContinue') {
         Write-Verbose "GET $DataverseApiUri"

@@ -2,21 +2,14 @@
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+    [Alias("PSPath")]
     [string]$FilePath,
     [Parameter(Mandatory = $false)]
     [string]$SolutionName
 )
 
 begin {
-    [ValidateNotNull()]
-    [System.IO.FileInfo]$FileInfo = Get-Item -LiteralPath $FilePath
-    [ValidateNotNull()]
-    [PSObject[]]$StatusValuesDefinitionData = ConvertFrom-Json -Depth 10 -InputObject (
-        Get-Content -Raw -LiteralPath $FilePath
-    )
-    [ValidateNotNullOrEmpty()]
-    [string]$EntityLogicalName = $FileInfo.Directory.Name
     [hashtable]$ODataHeaders = @{
         "Accept"           = "application/json"
         "OData-Version"    = "4.0"
@@ -55,6 +48,15 @@ begin {
 }
 
 process {
+    [ValidateNotNull()]
+    [System.IO.FileInfo]$FileInfo = Get-Item -Path $FilePath
+    [ValidateNotNull()]
+    [PSObject[]]$StatusValuesDefinitionData = ConvertFrom-Json -Depth 10 -InputObject (
+        Get-Content -Raw -Path $FilePath
+    )
+    [ValidateNotNullOrEmpty()]
+    [string]$EntityLogicalName = $FileInfo.Directory.Name
+
     $DataverseApiUri = New-Object uri $DataverseApiBase, "EntityDefinitions(LogicalName='${EntityLogicalName}')/Attributes(LogicalName='statuscode')/Microsoft.Dynamics.CRM.StatusAttributeMetadata/OptionSet?`$select=Options"
     if ($VerbosePreference -ne 'SilentlyContinue') {
         Write-Verbose "GET $DataverseApiUri"

@@ -2,38 +2,14 @@
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
+    [Alias("PSPath")]
     [string]$FilePath,
     [Parameter(Mandatory = $false)]
     [string]$SolutionName
 )
 
 begin {
-    [ValidateNotNull()]
-    [System.IO.FileInfo]$FileInfo = Get-Item -LiteralPath $FilePath
-    [ValidateNotNullOrEmpty()]
-    [string]$FileContent = Get-Content -Raw -LiteralPath $FilePath
-    [ValidateNotNull()]
-    $TypeDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
-    [ValidateNotNullOrEmpty()]
-    [string]$FolderName = $FileInfo.Directory.Parent.Name
-    [ValidateSet(
-        "EntityDefinitions",
-        "GlobalOptionSetDefinitions",
-        "RelationshipDefinitions"
-        )]
-    [ValidateNotNullOrEmpty()]
-    [string]$TypeSetName = switch ($FolderName) {
-        "Entities" { "EntityDefinitions"; break }
-        "OptionSets" { "GlobalOptionSetDefinitions"; break }
-        "Relationships" { "RelationshipDefinitions"; break }
-    }
-    [ValidateNotNullOrEmpty()]
-    [string]$TypeLookup = switch ($TypeSetName) {
-        "EntityDefinitions" { "LogicalName='$($TypeDefinitionData.LogicalName)'"; break }
-        "GlobalOptionSetDefinitions" { "Name='$($TypeDefinitionData.Name)'"; break }
-        "RelationshipDefinitions" { "SchemaName='$($TypeDefinitionData.SchemaName)'"; break }
-    }
     [hashtable]$ODataHeaders = @{
         "Accept"           = "application/json"
         "OData-Version"    = "4.0"
@@ -71,6 +47,32 @@ begin {
 }
 
 process {
+    [ValidateNotNull()]
+    [System.IO.FileInfo]$FileInfo = Get-Item -Path $FilePath
+    [ValidateNotNullOrEmpty()]
+    [string]$FileContent = Get-Content -Raw -Path $FilePath
+    [ValidateNotNull()]
+    $TypeDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
+    [ValidateNotNullOrEmpty()]
+    [string]$FolderName = $FileInfo.Directory.Parent.Name
+    [ValidateSet(
+        "EntityDefinitions",
+        "GlobalOptionSetDefinitions",
+        "RelationshipDefinitions"
+        )]
+    [ValidateNotNullOrEmpty()]
+    [string]$TypeSetName = switch ($FolderName) {
+        "Entities" { "EntityDefinitions"; break }
+        "OptionSets" { "GlobalOptionSetDefinitions"; break }
+        "Relationships" { "RelationshipDefinitions"; break }
+    }
+    [ValidateNotNullOrEmpty()]
+    [string]$TypeLookup = switch ($TypeSetName) {
+        "EntityDefinitions" { "LogicalName='$($TypeDefinitionData.LogicalName)'"; break }
+        "GlobalOptionSetDefinitions" { "Name='$($TypeDefinitionData.Name)'"; break }
+        "RelationshipDefinitions" { "SchemaName='$($TypeDefinitionData.SchemaName)'"; break }
+    }
+
     $DataverseApiUri = New-Object uri $DataverseApiBase, "${TypeSetName}(${TypeLookup})"
     if ($VerbosePreference -ne 'SilentlyContinue') {
         Write-Verbose "GET $DataverseApiUri"
