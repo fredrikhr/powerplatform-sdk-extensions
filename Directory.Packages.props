@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub">
-      <Version>10.0.201</Version>
+      <Version>10.0.202</Version>
     </GlobalPackageReference>
     <GlobalPackageReference Include="PolySharp">
       <Version>1.15.0</Version>
@@ -30,7 +30,7 @@
     <PackageVersion Include="Autofac" Version="6.0.0" />
     <PackageVersion Include="Google.Protobuf" Version="3.24.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    <PackageVersion Include="System.IO.Hashing" Version="10.0.5" />
+    <PackageVersion Include="System.IO.Hashing" Version="10.0.6" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
   <ItemGroup>
@@ -47,7 +47,7 @@
         FredrikHr.PowerPlatformSdkExtensions.MSBuild.PluginPackage;
         FredrikHr.PowerPlatformSdkExtensions.MSBuild.Solution
         "
-      Version="2.5.1"
+      Version="2.6.4"
     />
     <PackageVersion Include="Microsoft.CrmSdk.CoreAssemblies">
       <Version>9.0.2.60</Version>
