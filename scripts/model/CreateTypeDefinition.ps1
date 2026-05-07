@@ -20,24 +20,12 @@ begin {
     if ($SolutionName) {
         $ODataHeaders["MSCRM.SolutionUniqueName"] = $SolutionName
     }
-    $FlowApiUrl = "https://api.flow.microsoft.com/providers/Microsoft.Flow/environments?api-version=2026-01-01"
-    if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "GET $FlowApiUrl"
-    }
-    $PowerPlatformEnvironmentsResponse = Invoke-RestMethod -Authentication OAuth `
-        -Token ((Get-AzAccessToken -ResourceUrl "https://service.flow.microsoft.com/" -AsSecureString).Token) `
-        -Method Get `
-        -Uri $FlowApiUrl `
-        -SessionVariable "PowerPlatformWebSession" `
-        -Verbose:$false
     [ValidateNotNull()]
-    [psobject]$PowerPlatformEnvironment = $PowerPlatformEnvironmentsResponse.value |
-    ForEach-Object {
-        Add-Member -PassThru -InputObject $_.properties `
-            -NotePropertyName "environmentName" `
-            -NotePropertyValue $_.name
-    } |
-    Out-GridView -PassThru -Title "Select Power Platform Environment" |
+    [psobject]$PowerPlatformEnvironment = & (
+        Join-Path -Resolve (
+            Join-Path -Resolve (Join-Path -Resolve $PSScriptRoot "..") "env"
+        ) "GetEnvironmentProperties.ps1"
+    ) |
     Select-Object -First 1
     [ValidateNotNull()][psobject]$DataverseMetadataInfo = $PowerPlatformEnvironment.linkedEnvironmentMetadata
     [ValidateNotNull()][uri]$DataverseInstanceUri = $DataverseMetadataInfo.instanceUrl
