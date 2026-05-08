@@ -17,7 +17,7 @@ process {
         Write-Host "Connection: $($PowerAppsConnectionProperties.connectionName)"
         [string]$PowerAppsConnectionDisplayName = Read-Host -Prompt "New Display Name (current: $($PowerAppsConnectionProperties.displayName))"
         if (-not $PowerAppsConnectionDisplayName) { continue }
-        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis/$($PowerAppsConnectionProperties.api.name)/connections/$($PowerAppsConnectionProperties.connectionName)?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'"
+        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis/$($PowerAppsConnectionProperties.api.name)/connections/$($PowerAppsConnectionProperties.connectionName)?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerAppsConnectionProperties.environment.name)'"
         if ($VerbosePreference -ne 'SilentlyContinue') {
             Write-Verbose "PATCH $PowerAppsApiUrl"
         }
