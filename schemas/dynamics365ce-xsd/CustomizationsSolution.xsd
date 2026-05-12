@@ -400,6 +400,44 @@
 	</xs:sequence>
 		<xs:attribute name="EntityDataSourceId" use="required" type="GuidType" />
 	</xs:complexType>
+  <xs:complexType name="connectorstype">
+    <xs:sequence>
+      <xs:element name="Connector" type="connectordefinitiontype" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="connectordefinitiontype">
+    <xs:sequence>
+      <xs:element name="connectorid" type="GuidType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="displayname" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="iconbrandcolor" minOccurs="0" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="#[a-fA-f0-9]{6}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="name" minOccurs="1" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="connectortype" type="xs:int" minOccurs="0" maxOccurs="1" />
+      <xs:element name="capabilities" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="openapidefinition" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="connectionparameters" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="policytemplateinstances" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="iconblob" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="connectionreferencestype">
 		<xs:sequence>
 			<xs:element name="connectionreference" type="connectionreferencetype" minOccurs="0" maxOccurs="unbounded" />
@@ -814,6 +852,7 @@
 				<xs:element name="AppModules" type="AppModulesType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="EntityDataProviders" type="EntityDataProvidersType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="EntityDataSources" type="entitydatasourcestype" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Connectors" type="connectorstype" minOccurs="0" maxOccurs="1" />
 				<xs:element name="connectionreferences" type="connectionreferencestype" minOccurs="0" maxOccurs="1" />
 				<xs:element name="Languages" type="LanguagesType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="GlobalSearchConfigurations" type="GlobalSearchConfigurationType" minOccurs="0" maxOccurs="1" />

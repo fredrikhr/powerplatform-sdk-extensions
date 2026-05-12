@@ -36,6 +36,10 @@
       "systemId": "schemas/dynamics365ce-xsd/PluginPackage.xsd"
     },
     {
+      "pattern": "powerplatform/*/components/Connectors/*.xml",
+      "systemId": "schemas/dynamics365ce-xsd/Connector.xsd"
+    },
+    {
       "pattern": "powerplatform/*/components/Workflows/*.data.xml",
       "systemId": "schemas/dynamics365ce-xsd/Workflow.xsd"
     }
