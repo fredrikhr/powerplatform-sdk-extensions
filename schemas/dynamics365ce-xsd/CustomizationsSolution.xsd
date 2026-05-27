@@ -854,6 +854,7 @@
 				<xs:element name="EntityDataSources" type="entitydatasourcestype" minOccurs="0" maxOccurs="1" />
         <xs:element name="Connectors" type="connectorstype" minOccurs="0" maxOccurs="1" />
 				<xs:element name="connectionreferences" type="connectionreferencestype" minOccurs="0" maxOccurs="1" />
+				<xs:element name="managedidentities" minOccurs="0" maxOccurs="1" />
 				<xs:element name="Languages" type="LanguagesType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="GlobalSearchConfigurations" type="GlobalSearchConfigurationType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="StoredProcedures" type="StoredProceduresType" minOccurs="0" maxOccurs="1" />
