@@ -5,10 +5,10 @@
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub">
-      <Version>10.0.203</Version>
+      <Version>10.0.300</Version>
     </GlobalPackageReference>
     <GlobalPackageReference Include="PolySharp">
-      <Version>1.15.0</Version>
+      <Version>1.16.0</Version>
     </GlobalPackageReference>
     <GlobalPackageReference Include="FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference">
       <ProjectReference>$(MSBuildThisFileDirectory).submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference\FredrikHr.NupkgMSBuild.GitHubPackageProjectUrlInference.csproj</ProjectReference>
@@ -30,7 +30,7 @@
     <PackageVersion Include="Autofac" Version="6.0.0" />
     <PackageVersion Include="Google.Protobuf" Version="3.24.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    <PackageVersion Include="System.IO.Hashing" Version="10.0.7" />
+    <PackageVersion Include="System.IO.Hashing" Version="10.0.8" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
   </ItemGroup>
   <ItemGroup>
