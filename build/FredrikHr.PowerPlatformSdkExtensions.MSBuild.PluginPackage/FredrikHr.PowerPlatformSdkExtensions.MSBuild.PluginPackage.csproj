@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Project>
-
-  <PropertyGroup>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-  </PropertyGroup>
-
-  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -44,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="build\Package.*" Pack="true">
+    <Content Include="Package.*" Pack="true">
       <PackagePath>build\$(PackageId)%(Extension);buildMultiTargeting\$(PackageId)%(Extension)</PackagePath>
     </Content>
   </ItemGroup>
@@ -57,13 +51,5 @@
       <PackageVersion>$(Version)</PackageVersion>
     </PropertyGroup>
   </Target>
-
-  <Target Name="GetTargetPath" />
-
-  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-
-  <PropertyGroup>
-    <Language>Nupkg</Language>
-  </PropertyGroup>
 
 </Project>
