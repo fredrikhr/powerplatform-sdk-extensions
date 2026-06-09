@@ -10,6 +10,7 @@
 
   <PropertyGroup>
     <GenerateNuspecStripTargetFrameworkAttributes>true</GenerateNuspecStripTargetFrameworkAttributes>
+    <GenerateInstallToFallbackFolderOnPack Condition="'$(Configuration)' == 'Release'">true</GenerateInstallToFallbackFolderOnPack>
   </PropertyGroup>
 
   <!-- This target adds the generated deps.json file to our package output -->

@@ -32,8 +32,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FredrikHr.NupkgMSBuild.StripNuspecTfm">
-      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\FredrikHr.NupkgMSBuild.StripNuspecTfm\FredrikHr.NupkgMSBuild.StripNuspecTfm.csproj</ProjectReference>
+    <PackageReference
+      Include="
+        FredrikHr.NupkgMSBuild.InstallToFallbackFolder;
+        FredrikHr.NupkgMSBuild.StripNuspecTfm;
+        "
+    >
+      <ProjectReference>..\..\.submodules\fredrikhr\nuget-msbuild-extensions\build\%(Identity)\%(Identity).csproj</ProjectReference>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
