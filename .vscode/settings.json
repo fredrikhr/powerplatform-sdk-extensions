@@ -6,41 +6,41 @@
   "dotnet.defaultSolution": "PowerPlatform SDK Extensions.slnx",
   "json.schemas": [
     {
-      "fileMatch": ["powerplatform/**/modernflows/*/*.json"],
+      "fileMatch": ["powerplatform/*/{src,components}/Workflows/*.json"],
       "url": "./schemas/modernflow-json/workflow-clientdata.json"
     }
   ],
   "xml.fileAssociations": [
     {
-      "pattern": "powerplatform/*/components/Other/{Customizations,Solution}.xml",
+      "pattern": "powerplatform/*/{src,components}/Other/{Customizations,Solution}.xml",
       "systemId": "schemas/dynamics365ce-xsd/CustomizationsSolution.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/Entities/*/Entity.xml",
+      "pattern": "powerplatform/*/{src,components}/Entities/*/Entity.xml",
       "systemId": "schemas/dynamics365ce-xsd/Entity.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/Entities/*/FormXml/*/*.xml",
+      "pattern": "powerplatform/*/{src,components}/Entities/*/FormXml/*/*.xml",
       "systemId": "schemas/dynamics365ce-xsd/FormXmlSystemforms.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/Entities/*/SavedQueries/*.xml",
+      "pattern": "powerplatform/*/{src,components}/Entities/*/SavedQueries/*.xml",
       "systemId": "schemas/dynamics365ce-xsd/SavedQueries.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/environmentvariabledefinitions/*/environmentvariabledefinition.xml",
+      "pattern": "powerplatform/*/{src,components}/environmentvariabledefinitions/*/environmentvariabledefinition.xml",
       "systemId": "schemas/dynamics365ce-xsd/EnvironmentVariableDefinition.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/pluginpackages/*/pluginpackage.xml",
+      "pattern": "powerplatform/*/{src,components}/pluginpackages/*/pluginpackage.xml",
       "systemId": "schemas/dynamics365ce-xsd/PluginPackage.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/Connectors/*.xml",
+      "pattern": "powerplatform/*/{src,components}/Connectors/*.xml",
       "systemId": "schemas/dynamics365ce-xsd/Connector.xsd"
     },
     {
-      "pattern": "powerplatform/*/components/Workflows/*.data.xml",
+      "pattern": "powerplatform/*/{src,components}/Workflows/*.data.xml",
       "systemId": "schemas/dynamics365ce-xsd/Workflow.xsd"
     }
   ]

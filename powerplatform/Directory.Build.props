@@ -13,7 +13,7 @@
     <TargetFramework>net471</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <SolutionRootPath>components</SolutionRootPath>
+    <SolutionRootPath>src</SolutionRootPath>
   </PropertyGroup>
 
   <ItemGroup>
