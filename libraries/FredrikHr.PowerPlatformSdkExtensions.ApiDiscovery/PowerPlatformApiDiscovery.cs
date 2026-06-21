@@ -9,6 +9,27 @@ public class PowerPlatformApiDiscovery
 {
     private const StringComparison Cmp = StringComparison.OrdinalIgnoreCase;
 
+    private static readonly (string GlobalEndpoint, string GlobalUserContentEndpoint) DefaultEndpointEntry =
+        ("api.powerplatform.com", "api.powerplatformusercontent.com");
+    private static readonly Dictionary<string, (string GlobalEndpoint, string GlobalUserContentEndpoint)> ClusterCatorgyEndpointMap = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "Prod", DefaultEndpointEntry },
+        { "FirstRelease", DefaultEndpointEntry },
+        { "Local", ("api.powerplatform.localhost", "api.powerplatformusercontent.localhost") },
+        { "Exp", ("api.exp.powerplatform.com", "api.exp.powerplatformusercontent.com") },
+        { "Dev", ("api.dev.powerplatform.com", "api.dev.powerplatformusercontent.com") },
+        { "Prv", ("api.prv.powerplatform.com", "api.prv.powerplatformusercontent.com") },
+        { "Test", ("api.test.powerplatform.com", "api.test.powerplatformusercontent.com") },
+        { "Preprod", ("api.preprod.powerplatform.com", "api.preprod.powerplatformusercontent.com") },
+        { "GovFR", ("api.gov.powerplatform.microsoft.us", "api.gov.powerplatformusercontent.microsoft.us") },
+        { "Gov", ("api.gov.powerplatform.microsoft.us", "api.gov.powerplatformusercontent.microsoft.us") },
+        { "High", ("api.high.powerplatform.microsoft.us", "api.high.powerplatformusercontent.microsoft.us") },
+        { "DoD", ("api.appsplatform.us", "api.appsplatformusercontent.us") },
+        { "Mooncake", ("api.powerplatform.partner.microsoftonline.cn", "api.powerplatformusercontent.partner.microsoftonline.cn") },
+        { "Ex", ("api.powerplatform.eaglex.ic.gov", "api.powerplatformusercontent.eaglex.ic.gov") },
+        { "Rx", ("api.powerplatform.microsoft.scloud", "api.powerplatformusercontent.microsoft.scloud") },
+    };
+
     private readonly IPluginExecutionContext6 _context;
     private const string TenantInfix = "tenant";
 
@@ -78,8 +99,8 @@ public class PowerPlatformApiDiscovery
     {
         return category switch
         {
-            string c when string.Equals("FirstRelease", c, Cmp) => 2,
             string c when string.Equals("Prod", c, Cmp) => 2,
+            string c when string.Equals("FirstRelease", c, Cmp) => 2,
             _ => 1,
         };
     }
@@ -92,36 +113,9 @@ public class PowerPlatformApiDiscovery
         _context = context;
         string clusterCategory = GetClusterCategoryName(envService) ?? "Prod";
         _idSuffixLength = GetIdSuffixLength(clusterCategory);
-        (GlobalEndpoint, GlobalUserContentEndpoint) = clusterCategory switch
-        {
-            string c when string.Equals("Local", c, Cmp)
-                => ("api.powerplatform.localhost", "api.powerplatformusercontent.localhost"),
-            string c when string.Equals("Exp", c, Cmp)
-                => ("api.exp.powerplatform.com", "api.exp.powerplatformusercontent.com"),
-            string c when string.Equals("Dev", c, Cmp)
-                => ("api.dev.powerplatform.com", "api.dev.powerplatformusercontent.com"),
-            string c when string.Equals("Prv", c, Cmp)
-                => ("api.prv.powerplatform.com", "api.prv.powerplatformusercontent.com"),
-            string c when string.Equals("Test", c, Cmp)
-                => ("api.test.powerplatform.com", "api.test.powerplatformusercontent.com"),
-            string c when string.Equals("Preprod", c, Cmp)
-                => ("api.preprod.powerplatform.com", "api.preprod.powerplatformusercontent.com"),
-            string c when string.Equals("GovFR", c, Cmp)
-                => ("api.gov.powerplatform.microsoft.us", "api.gov.powerplatformusercontent.microsoft.us"),
-            string c when string.Equals("Gov", c, Cmp)
-                => ("api.gov.powerplatform.microsoft.us", "api.gov.powerplatformusercontent.microsoft.us"),
-            string c when string.Equals("High", c, Cmp)
-                => ("api.high.powerplatform.microsoft.us", "api.high.powerplatformusercontent.microsoft.us"),
-            string c when string.Equals("DoD", c, Cmp)
-                => ("api.appsplatform.us", "api.appsplatformusercontent.us"),
-            string c when string.Equals("Mooncake", c, Cmp)
-                => ("api.powerplatform.partner.microsoftonline.cn", "api.powerplatformusercontent.partner.microsoftonline.cn"),
-            string c when string.Equals("Ex", c, Cmp)
-                => ("api.powerplatform.eaglex.ic.gov", "api.powerplatformusercontent.eaglex.ic.gov"),
-            string c when string.Equals("Rx", c, Cmp)
-                => ("api.powerplatform.microsoft.scloud", "api.powerplatformusercontent.microsoft.scloud"),
-            _ => ("api.powerplatform.com", "api.powerplatformusercontent.com"),
-        };
+        if (!ClusterCatorgyEndpointMap.TryGetValue(clusterCategory, out var endpointEntry))
+            endpointEntry = DefaultEndpointEntry;
+        (GlobalEndpoint, GlobalUserContentEndpoint) = endpointEntry;
     }
 
     private static string? GetClusterCategoryName(IEnvironmentService envService)
