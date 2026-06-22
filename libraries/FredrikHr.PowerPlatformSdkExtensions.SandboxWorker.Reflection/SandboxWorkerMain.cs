@@ -7,10 +7,33 @@ namespace Microsoft.CDSRuntime.SandboxWorker;
 
 public static class SandboxWorkerMain
 {
+    private static readonly object[] SetBoolFieldTrue = [true];
+    private static readonly object[] SetBoolFieldFalse = [false];
+
     private const string AssemblyQualifiedName =
         "Microsoft.CDSRuntime.SandboxWorker.SandboxWorkerMain, Microsoft.CDSRuntime.SandboxWorker, PublicKeyToken=31bf3856ad364e35";
     public static Type TypeReference { get; } =
         Type.GetType(AssemblyQualifiedName, throwOnError: true);
+
+    public static bool EnableAssemblyResolverForPluginPackage
+    {
+        get => (bool)TypeReference.InvokeMember(
+            "_enableAssemblyResolverForPluginPackage",
+            BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField,
+            binder: default,
+            target: null,
+            args: null,
+            culture: System.Globalization.CultureInfo.InvariantCulture
+            );
+        set => TypeReference.InvokeMember(
+            "_enableAssemblyResolverForPluginPackage",
+            BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetField,
+            binder: default,
+            target: null,
+            args: value ? SetBoolFieldTrue : SetBoolFieldFalse,
+            culture: System.Globalization.CultureInfo.InvariantCulture
+            );
+    }
 
     public static IContainer Container => (IContainer)TypeReference.InvokeMember(
         "_container",
