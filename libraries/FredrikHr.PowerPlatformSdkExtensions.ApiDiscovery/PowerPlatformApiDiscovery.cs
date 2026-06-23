@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -118,10 +119,24 @@ public class PowerPlatformApiDiscovery
         (GlobalEndpoint, GlobalUserContentEndpoint) = endpointEntry;
     }
 
+    private static readonly Type? InternalEnvironmentServiceType = Type.GetType(
+        "Microsoft.Xrm.Sdk.IInternalEnvironmentService" + ", " +
+        "Microsoft.Xrm.Kernel.Contracts.Internal, PublicKeyToken=31bf3856ad364e35",
+        throwOnError: false
+        );
+
     private static string? GetClusterCategoryName(IEnvironmentService envService)
     {
-        dynamic envInternalService = envService;
-        return envInternalService.ClusterCategory as string;
+        return InternalEnvironmentServiceType?.InvokeMember(
+            "ClusterCategory",
+            BindingFlags.Instance |
+            BindingFlags.Public |
+            BindingFlags.GetProperty,
+            binder: default,
+            target: envService,
+            args: null,
+            System.Globalization.CultureInfo.InvariantCulture
+            ) as string;
     }
 
     private static void ThrowIfStringIsNullOrEmpty(
