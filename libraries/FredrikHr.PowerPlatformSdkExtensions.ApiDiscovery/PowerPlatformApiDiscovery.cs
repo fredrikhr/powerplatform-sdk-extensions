@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.CompilerServices;
+
+using Microsoft.Xrm.Kernel.Contracts.Internal;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace Microsoft.PowerApps.CoreFramework.PowerPlatform.Api;
@@ -31,7 +32,6 @@ public class PowerPlatformApiDiscovery
         { "Rx", ("api.powerplatform.microsoft.scloud", "api.powerplatformusercontent.microsoft.scloud") },
     };
 
-    private readonly IPluginExecutionContext6 _context;
     private const string TenantInfix = "tenant";
 
     private const string EnvironmentInfix = "environment";
@@ -41,46 +41,35 @@ public class PowerPlatformApiDiscovery
     private const string TenantIslandPrefix = "il-";
     private readonly int _idSuffixLength;
 
-    public string TokenAudience => "https://" + GlobalEndpoint;
+    public string TokenAudience => field ??= "https://" + GlobalEndpoint;
 
     public string GlobalEndpoint { get; }
 
     public string GlobalUserContentEndpoint { get; }
 
-    public string TenantEndpoint
-        => field ??= GetTenantEndpoint(_context.TenantId);
-    public string TenantIslandClusterEndpoint
-        => field ??= GetTenantIslandClusterEndpoint(_context.TenantId);
-    public string EnvironmentEndpoint
-        => field ??= GetEnvironmentEndpoint(_context.EnvironmentId);
-    public string EnvironmentUserContentEndpoint
-        => field ??= GetEnvironmentUserContentEndpoint(_context.EnvironmentId);
-    public string OrganizationEndpoint
-        => field ??= GetOrganizationEndpoint(_context.OrganizationId);
-
-    private string GetTenantEndpoint(Guid tenantId)
+    public string GetTenantEndpoint(Guid tenantId)
     {
         return BuildEndpoint(TenantInfix, tenantId.ToString("N"));
     }
 
-    private string GetTenantIslandClusterEndpoint(Guid tenantId)
+    public string GetTenantIslandClusterEndpoint(Guid tenantId)
     {
         return BuildEndpoint(TenantInfix, tenantId.ToString("N"), TenantIslandPrefix);
     }
 
-    private string GetEnvironmentEndpoint(string environmentId)
+    public string GetEnvironmentEndpoint(string environmentId)
     {
         ThrowIfStringIsNullOrEmpty(environmentId);
         return BuildEndpoint(EnvironmentInfix, environmentId);
     }
 
-    private string GetEnvironmentUserContentEndpoint(string environmentId)
+    public string GetEnvironmentUserContentEndpoint(string environmentId)
     {
         ThrowIfStringIsNullOrEmpty(environmentId);
         return BuildEndpoint(EnvironmentInfix, environmentId, "", userContentEndpoint: true);
     }
 
-    private string GetOrganizationEndpoint(Guid organizationId)
+    public string GetOrganizationEndpoint(Guid organizationId)
     {
         return BuildEndpoint(OrganizationInfix, organizationId.ToString("N"));
     }
@@ -106,37 +95,32 @@ public class PowerPlatformApiDiscovery
         };
     }
 
-    public PowerPlatformApiDiscovery(
-        IPluginExecutionContext6 context,
-        IEnvironmentService envService
-        )
+    public PowerPlatformApiDiscovery(string? clusterCategory)
     {
-        _context = context;
-        string clusterCategory = GetClusterCategoryName(envService) ?? "Prod";
-        _idSuffixLength = GetIdSuffixLength(clusterCategory);
-        if (!ClusterCatorgyEndpointMap.TryGetValue(clusterCategory, out var endpointEntry))
+        if (string.IsNullOrEmpty(clusterCategory))
+        { clusterCategory = "Prod"; }
+        _idSuffixLength = GetIdSuffixLength(clusterCategory!);
+        if (!ClusterCatorgyEndpointMap.TryGetValue(clusterCategory!, out var endpointEntry))
             endpointEntry = DefaultEndpointEntry;
         (GlobalEndpoint, GlobalUserContentEndpoint) = endpointEntry;
     }
 
-    private static readonly Type? InternalEnvironmentServiceType = Type.GetType(
-        "Microsoft.Xrm.Sdk.IInternalEnvironmentService" + ", " +
-        "Microsoft.Xrm.Kernel.Contracts.Internal, PublicKeyToken=31bf3856ad364e35",
-        throwOnError: false
-        );
-
-    private static string? GetClusterCategoryName(IEnvironmentService envService)
+    public static PowerPlatformApiDiscovery FromPluginServiceProvider(
+        IServiceProvider serviceProvider
+        )
     {
-        return InternalEnvironmentServiceType?.InvokeMember(
-            "ClusterCategory",
-            BindingFlags.Instance |
-            BindingFlags.Public |
-            BindingFlags.GetProperty,
-            binder: default,
-            target: envService,
-            args: null,
-            System.Globalization.CultureInfo.InvariantCulture
-            ) as string;
+        try
+        {
+            if (serviceProvider?.GetService(IInternalEnvironmentService.TypeReference)
+                is not IEnvironmentService envInfo)
+            {
+                envInfo = serviceProvider.Get<IEnvironmentService>();
+            }
+            var internalEnvInfo = IInternalEnvironmentService.Wrap(envInfo);
+            return new(internalEnvInfo.ClusterCategory);
+        }
+        catch (InvalidCastException) { }
+        return new(default);
     }
 
     private static void ThrowIfStringIsNullOrEmpty(
