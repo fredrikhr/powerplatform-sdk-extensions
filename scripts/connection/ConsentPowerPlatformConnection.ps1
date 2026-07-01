@@ -37,9 +37,7 @@ process {
         }
         $PowerAppsConnectionConsentedResponse = Invoke-RestMethod -Authentication OAuth `
             -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
-            -Method Put -Uri $PowerAppsApiUrl `
-            -Headers @{ "Content-Type" = "application/json; charset=utf-8" } `
-            -Body $ConnectionCreatePayload `
+            -Method Get -Uri $PowerAppsApiUrl `
             -WebSession $PowerPlatformWebSession `
             -Verbose:$false
         $PowerAppsConnectionProperties = Add-Member -PassThru `
