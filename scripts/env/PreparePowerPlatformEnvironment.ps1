@@ -98,7 +98,7 @@ process {
                 -Headers $DataverseHeaders `
                 -WebSession $DataverseWebSession `
                 -Verbose:$false
-            $ProvisionLanguageOperationRecord | Format-List -Property "*", @{ N = "timetocompletion"; E = { if ($_.completedon) { $_.completedon - $_.startedon } else { $null } } }, @{ N = "timesincecreation"; E = { ($_.completedon ?? [datetime]::UtcNow) - $_.createdon } }
+            $ProvisionLanguageOperationRecord | Format-List -Property "*", @{ N = "timeelapsed"; E = { if ($_.startedon) { ($_.completedon ?? [datetime]::UtcNow) - $_.startedon } else { $null } } }, @{ N = "timesincecreation"; E = { ($_.completedon ?? [datetime]::UtcNow) - $_.createdon } }
         } until ($ProvisionLanguageOperationRecord.statecode -eq 3) # statecode 3 = Completed
         Write-Host "Provisioning complete"
     }
@@ -115,8 +115,10 @@ process {
             -Uri $DataverseRequestUri `
             -Headers $DataverseHeaders `
             -Body (ConvertTo-Json -InputObject @{
-                localeid           = $CultureLcid
-                defaultcountrycode = $PhoneCountryCode
+                localeid                         = $CultureLcid
+                languagecode                     = $CultureLcid
+                defaultcountrycode               = $PhoneCountryCode
+                isdefaultcountrycodecheckenabled = if ($PhoneCountryCode) { $true } else { $false }
             } -Depth 20) `
             -WebSession $DataverseWebSession `
             -Verbose:$false
