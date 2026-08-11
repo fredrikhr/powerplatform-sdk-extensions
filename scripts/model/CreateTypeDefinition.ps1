@@ -42,7 +42,7 @@ process {
     [ValidateNotNull()]
     $TypeDefinitionData = ConvertFrom-Json -Depth 10 -InputObject $FileContent
     [ValidateNotNullOrEmpty()]
-    [string]$FolderName = $FileInfo.Directory.Parent.Name
+    [string]$FolderName = $FileInfo.Directory.Name
     [ValidateSet(
         "EntityDefinitions",
         "GlobalOptionSetDefinitions",
@@ -50,9 +50,15 @@ process {
         )]
     [ValidateNotNullOrEmpty()]
     [string]$TypeSetName = switch ($FolderName) {
-        "Entities" { "EntityDefinitions"; break }
         "OptionSets" { "GlobalOptionSetDefinitions"; break }
         "Relationships" { "RelationshipDefinitions"; break }
+        default {
+            $FolderName = $FileInfo.Directory.Parent.Name
+            switch ($FolderName) {
+                "Entities" { "EntityDefinitions"; break }
+            }
+            break
+        }
     }
     [ValidateNotNullOrEmpty()]
     [string]$TypeLookup = switch ($TypeSetName) {
