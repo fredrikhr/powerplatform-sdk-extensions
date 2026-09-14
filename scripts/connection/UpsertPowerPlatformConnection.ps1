@@ -2,6 +2,9 @@
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
 param (
+    [Parameter(Mandatory = $false)]
+    [AllowNull()][AllowEmptyString()]
+    [string]$EnvironmentId,
     [Parameter()]
     [string]$ConnectionId = [guid]::NewGuid().ToString("N"),
     [Parameter()]
@@ -11,12 +14,16 @@ param (
 begin {
     $PowerAppsApiVersion = "2025-04-01"
     $PowerAppsAudience = "https://service.powerapps.com/"
+    $PowerAppsConnectorParams = @{}
+    if ($EnvironmentId) {
+        $PowerAppsConnectorParams["EnvironmentId"] = $EnvironmentId
+    }
     [ValidateNotNull()]
     [psobject]$PowerAppsConnectorProperties = & (
         Join-Path (
             Join-Path (Join-Path -Resolve $PSScriptRoot "..") "connector"
         ) "GetPowerPlatformConnectorProperties.ps1"
-    ) |
+    ) @PowerAppsConnectorParams |
     Select-Object -First 1
 }
 

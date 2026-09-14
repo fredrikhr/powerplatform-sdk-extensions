@@ -1,14 +1,22 @@
 #Requires -Version 7.0
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
-param ()
+param (
+    [Parameter(Mandatory = $false)]
+    [AllowNull()][AllowEmptyString()]
+    [string]$EnvironmentId
+)
 
 begin {
     $PowerAppsApiVersion = "2025-04-01"
     $PowerAppsAudience = "https://service.powerapps.com/"
+    $PowerAppsConnectionsParams = @{}
+    if ($EnvironmentId) {
+        $PowerAppsConnectionsParams["EnvironmentId"] = $EnvironmentId
+    }
     [psobject[]]$PowerAppsConnectionsArray = & (
         Join-Path -Resolve $PSScriptRoot "GetPowerPlatformConnectionProperties.ps1"
-    )
+    ) @PowerAppsConnectionsParams
 }
 
 process {

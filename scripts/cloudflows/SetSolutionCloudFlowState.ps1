@@ -2,17 +2,24 @@
 #Requires -Modules @{ ModuleName = "Az.Accounts"; ModuleVersion = "5.0.0" }
 [CmdletBinding()]
 param (
+    [Parameter(Mandatory = $false)]
+    [AllowNull()][AllowEmptyString()]
+    [string]$EnvironmentId,
     [Parameter()][switch]$Disable,
     [Parameter()][switch]$Enable
 )
 
 begin {
+    $PowerPlatformEnvironmentParams = @{}
+    if ($EnvironmentId) {
+        $PowerPlatformEnvironmentParams["EnvironmentId"] = $EnvironmentId
+    }
     [ValidateNotNull()]
     [psobject]$PowerPlatformEnvironment = & (
         Join-Path -Resolve (
             Join-Path -Resolve (Join-Path -Resolve $PSScriptRoot "..") "env"
         ) "GetEnvironmentProperties.ps1"
-    ) |
+    ) @PowerPlatformEnvironmentParams |
     Select-Object -First 1
     [ValidateNotNull()][psobject]$DataverseMetadataInfo = $PowerPlatformEnvironment.linkedEnvironmentMetadata
     [ValidateNotNull()][uri]$DataverseInstanceUri = $DataverseMetadataInfo.instanceUrl
