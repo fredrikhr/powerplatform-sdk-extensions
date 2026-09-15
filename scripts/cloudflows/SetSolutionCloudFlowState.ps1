@@ -5,102 +5,88 @@ param (
     [Parameter(Mandatory = $false)]
     [AllowNull()][AllowEmptyString()]
     [string]$EnvironmentId,
+    [Parameter(Mandatory = $false)]
+    [AllowNull()]
+    [uri]$DataverseUri,
+    [Parameter(Mandatory = $false)]
+    [AllowNull()][AllowEmptyString()]
+    [string]$SolutionUniqueName,
     [Parameter()][switch]$Disable,
     [Parameter()][switch]$Enable
 )
 
 begin {
-    $PowerPlatformEnvironmentParams = @{}
-    if ($EnvironmentId) {
-        $PowerPlatformEnvironmentParams["EnvironmentId"] = $EnvironmentId
+    $DataverseComponentParams = @{
+        EnvironmentId      = $EnvironmentId
+        DataverseUri       = $DataverseUri
+        SolutionUniqueName = $SolutionUniqueName
+        FilterExpression   = "msdyn_componentlogicalname eq 'workflow' and msdyn_workflowcategory eq '5'"
+        SelectExpression   = "msdyn_objectid,msdyn_workflowcategoryname,msdyn_name,msdyn_statusname,msdyn_solutionid"
     }
-    [ValidateNotNull()]
-    [psobject]$PowerPlatformEnvironment = & (
+    [PSObject[]]$DataverseComponentSummaries = & (
         Join-Path -Resolve (
-            Join-Path -Resolve (Join-Path -Resolve $PSScriptRoot "..") "env"
-        ) "GetEnvironmentProperties.ps1"
-    ) @PowerPlatformEnvironmentParams |
-    Select-Object -First 1
-    [ValidateNotNull()][psobject]$DataverseMetadataInfo = $PowerPlatformEnvironment.linkedEnvironmentMetadata
-    [ValidateNotNull()][uri]$DataverseInstanceUri = $DataverseMetadataInfo.instanceUrl
-    [string]$DataverseTokenAudience = $DataverseInstanceUri.GetLeftPart([System.UriPartial]::Authority)
-    [ValidateNotNull()][uri]$DataverseApiRootUri = $DataverseMetadataInfo.instanceApiUrl
-    [uri]$DataverseApiBase = New-Object uri $DataverseApiRootUri, "/api/data/v$($DataverseMetadataInfo.version)/`$metadata"
-    [hashtable]$ODataReadHeaders = @{
+            Join-Path -Resolve (Join-Path -Resolve $PSScriptRoot "..") "solutions"
+        ) "GetSolutionComponentSummaries.ps1"
+    ) @DataverseComponentParams
+    | Out-GridView -PassThru -Title "Select Solution Cloud Flow"
+
+    $DataverseVersion = "9.2"
+    [hashtable]$ODataHeaders = @{
         "Accept"           = "application/json"
         "OData-Version"    = "4.0"
         "OData-MaxVersion" = "4.01"
         "Prefer"           = "odata.include-annotations=*, return=representation"
     }
-    [hashtable]$ODataWriteHeaders = $ODataReadHeaders + @{
-        "Content-Type" = "application/json; charset=utf-8"
-    }
-    $DataverseApiUri = New-Object uri $DataverseApiBase, "solutions?`$select=solutionid,uniquename,friendlyname,version,ismanaged,isvisible,modifiedon&`$filter=isvisible eq true&`$orderby=ismanaged,uniquename&`$expand=publisherid(`$select=publisherid,uniquename,friendlyname,customizationprefix,customizationoptionvalueprefix,isreadonly)"
-    if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "GET $DataverseApiUri"
-    }
-    $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
-        -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
-        -Method Get -Uri $DataverseApiUri `
-        -Headers $ODataReadHeaders `
-        -WebSession $PowerPlatformWebSession `
-        -Verbose:$false
-    [PSObject[]]$DataverseSolutionRecords = $DataverseApiResponse.value |
-    Out-GridView -PassThru -Title "Select Dataverse Solution"
+
+    [string]$EnvironmentId = $DataverseComponentSummaries.pwrplatf_environmentName | Select-Object -First 1
+    [uri]$DataverseInstanceUri = $DataverseComponentSummaries.dataverse_instanceUrl | Select-Object -First 1
+    [string]$DataverseTokenAudience = if ($DataverseInstanceUri) { $DataverseInstanceUri.GetLeftPart([System.UriPartial]::Authority) }
+    [uri]$DataverseApiBase = if ($DataverseInstanceUri) { New-Object uri $DataverseInstanceUri, "/api/data/v${DataverseVersion}/`$metadata" }
 }
 
 process {
-    foreach ($DataverseSolutionRecord in $DataverseSolutionRecords) {
-        $DataverseSolutionId = $DataverseSolutionRecord.solutionid
-        $DataverseApiUri = New-Object uri $DataverseApiBase, "msdyn_solutioncomponentsummaries?`$filter=msdyn_solutionid eq '${DataverseSolutionId}' and msdyn_componentlogicalname eq 'workflow' and msdyn_workflowcategory eq '5'&`$select=msdyn_objectid,msdyn_workflowcategoryname,msdyn_name,msdyn_statusname"
-        if ($VerbosePreference -ne 'SilentlyContinue') {
-            Write-Verbose "GET $DataverseApiUri"
-        }
-        $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
-            -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
-            -Method Get -Uri $DataverseApiUri `
-            -Headers $ODataReadHeaders `
-            -WebSession $PowerPlatformWebSession `
-            -Verbose:$false
-        $DataverseWorkflowSummaryRecords = $DataverseApiResponse.value |
-        Out-GridView -PassThru -Title "Select Solution Cloud Flow"
-        foreach ($DataverseWorkflowSummaryRecord in $DataverseWorkflowSummaryRecords) {
-            $DataverseCloudFlowId = $DataverseWorkflowSummaryRecord.msdyn_objectid
-            $DataverseApiUri = New-Object uri $DataverseApiBase, "workflows(${DataverseCloudFlowId})?`$select=workflowid,category,name,description,statecode,statuscode"
-            $DataverseApiResponse = $null
-            if ($Disable) {
-                if ($VerbosePreference -ne 'SilentlyContinue') {
-                    Write-Verbose "PATCH $DataverseApiUri"
-                }
-                $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
+    foreach ($DataverseWorkflowSummaryRecord in $DataverseComponentSummaries) {
+        [ValidateNotNull()]
+        [string]$DataverseSolutionId = $DataverseWorkflowSummaryRecord.msdyn_solutionid
+        [ValidateNotNull()]
+        [string]$DataverseCloudFlowId = $DataverseWorkflowSummaryRecord.msdyn_objectid
+
+        $DataverseApiUri = New-Object uri $DataverseApiBase, "workflows(${DataverseCloudFlowId})?`$select=workflowid,category,name,description,statecode,statuscode"
+        $DataverseApiResponse = $null
+        if ($Disable) {
+            if ($VerbosePreference -ne 'SilentlyContinue') {
+                Write-Verbose "PATCH $DataverseApiUri"
+            }
+            $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
                 -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
                 -Method Patch -Uri $DataverseApiUri `
-                -Headers $ODataWriteHeaders `
+                -Headers $ODataHeaders `
+                -ContentType "application/json; charset=utf-8" `
                 -Body (ConvertTo-Json -Depth 10 -InputObject @{
                     statecode  = 0
                     statuscode = 1
                 })`
                 -WebSession $PowerPlatformWebSession `
                 -Verbose:$false
+        }
+        if ($Enable) {
+            if ($VerbosePreference -ne 'SilentlyContinue') {
+                Write-Verbose "PATCH $DataverseApiUri"
             }
-            if ($Enable) {
-                if ($VerbosePreference -ne 'SilentlyContinue') {
-                    Write-Verbose "PATCH $DataverseApiUri"
-                }
-                $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
+            $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
                 -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
                 -Method Patch -Uri $DataverseApiUri `
-                -Headers $ODataWriteHeaders `
+                -Headers $ODataHeaders `
+                -ContentType "application/json; charset=utf-8" `
                 -Body (ConvertTo-Json -Depth 10 -InputObject @{
                     statecode  = 1
                     statuscode = 2
                 })`
                 -WebSession $PowerPlatformWebSession `
                 -Verbose:$false
-            }
-            if ($DataverseApiResponse) {
-                Write-Output $DataverseApiResponse
-            }
+        }
+        if ($DataverseApiResponse) {
+            Write-Output $DataverseApiResponse
         }
     }
 }
