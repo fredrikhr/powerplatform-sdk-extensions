@@ -24,10 +24,7 @@ param (
     )]
     [string]$PrincipalType,
     [Parameter(Mandatory = $true, Position = 1)]
-    [string]$PrincipalId,
-    [Parameter(Mandatory = $true, Position = 2)]
-    [ValidateSet("ReadAccess", "ReadWriteAccess")]
-    [string]$AccessType
+    [string]$PrincipalId
 )
 
 begin {
@@ -109,16 +106,6 @@ begin {
         "@odata.type"                           = $DataversePrincipalEntityTypeFqn
         $DataversePrincipalPrimaryAttributeName = $DataversePrincipalRecord.$DataversePrincipalPrimaryAttributeName
     }
-    $DataverseAccessMask = ""
-    switch ($AccessType) {
-        "ReadAccess" { $DataverseAccessMask = "ReadAccess"; break }
-        "ReadWriteAccess" { $DataverseAccessMask = "ReadAccess, WriteAccess"; break }
-    }
-    $DataversePrincipalAccess = @{
-        "@odata.type" = "Microsoft.Dynamics.CRM.PrincipalAccess"
-        AccessMask    = $DataverseAccessMask
-        Principal     = $DataversePrincipalReference
-    }
 
     [ValidateNotNull()][uri]$DataverseInstanceUri = $DataversePrincipalRecord.dataverse_instanceUrl
     [string]$DataverseTokenAudience = $DataverseInstanceUri.GetLeftPart([System.UriPartial]::Authority)
@@ -171,12 +158,12 @@ process {
             $DataverseComponentSummary.msdyn_primaryidattribute = $DataverseComponentSummary.msdyn_objectid
         }
         $DataverseApiRequestData = @{
-            Target          = $DataverseComponentTarget
-            PrincipalAccess = $DataversePrincipalAccess
+            Target  = $DataverseComponentTarget
+            Revokee = $DataversePrincipalReference
         }
         $DataverseApiRequestText = ConvertTo-Json -Depth 10 `
             -InputObject $DataverseApiRequestData -Compress
-        $DataverseApiUri = New-Object uri $DataverseApiBase, "GrantAccess"
+        $DataverseApiUri = New-Object uri $DataverseApiBase, "RevokeAccess"
         if ($VerbosePreference -ne 'SilentlyContinue') {
             Write-Verbose "POST ${DataverseApiUri}"
             Write-Verbose "Target: $(ConvertTo-Json -Depth 2 -Compress @{ $DataverseComponentSummary.msdyn_primaryidattribute = $DataverseComponentSummary.msdyn_objectid })"

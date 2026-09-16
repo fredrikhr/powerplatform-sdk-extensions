@@ -32,6 +32,8 @@ begin {
         "OData-MaxVersion" = "4.01"
         "Prefer"           = "odata.include-annotations=*"
     }
+    [hashtable]$ODataNoMetadataHeaders = $ODataHeaders.Clone()
+    $ODataNoMetadataHeaders["Accept"] = "application/json; odata.metadata=none"
 
     [string]$EnvironmentId = $DataverseComponentSummaries.pwrplatf_environmentName | Select-Object -First 1
     [uri]$DataverseInstanceUri = $DataverseComponentSummaries.dataverse_instanceUrl | Select-Object -First 1
@@ -51,7 +53,7 @@ begin {
             -Headers $ODataHeaders `
             -SessionVariable $PowerPlatformWebSession `
             -Verbose:$false
-        return $DataverseApiResponse.OwnershipType -notin "None", "OrganizationOwned"
+        return $DataverseApiResponse.OwnershipType -notin "None", "OrganizationOwned", "BusinessOwned"
     }
 }
 
@@ -113,7 +115,7 @@ process {
         $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
             -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
             -Method Get -Uri $DataverseApiUri `
-            -Headers $ODataHeaders `
+            -Headers $ODataNoMetadataHeaders `
             -SessionVariable $PowerPlatformWebSession `
             -Verbose:$false
         $DataverseUserCache[$DataversePrincipalOwnerId] = $DataverseApiResponse
@@ -126,7 +128,7 @@ process {
         $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
             -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
             -Method Get -Uri $DataverseApiUri `
-            -Headers $ODataHeaders `
+            -Headers $ODataNoMetadataHeaders `
             -SessionVariable $PowerPlatformWebSession `
             -Verbose:$false
         $DataverseTeamCache[$DataversePrincipalOwnerId] = $DataverseApiResponse
@@ -151,34 +153,23 @@ process {
             [string]$DataversePrincipalType = $DataversePrincipalReference."@type"
             [ValidateNotNull()]
             [string]$DataversePrincipalOwnerId = $DataversePrincipalReference.ownerid
+            [psobject]$DataversePrincipalRecord = $null
             switch ($DataversePrincipalType) {
                 "#Microsoft.Dynamics.CRM.systemuser" {
-                    $DataverseUserRecord = $DataverseUserCache[$DataversePrincipalOwnerId]
-                    foreach ($DataverseUserProp in (
-                            $DataverseUserRecord.PSObject.Properties
-                            | Where-Object -Property Name -NE "@etag"
-                            | Where-Object -Property Name -NE "@context"
-                        )) {
-                        Add-Member -Force -InputObject $DataverseComponentAccessRecord `
-                            -NotePropertyName "systemuser_$($DataverseUserProp.Name)" `
-                            -NotePropertyValue $DataverseUserProp.Value
-                    }
+                    $DataversePrincipalRecord = $DataverseUserCache[$DataversePrincipalOwnerId]
                     break
                 }
                 "#Microsoft.Dynamics.CRM.team" {
-                    $DataverseTeamRecord = $DataverseTeamCache[$DataversePrincipalOwnerId]
-                    foreach ($DataverseTeamProp in (
-                            $DataverseTeamRecord.PSObject.Properties
-                            | Where-Object -Property Name -NE "@etag"
-                            | Where-Object -Property Name -NE "@context"
-                        )) {
-                        Add-Member -Force -InputObject $DataverseComponentAccessRecord `
-                            -NotePropertyName "team_$($DataverseTeamProp.Name)" `
-                            -NotePropertyValue $DataverseTeamProp.Value
-                    }
+                    $DataversePrincipalRecord = $DataverseTeamCache[$DataversePrincipalOwnerId]
                     break
                 }
+                default {
+                    $DataversePrincipalRecord = $DataversePrincipalReference
+                }
             }
+            Add-Member -Force -InputObject $DataverseComponentAccessRecord `
+                -NotePropertyName "access_principal" `
+                -NotePropertyValue $DataversePrincipalRecord
             Add-Member -Force -InputObject $DataverseComponentAccessRecord `
                 -NotePropertyName "access_granted" `
                 -NotePropertyValue $DataverseComponentAccessRights
