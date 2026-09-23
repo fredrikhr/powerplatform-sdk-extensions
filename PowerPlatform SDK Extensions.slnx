@@ -23,6 +23,7 @@
   </Folder>
   <Folder Name="/libraries/">
     <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery/FredrikHr.PowerPlatformSdkExtensions.ApiDiscovery.csproj" />
+    <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.PluginRuntime/FredrikHr.PowerPlatformSdkExtensions.PluginRuntime.csproj" />
     <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.SampleDependencyLib/FredrikHr.PowerPlatformSdkExtensions.SampleDependencyLib.csproj" />
     <Project Path="libraries/FredrikHr.PowerPlatformSdkExtensions.SandboxWorker.Reflection/FredrikHr.PowerPlatformSdkExtensions.SandboxWorker.Reflection.csproj" />
   </Folder>
