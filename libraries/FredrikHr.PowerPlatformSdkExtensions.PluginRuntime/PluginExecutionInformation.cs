@@ -7,7 +7,7 @@ namespace FredrikHr.PowerPlatformSdkExtensions.PluginRuntime;
 
 public class PluginExecutionInformation
 {
-    internal const string PrivilegeNameImpersonation = "prvActOnBehalfOfAnotherUser";
+    public const string PrivilegeNameImpersonation = "prvActOnBehalfOfAnotherUser";
     private static readonly string[] PrivilegeNamesImpersonation = [PrivilegeNameImpersonation];
 
     private readonly IServiceProvider _serviceProvider;
