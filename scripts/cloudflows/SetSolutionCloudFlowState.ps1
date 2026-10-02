@@ -54,34 +54,38 @@ process {
         $DataverseApiUri = New-Object uri $DataverseApiBase, "workflows(${DataverseCloudFlowId})?`$select=workflowid,category,name,description,statecode,statuscode"
         $DataverseApiResponse = $null
         if ($Disable) {
+            $DataverseApiRequestBody = ConvertTo-Json -Depth 10 -Compress -InputObject @{
+                statecode  = 0
+                statuscode = 1
+            }
             if ($VerbosePreference -ne 'SilentlyContinue') {
                 Write-Verbose "PATCH $DataverseApiUri"
+                Write-Verbose $DataverseApiRequestBody
             }
             $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
                 -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
                 -Method Patch -Uri $DataverseApiUri `
                 -Headers $ODataHeaders `
                 -ContentType "application/json; charset=utf-8" `
-                -Body (ConvertTo-Json -Depth 10 -InputObject @{
-                    statecode  = 0
-                    statuscode = 1
-                })`
+                -Body $DataverseApiRequestBody `
                 -WebSession $PowerPlatformWebSession `
                 -Verbose:$false
         }
         if ($Enable) {
+            $DataverseApiRequestBody = ConvertTo-Json -Depth 10 -Compress -InputObject @{
+                statecode  = 1
+                statuscode = 2
+            }
             if ($VerbosePreference -ne 'SilentlyContinue') {
                 Write-Verbose "PATCH $DataverseApiUri"
+                Write-Verbose $DataverseApiRequestBody
             }
             $DataverseApiResponse = Invoke-RestMethod -Authentication OAuth `
                 -Token ((Get-AzAccessToken -ResourceUrl $DataverseTokenAudience -AsSecureString).Token) `
                 -Method Patch -Uri $DataverseApiUri `
                 -Headers $ODataHeaders `
                 -ContentType "application/json; charset=utf-8" `
-                -Body (ConvertTo-Json -Depth 10 -InputObject @{
-                    statecode  = 1
-                    statuscode = 2
-                })`
+                -Body $DataverseApiRequestBody `
                 -WebSession $PowerPlatformWebSession `
                 -Verbose:$false
         }
