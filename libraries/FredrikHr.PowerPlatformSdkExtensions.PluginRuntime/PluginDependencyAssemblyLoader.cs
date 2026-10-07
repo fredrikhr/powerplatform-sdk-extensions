@@ -177,7 +177,6 @@ internal sealed class PluginDependencyAssemblyLoader : IDisposable
             {
                 try
                 {
-                    _trace.Trace("Preloading assembly: {0}", dllPath);
                     Assembly.LoadFile(dllPath);
                 }
                 catch (Exception assemblyLoadExcept)
