@@ -22,6 +22,7 @@
     <PackageReference Include="Autofac" PrivateAssets="All" />
     <PackageReference Include="Google.Protobuf" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" PrivateAssets="All" />
+    <PackageReference Include="System.ValueTuple" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
