@@ -58,8 +58,7 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Design",
         "CA1031: Do not catch general exception types",
-        Justification = nameof(MSBuildTask)
-    )]
+        Justification = nameof(MSBuildTask))]
     public override sealed bool Execute()
     {
         var arguments = GetArguments();
@@ -137,10 +136,9 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
     private void LogErrorFromException(
         Exception exception,
         PackagerArguments arguments,
-        SolutionPackager runner
-        )
+        SolutionPackager runner)
     {
-        var logSourceFile = GetLogSourceFile(arguments, runner);
+        string? logSourceFile = GetLogSourceFile(arguments, runner);
         Log.LogErrorFromException(
             exception,
             showStackTrace: true,
@@ -151,12 +149,10 @@ public abstract class SolutionPackagerTaskBase : MSBuildTask
 
     protected abstract string? GetLogSourceFile(
         PackagerArguments arguments,
-        SolutionPackager runner
-    );
+        SolutionPackager runner);
 
     private static void RemoveTraceFileListener(
-        PackagerArguments arguments
-        )
+        PackagerArguments arguments)
     {
         string logFilePath = Path.GetFullPath(arguments.LogFile);
         foreach (var fileTracer in Trace.Listeners.OfType<TextWriterTraceListener>().ToList())

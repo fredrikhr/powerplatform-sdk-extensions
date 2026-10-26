@@ -9,13 +9,16 @@ public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase, ITask
 
     public bool DisablePluginAssemblyTypeNameRemapping { get; init; }
 
+    public string? SolutionName { get; init; }
+
     protected override PackagerArguments GetArguments()
     {
-        var arguments = base.GetArguments();
+        PackagerArguments arguments = base.GetArguments();
 
         arguments.Action = CommandAction.Pack;
         arguments.UseUnmanagedFileForManaged = UseUnmanagedFileForManaged;
         arguments.RemapPluginTypeNames = !DisablePluginAssemblyTypeNameRemapping;
+        arguments.SolutionName = SolutionName;
 
         return arguments;
     }
@@ -23,14 +26,12 @@ public sealed class SolutionPackagerPackTask : SolutionPackagerTaskBase, ITask
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Design",
         "CA1031: Do not catch general exception types",
-        Justification = nameof(Log)
-        )]
+        Justification = nameof(Log))]
     protected override string? GetLogSourceFile(
         PackagerArguments arguments,
-        SolutionPackager runner
-        )
+        SolutionPackager runner)
     {
-        var context = runner.Context;
+        Context context = runner.Context;
         try
         {
             return Path.Combine(

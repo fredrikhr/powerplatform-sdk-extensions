@@ -24,6 +24,6 @@ public sealed class SolutionPackagerExtractTask : SolutionPackagerTaskBase, ITas
 
     protected override string? GetLogSourceFile(
         PackagerArguments arguments,
-        SolutionPackager runner
-        ) => arguments.PathToZipFile;
+        SolutionPackager runner)
+        => arguments.PathToZipFile;
 }
