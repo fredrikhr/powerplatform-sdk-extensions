@@ -40,7 +40,7 @@
   <ItemGroup>
     <PackageVersion
       Include="Microsoft.Build.Framework;Microsoft.Build.Utilities.Core"
-      Version="18.4.0"
+      Version="18.9.6"
     />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +55,9 @@
     />
     <PackageVersion Include="Microsoft.CrmSdk.CoreAssemblies">
       <Version>9.0.2.60</Version>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies">
+      <Version>1.0.3</Version>
     </PackageVersion>
   </ItemGroup>
 </Project>
