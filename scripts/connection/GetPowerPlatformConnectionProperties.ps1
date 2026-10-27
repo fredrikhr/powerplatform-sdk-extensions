@@ -4,7 +4,14 @@
 param (
     [Parameter(Mandatory = $false)]
     [AllowNull()][AllowEmptyString()]
-    [string]$EnvironmentId
+    [string]$EnvironmentId,
+    [Parameter(Mandatory = $false)]
+    [Alias("ConnectorId")]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ApiId,
+    [Parameter()]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ConnectionId
 )
 
 begin {
@@ -24,34 +31,53 @@ begin {
         ) |
         Select-Object -First 1
     }
-    $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/connections?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'&`$expand=api"
-    if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "GET $PowerAppsApiUrl"
-    }
-    $PowerAppsConnectionsResponse = Invoke-RestMethod -Authentication OAuth `
-        -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
-        -Method Get `
-        -Uri $PowerAppsApiUrl `
-        -WebSession $PowerPlatformWebSession `
-        -Verbose:$false
-    [psobject[]]$PowerAppsConnectionsArray = $PowerAppsConnectionsResponse.value |
-    ForEach-Object {
-        Add-Member -PassThru -InputObject $_.properties `
-            -NotePropertyName "connectionName" `
-            -NotePropertyValue $_.name
-    } |
-    Sort-Object -Property @{
-        Expression = { $_.api.properties.isCustomApi }
-    }, @{
-        Expression = { $_.api.properties.tier }
-    }, @{
-        Expression = { $_.api.properties.publisher }
-    }, @{
-        Expression = { $_.api.name }
-    }, "connectionName" |
-    Out-GridView -PassThru -Title "Select Power Platform Connection"
 }
 
 process {
-    $PowerAppsConnectionsArray | Write-Output
+    if ($ApiId -and $ConnectionId) {
+        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis/${ApiId}/connections/${ConnectionId}?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'&`$expand=api"
+        if ($VerbosePreference -ne 'SilentlyContinue') {
+            Write-Verbose "GET $PowerAppsApiUrl"
+        }
+        $PowerAppsConnectionsResponse = Invoke-RestMethod -Authentication OAuth `
+            -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
+            -Method Get `
+            -Uri $PowerAppsApiUrl `
+            -WebSession $PowerPlatformWebSession `
+            -Verbose:$false
+        Add-Member -InputObject $PowerAppsConnectionsResponse.properties -PassThru `
+            -NotePropertyMembers @{
+                connectionName = $PowerAppsConnectionsResponse.name
+            } -Force
+        | Write-Output
+    }
+    else {
+        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/connections?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'&`$expand=api"
+        if ($VerbosePreference -ne 'SilentlyContinue') {
+            Write-Verbose "GET $PowerAppsApiUrl"
+        }
+        $PowerAppsConnectionsResponse = Invoke-RestMethod -Authentication OAuth `
+            -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
+            -Method Get `
+            -Uri $PowerAppsApiUrl `
+            -WebSession $PowerPlatformWebSession `
+            -Verbose:$false
+        $PowerAppsConnectionsResponse.value
+        | ForEach-Object {
+            Add-Member -PassThru -InputObject $_.properties `
+                -NotePropertyName "connectionName" `
+                -NotePropertyValue $_.name
+        }
+        | Sort-Object -Property @{
+            Expression = { $_.api.properties.isCustomApi }
+        }, @{
+            Expression = { $_.api.properties.tier }
+        }, @{
+            Expression = { $_.api.properties.publisher }
+        }, @{
+            Expression = { $_.api.name }
+        }, "connectionName"
+        | Out-GridView -PassThru -Title "Select Power Platform Connection"
+        | Write-Output
+    }
 }

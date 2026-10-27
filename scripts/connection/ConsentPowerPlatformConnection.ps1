@@ -4,15 +4,23 @@
 param (
     [Parameter(Mandatory = $false)]
     [AllowNull()][AllowEmptyString()]
-    [string]$EnvironmentId
+    [string]$EnvironmentId,
+    [Parameter(Mandatory = $false)]
+    [Alias("ConnectorId")]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ApiId,
+    [Parameter()]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ConnectionId
 )
 
 begin {
     $PowerAppsApiVersion = "2025-04-01"
     $PowerAppsAudience = "https://service.powerapps.com/"
-    $PowerAppsConnectionsParams = @{}
-    if ($EnvironmentId) {
-        $PowerAppsConnectionsParams["EnvironmentId"] = $EnvironmentId
+    $PowerAppsConnectionsParams = @{
+        EnvironmentId = $EnvironmentId
+        ApiId         = $ApiId
+        ConnectionId  = $ConnectionId
     }
     [psobject[]]$PowerAppsConnectionsArray = & (
         Join-Path -Resolve $PSScriptRoot "GetPowerPlatformConnectionProperties.ps1"

@@ -5,6 +5,10 @@ param (
     [Parameter(Mandatory = $false)]
     [AllowNull()][AllowEmptyString()]
     [string]$EnvironmentId,
+    [Parameter(Mandatory = $false)]
+    [Alias("ConnectorId")]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ApiId,
     [Parameter()]
     [string]$ConnectionId = [guid]::NewGuid().ToString("N"),
     [Parameter()]
@@ -14,9 +18,9 @@ param (
 begin {
     $PowerAppsApiVersion = "2025-04-01"
     $PowerAppsAudience = "https://service.powerapps.com/"
-    $PowerAppsConnectorParams = @{}
-    if ($EnvironmentId) {
-        $PowerAppsConnectorParams["EnvironmentId"] = $EnvironmentId
+    $PowerAppsConnectorParams = @{
+        EnvironmentId = $EnvironmentId
+        ApiId = $ApiId
     }
     [ValidateNotNull()]
     [psobject]$PowerAppsConnectorProperties = & (

@@ -4,7 +4,11 @@
 param (
     [Parameter(Mandatory = $false)]
     [AllowNull()][AllowEmptyString()]
-    [string]$EnvironmentId
+    [string]$EnvironmentId,
+    [Parameter(Mandatory = $false)]
+    [Alias("ConnectorId")]
+    [AllowNull()][AllowEmptyString()]
+    [string]$ApiId
 )
 
 begin {
@@ -21,32 +25,55 @@ begin {
             Join-Path -Resolve (
                 Join-Path -Resolve (Join-Path -Resolve $PSScriptRoot "..") "env"
             ) "GetEnvironmentProperties.ps1"
-        ) |
-        Select-Object -First 1
+        )
+        | Select-Object -First 1
     }
-    $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'"
-    if ($VerbosePreference -ne 'SilentlyContinue') {
-        Write-Verbose "GET $PowerAppsApiUrl"
-    }
-    $PowerAppsConnectorsResponse = Invoke-RestMethod -Authentication OAuth `
-        -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
-        -Method Get `
-        -Uri $PowerAppsApiUrl `
-        -WebSession $PowerPlatformWebSession `
-        -Verbose:$false
-    [psobject[]]$PowerAppsConnectorsArray = $PowerAppsConnectorsResponse.value |
-    ForEach-Object {
-        Add-Member -PassThru -InputObject $_.properties `
-            -NotePropertyName "apiName" `
-            -NotePropertyValue $_.name |
-        Add-Member -PassThru -Force `
-            -NotePropertyName "environmentName" `
-            -NotePropertyValue $PowerPlatformEnvironment.environmentName
-    } |
-    Sort-Object -Property "isCustomApi", "tier", "publisher", "apiName" |
-    Out-GridView -PassThru -Title "Select Power Platform Connector"
+
 }
 
 process {
-    $PowerAppsConnectorsArray | Write-Output
+    if ($ApiId) {
+        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis/${ApiId}?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'"
+        if ($VerbosePreference -ne 'SilentlyContinue') {
+            Write-Verbose "GET $PowerAppsApiUrl"
+        }
+        $PowerAppsConnectorsResponse = Invoke-RestMethod -Authentication OAuth `
+            -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
+            -Method Get `
+            -Uri $PowerAppsApiUrl `
+            -WebSession $PowerPlatformWebSession `
+            -Verbose:$false
+        Add-Member -PassThru -InputObject $PowerAppsConnectorsResponse.properties `
+            -NotePropertyMembers @{
+            apiName         = $PowerAppsConnectorsResponse.name
+            environmentName = $PowerPlatformEnvironment.environmentName
+        } `
+            -Force
+        | Write-Output
+    }
+    else {
+        $PowerAppsApiUrl = "https://api.powerapps.com/providers/Microsoft.PowerApps/apis?api-version=${PowerAppsApiVersion}&`$filter=environment eq '$($PowerPlatformEnvironment.environmentName)'"
+        if ($VerbosePreference -ne 'SilentlyContinue') {
+            Write-Verbose "GET $PowerAppsApiUrl"
+        }
+        $PowerAppsConnectorsResponse = Invoke-RestMethod -Authentication OAuth `
+            -Token ((Get-AzAccessToken -ResourceUrl $PowerAppsAudience -AsSecureString).Token) `
+            -Method Get `
+            -Uri $PowerAppsApiUrl `
+            -WebSession $PowerPlatformWebSession `
+            -Verbose:$false
+        $PowerAppsConnectorsResponse.value
+        | ForEach-Object {
+            Add-Member -PassThru -InputObject $_.properties `
+                -NotePropertyName "apiName" `
+                -NotePropertyValue $_.name
+            | Add-Member -PassThru -Force `
+                -NotePropertyName "environmentName" `
+                -NotePropertyValue $PowerPlatformEnvironment.environmentName
+        }
+        | Sort-Object -Property "isCustomApi", "tier", "publisher", "apiName"
+        | Out-GridView -PassThru -Title "Select Power Platform Connector"
+        | Select-Object -First 1
+        | Write-Output
+    }
 }
